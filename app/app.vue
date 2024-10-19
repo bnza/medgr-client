@@ -1,16 +1,15 @@
 <script setup lang="ts">
-const ready = ref(true);
+const ready = ref(true)
+const name = computed(() => (ready.value ? 'default' : 'empty'))
 </script>
 <template>
   <v-app theme="dark">
-    <v-layout>
-      <v-main v-if="!ready" class="d-flex align-center justify-center">
-        <home-page-logo />
-      </v-main>
-      <v-main v-else class="d-flex align-center justify-center">
-        <app-bar />
-        <app-navigation-drawer />
-        <NuxtPage />
+    <v-layout data-testid="app-layout">
+      <v-main class="d-flex align-center justify-center">
+        <NuxtLayout :name>
+          <NuxtPage />
+        </NuxtLayout>
+        <app-snackbar />
       </v-main>
     </v-layout>
   </v-app>

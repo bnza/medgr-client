@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const store = useUiAppNavigationDrawerStore();
+const store = useUiAppNavigationDrawerStore()
 </script>
 
 <template>
@@ -8,6 +8,9 @@ const store = useUiAppNavigationDrawerStore();
       data-testid="app-bar-nav-icon"
       @click.stop="store.toggle()"
     />
+    <template #append>
+      <auth-app-bar-icon />
+    </template>
   </v-app-bar>
 </template>
 

@@ -1,0 +1,75 @@
+interface JsonLdItem extends Record<string, unknown> {
+  '@id': string
+  '@type': string
+}
+
+interface JsonLdDocument extends JsonLdItem {
+  '@context': string | Record<string, string>
+}
+
+interface JsonLdContext extends Record<string, string> {
+  '@vocab': string
+}
+
+interface HydraProperty extends JsonLdItem {
+  'rdfs:label': string
+  domain: string
+  range: string
+}
+
+interface HydraSupportedProperty extends JsonLdItem {
+  '@type': 'hydra:SupportedProperty'
+  'hydra:property': HydraProperty
+  'hydra:title': string
+  'hydra:required': boolean
+  'hydra:readable': boolean
+  'hydra:writable': boolean
+}
+
+interface HydraSupportedOperation extends JsonLdItem {
+  '@type': string | Array<string>
+  'hydra:method': 'GET' | 'DELETE' | 'POST' | 'PUT' | 'PATCH' | 'OPTIONS'
+  'hydra:title': string
+  'rdfs:label': string
+  returns: string
+}
+
+interface HydraSupportedClass extends JsonLdItem {
+  'hydra:title': string
+  'rdfs:label': string
+  'hydra:SupportedProperty': Array<HydraSupportedProperty>
+  'hydra:SupportedOperation': Array<HydraSupportedOperation>
+}
+
+interface JsonLdApiDocumentation extends JsonLdDocument, JsonLdContext {
+  'hydra:title': string
+  'hydra:entrypoint': string
+  'hydra:supportedClass': Array<HydraSupportedClass>
+}
+
+export interface JsonLdResourceItem<T extends Record<string, unknown>>
+  extends JsonLdItem,
+    T {}
+
+export interface JsonLdResourceCollection<T extends Record<string, unknown>>
+  extends JsonLdDocument {
+  'hydra:totalItems': number
+  'hydra:member': Array<JsonLdResourceItem<T>>
+}
+
+export interface JsonLdConstraintViolationsList extends JsonLdItem {
+  '@context': '/api/contexts/ConstraintViolationList'
+  '@type': 'ConstraintViolationList'
+  title: string
+  description: string
+  violations: Array<{
+    propertyPath: string
+    message: string
+  }>
+}
+export interface JsonLdHydraError extends JsonLdItem {
+  '@context': '/api/contexts/Error'
+  '@type': 'hydra:Error'
+  'hydra:title': string
+  'hydra:description': string
+}

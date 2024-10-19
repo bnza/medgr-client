@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const store = useUiAppNavigationDrawerStore();
-const open = ref([]);
+const store = useUiAppNavigationDrawerStore()
+const open = ref([])
 </script>
 
 <template>
@@ -16,7 +16,17 @@ const open = ref([]);
         router
         exact
         prepend-icon="fas fa-house"
+        data-testid="app-navigation-drawer-li-home"
         title="Home"
+      />
+      <v-list-item
+        nuxt
+        to="/about"
+        router
+        exact
+        prepend-icon="fas fa-info"
+        data-testid="app-navigation-drawer-li-about"
+        title="About"
       />
     </v-list>
   </v-navigation-drawer>
