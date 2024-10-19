@@ -1,4 +1,5 @@
 import { COLORS } from '~/utils/consts/colors'
+import type { BaseAcl } from '~~/types'
 
 export enum ApiRole {
   Admin = 'ROLE_ADMIN',
@@ -30,3 +31,8 @@ export const SITES_ROLE_COLORS: Readonly<Record<ApiSiteRole, string>> = {
   [ApiSiteRole.User]: COLORS.success,
   [ApiSiteRole.Editor]: COLORS.warning,
 } as const
+export const defaultBaseAcl: Readonly<BaseAcl> = Object.freeze({
+  canRead: true,
+  canUpdate: false,
+  canDelete: false,
+})

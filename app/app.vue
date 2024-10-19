@@ -7,6 +7,7 @@ const name = computed(() => (ready.value ? 'default' : 'empty'))
     <v-layout data-testid="app-layout">
       <v-main class="d-flex align-center justify-center">
         <NuxtLayout :name>
+          <NuxtLoadingIndicator color="warning" />
           <NuxtPage />
         </NuxtLayout>
         <app-snackbar />

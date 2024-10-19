@@ -3,6 +3,9 @@ import type {
   JsonLdHydraError,
 } from '~~/types/jsonld'
 import { ApiRole, type ApiSpecialistRole } from '~/utils/consts/auth'
+import type { ApiResourceKey } from '~~/types/api'
+import { apiResourceKeys } from '~/utils/resources'
+import type { FetchResponse } from 'ofetch'
 
 export const isLiteralObject = (
   value: unknown,
@@ -22,3 +25,12 @@ export const isAppRole = (value: string): value is ApiRole =>
 
 export const isSpecialistRole = (value: string): value is ApiSpecialistRole =>
   !isAppRole(value)
+
+export const isApiResourceKey = (value: string): value is ApiResourceKey =>
+  (apiResourceKeys as ReadonlyArray<string>).includes(value)
+
+export const isFetchResponse = (
+  value: unknown,
+): value is FetchResponse<unknown> =>
+  isLiteralObject(value) &&
+  ['status', 'statusText', '_data'].every((key) => key in value)

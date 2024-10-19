@@ -1,3 +1,5 @@
+import type { ApiResourceItem } from '~~/types/resources'
+
 interface JsonLdItem extends Record<string, unknown> {
   '@id': string
   '@type': string
@@ -47,15 +49,13 @@ interface JsonLdApiDocumentation extends JsonLdDocument, JsonLdContext {
   'hydra:supportedClass': Array<HydraSupportedClass>
 }
 
-export interface JsonLdResourceItem<T extends Record<string, unknown>>
-  extends JsonLdItem,
-    T {}
+export type JsonLdResourceItem<T extends ApiResourceItem> = JsonLdItem & T
 
-export interface JsonLdResourceCollection<T extends Record<string, unknown>>
-  extends JsonLdDocument {
-  'hydra:totalItems': number
-  'hydra:member': Array<JsonLdResourceItem<T>>
-}
+export type JsonLdResourceCollection<T extends ApiResourceItem> =
+  JsonLdDocument & {
+    'hydra:totalItems': number
+    'hydra:member': Array<JsonLdResourceItem<T>>
+  }
 
 export interface JsonLdConstraintViolationsList extends JsonLdItem {
   '@context': '/api/contexts/ConstraintViolationList'

@@ -1,36 +1,36 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
-    baseURL: "/app",
+    baseURL: '/app',
     head: {
       link: [
         {
-          rel: "icon",
-          href: "/app/favicon.ico",
+          rel: 'icon',
+          href: '/app/favicon.ico',
         },
       ],
     },
   },
   auth: {
     provider: {
-      type: "local",
+      type: 'local',
       endpoints: {
         // From @sidebase/nuxt-auth 0.8 Endpoints requires NOT to have the trailing slash
-        // in ordet to use baseURL
+        // in order to use baseURL
         // @see joinPathToApiURL function
-        signIn: { path: "login", method: "post" },
-        signOut: { path: "logout", method: "post" },
-        getSession: { path: "users/me", method: "get" },
+        signIn: { path: 'login', method: 'post' },
+        signOut: { path: 'logout', method: 'post' },
+        getSession: { path: 'users/me', method: 'get' },
       },
       pages: {
-        login: "/login",
+        login: '/login',
       },
       session: {
         dataType: {
-          id: "string",
-          email: "string",
-          roles: "string[]",
-          privileges: "number[]",
+          id: 'string',
+          email: 'string',
+          roles: 'string[]',
+          privileges: 'number[]',
         },
       },
     },
@@ -43,32 +43,34 @@ export default defineNuxtConfig({
     },
     disableServerSideAuth: true,
     globalAppMiddleware: true,
-    baseURL: process.env.NUXT_PUBLIC_API_BASE_URL || "http://localhost/api",
+    baseURL: process.env.NUXT_PUBLIC_API_BASE_URL
+      ? process.env.NUXT_PUBLIC_API_BASE_URL + '/api'
+      : 'http://localhost/api',
   },
-  compatibilityDate: "2024-04-03",
-  css: ["~/assets/styles/index.css"],
+  compatibilityDate: '2024-04-03',
+  css: ['~/assets/styles/index.css'],
   devtools: { enabled: true },
   future: {
     compatibilityVersion: 4,
   },
   modules: [
-    "vuetify-nuxt-module",
-    "@nuxt/eslint",
+    'vuetify-nuxt-module',
+    '@nuxt/eslint',
     [
-      "@nuxtjs/google-fonts",
+      '@nuxtjs/google-fonts',
       {
         families: {
           Montserrat: true,
         },
       },
     ],
-    "@pinia/nuxt",
-    "@sidebase/nuxt-auth",
+    '@pinia/nuxt',
+    '@sidebase/nuxt-auth',
   ],
   runtimeConfig: {
     public: {
-      apiBaseURL: "http://localhost/api",
+      apiBaseURL: 'http://localhost',
     },
   },
   ssr: false,
-});
+})

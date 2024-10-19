@@ -37,18 +37,20 @@ export default defineStore('app-snackbar', () => {
     )
   }
 
-  const showError = (
-    value: string | (Error & { response?: FetchResponse<unknown> }),
-  ) => {
+  const showError = (value: string | Error | FetchResponse<unknown>) => {
     let values: string[] = []
-    if (value instanceof Error) {
-      values = value.response
-        ? responseErrorToString(value.response)
-        : [value.message]
+    if (isFetchResponse(value)) {
+      values = responseErrorToString(value)
     }
+
+    if (value instanceof Error) {
+      values = [value.message]
+    }
+
     if ('string' === typeof value) {
       values = [value]
     }
+
     values.forEach((text) => {
       set(
         Object.assign(
