@@ -10,7 +10,7 @@ export interface ApiAclResource {
   _acl: BaseAcl
 }
 
-export interface ApiResourceItem {
+export interface ApiResourceItem extends Record<string, unknown> {
   id: ApiId
 }
 

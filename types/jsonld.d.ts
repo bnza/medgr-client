@@ -49,6 +49,8 @@ interface JsonLdApiDocumentation extends JsonLdDocument, JsonLdContext {
   'hydra:supportedClass': Array<HydraSupportedClass>
 }
 
+export type JsonLdResourceDocument<T extends ApiResourceItem> = JsonLdDocument &
+  T
 export type JsonLdResourceItem<T extends ApiResourceItem> = JsonLdItem & T
 
 export type JsonLdResourceCollection<T extends ApiResourceItem> =

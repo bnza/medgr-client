@@ -2,6 +2,7 @@ import type { $Fetch } from 'nitropack'
 import type {
   ApiResourceItem,
   JsonLdResourceCollection,
+  JsonLdResourceDocument,
   JsonLdResourceItem,
 } from '~~/types'
 import AbstractRepository from '~/utils/repository/AbstractRepository'
@@ -21,7 +22,9 @@ class ResourceRepository<
 
   fetchItem(id: string | number) {
     const url = this.getItemUrl(id)
-    return this.$fetch<JsonLdResourceItem<ResourceType>>(url, { method: 'GET' })
+    return this.$fetch<JsonLdResourceDocument<ResourceType>>(url, {
+      method: 'GET',
+    })
   }
 
   async exportCollection(query: Record<string, unknown>) {

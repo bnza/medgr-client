@@ -41,3 +41,5 @@ export type ResourceCollectionKey =
 export type ResourceCollectionParent<
   RT extends ApiResourceItem = ApiResourceItem,
 > = [ApiDataResourceKey, JsonLdResourceItem<RT>]
+
+export type ApiAction = 'create' | 'update' | 'read' | 'delete'

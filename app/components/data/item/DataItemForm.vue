@@ -1,0 +1,70 @@
+<script setup lang="ts">
+import type { ApiAction, ApiResourceItem, ResourceConfig } from '~~/types'
+import type { VForm } from 'vuetify/components'
+import type ResourceRepository from '~/utils/repository/ResourceRepository'
+import useAppNavigateToStore from '~/stores/useAppNavigateToStore'
+
+const props = defineProps<{
+  item: ApiResourceItem
+  mode: ApiAction
+  readonly: boolean
+  repository: ResourceRepository<ApiResourceItem>
+  resourceConfig: ResourceConfig
+}>()
+const { submittingItem, submitStatus } = inject(resourceItemSubmitInjectionKey)
+const formRef = useTemplateRef<VForm>('form')
+
+const router = useRouter()
+const { showSuccess } = useAppSnackbarStore()
+const { to } = useAppNavigateToStore(true)
+watch(submittingItem, async (value) => {
+  const form = formRef.value
+  let _to = to
+  if (value && form) {
+    await form.validate()
+    if (!form.isValid) {
+      return
+    }
+    submitStatus.value = 'pending'
+    try {
+      switch (props.mode) {
+        case 'create': {
+          console.log('create')
+          const response = await props.repository.postItem(value)
+          _to = `${props.resourceConfig.appPath}/${response.id}`
+          break
+        }
+        case 'delete':
+          await props.repository.deleteItem(value)
+          break
+        case 'update':
+          await props.repository.patchItem(
+            props.item.id,
+            Object.assign({}, value),
+          )
+          break
+      }
+      submitStatus.value = 'error'
+      showSuccess(`Successfully ${props.mode}d resource`)
+      await router.replace(_to)
+    } catch (e) {
+      console.error(e)
+      submitStatus.value = 'error'
+    } finally {
+      submittingItem.value = undefined
+    }
+  }
+})
+onUnmounted(() => {
+  submitStatus.value = 'idle'
+})
+</script>
+
+<template>
+  <v-form ref="form" :readonly @submit.prevent>
+    <v-container>
+      <lazy-data-item-delete-alert v-if="mode === 'delete'" />
+      <slot />
+    </v-container>
+  </v-form>
+</template>

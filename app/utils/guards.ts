@@ -34,3 +34,8 @@ export const isFetchResponse = (
 ): value is FetchResponse<unknown> =>
   isLiteralObject(value) &&
   ['status', 'statusText', '_data'].every((key) => key in value)
+
+export const isValidResourceIdRef = (
+  value: Ref<unknown>,
+): value is Ref<string | number> =>
+  ['string', 'number'].includes(typeof value.value)

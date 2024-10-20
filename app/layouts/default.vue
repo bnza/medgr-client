@@ -5,5 +5,3 @@
   <app-navigation-drawer />
   <NuxtPage />
 </template>
-
-<style scoped></style>
