@@ -8,7 +8,7 @@ export type ReadonlyHeaders = VDataTable['$props']['headers']
 export type ApiDataResourceKey = 'site' | 'stratigraphicUnit'
 export type ApiVocabularyResourceKey = 'vocabularySuRelationship'
 export type ApiResourceKey = ApiDataResourceKey | ApiVocabularyResourceKey
-export type ApiResourceCollectionParent = [ApiDataResourceType, ApiId]
+// export type ApiResourceCollectionParent = [ApiDataResourceType, ApiId]
 export type ResourceConfig = Readonly<{
   apiPath: string
   appPath: string
@@ -43,3 +43,5 @@ export type ResourceCollectionParent<
 > = [ApiDataResourceKey, JsonLdResourceItem<RT>]
 
 export type ApiAction = 'create' | 'update' | 'read' | 'delete'
+
+export type ApiResourceCollectionParent = [ApiDataResourceKey, ApiResourceItem]

@@ -33,7 +33,10 @@ const { tab } = storeToRefs(useUiResourcePageTabStore(apiResourceKey))
           />
         </v-tabs-window-item>
         <v-tabs-window-item value="sus">
-          <p>sus</p>
+          <lazy-data-collection-card
+            resource-key="stratigraphicUnit"
+            :parent="['site', item]"
+          />
         </v-tabs-window-item>
       </v-tabs-window>
     </template>

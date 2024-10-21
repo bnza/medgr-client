@@ -35,6 +35,13 @@ const open = ref([])
           title="Site"
           data-testid="app-nav-drawer-li-sites"
         />
+        <v-list-item
+          nuxt
+          to="/data/stratigraphic-units"
+          router
+          title="Stratigraphic Unit"
+          data-testid="app-nav-drawer-li-sites"
+        />
       </v-list-group>
       <v-list-item
         nuxt

@@ -1,15 +1,47 @@
 import type {
   ApiAclResource,
   ApiDataResourceKey,
+  ApiResourceCollectionParent,
   ApiResourceItem,
   JsonLdResourceCollection,
   ResourceCollectionCacheKey,
 } from '~~/types'
 import useApiResourceCollectionPaginationOptionsStore from '~/stores/useApiResourceCollectionPaginationOptionsStore'
 
+export type UseResourceCollection = ReturnType<typeof _useResource>
+function useResourceCollection<RT extends ApiResourceItem>(
+  key: ApiDataResourceKey,
+  parent?: ApiResourceCollectionParent,
+) {
+  const cache = useNuxtApp().$cache.resourceCollections
+  const resourceCollectionCacheKey: ResourceCollectionCacheKey = parent
+    ? `${key}/${parent[0]}`
+    : key
+
+  if (!cache.has(resourceCollectionCacheKey)) {
+    cache.set(
+      resourceCollectionCacheKey,
+      _useResource<RT>(resourceCollectionCacheKey, parent),
+    )
+  }
+
+  const _return = cache.get(resourceCollectionCacheKey)
+  if (!_return) {
+    throw new Error(
+      `No useResource collection found in cache for key "${resourceCollectionCacheKey}"`,
+    )
+  }
+  if (parent) {
+    _return.parent.value = parent
+  }
+  return _return
+}
+
 function _useResource<RT extends ApiResourceItem>(
   key: ResourceCollectionCacheKey,
+  _parent?: ApiResourceCollectionParent,
 ) {
+  const parent = ref(_parent)
   const resourceKey: ApiDataResourceKey = key.replace(/\/.+/, '')
   const repository = useNuxtApp().$api.getRepository<RT>(resourceKey)
   const resourceConfig = useApiResourceConfig(resourceKey)
@@ -30,8 +62,14 @@ function _useResource<RT extends ApiResourceItem>(
     useApiResourceCollectionPaginationOptionsStore(key),
   )
 
+  const parentObject = computed(() =>
+    'undefined' === typeof parent.value
+      ? {}
+      : { [parent.value[0]]: parent.value[1].id },
+  )
+
   const fetchCollectionParams = computed(() =>
-    Object.assign({}, queryPaginationOptionsParams.value),
+    Object.assign({}, queryPaginationOptionsParams.value, parentObject.value),
   )
   type Collection = JsonLdResourceCollection<RT> & ApiAclResource
   const fetchCollection = async () => {
@@ -55,7 +93,14 @@ function _useResource<RT extends ApiResourceItem>(
     }
   }
 
-  return { headers, label, paginationOptions, fetchCollection, resourceConfig }
+  return {
+    headers,
+    label,
+    paginationOptions,
+    parent,
+    fetchCollection,
+    resourceConfig,
+  }
 }
 
-export default _useResource
+export default useResourceCollection

@@ -17,7 +17,10 @@ const props = withDefaults(
   },
 )
 
-const { label, resourceConfig } = useResourceCollection(props.resourceKey)
+const { label, resourceConfig } = useResourceCollection(
+  props.resourceKey,
+  props.parent,
+)
 
 const collectionTableComponentsMap: Partial<
   Record<ApiDataResourceKey, ReturnType<typeof defineAsyncComponent>>
@@ -27,7 +30,10 @@ const collectionTableComponentsMap: Partial<
   ),
 
   stratigraphicUnit: defineAsyncComponent(
-    () => import('~/components/data/collection/DataCollectionSiteTable.vue'),
+    () =>
+      import(
+        '~/components/data/collection/DataCollectionStratigraphicUnitTable.vue'
+      ),
   ),
 }
 const collectionTableComponent = computed(

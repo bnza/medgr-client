@@ -13,7 +13,7 @@ const props = defineProps<{
 }>()
 
 const { headers, fetchCollection, resourceConfig } =
-  useResourceCollection<ApiResourceItem>(props.resourceKey)
+  useResourceCollection<ApiResourceItem>(props.resourceKey, props.parent)
 
 // if (props.parent) {
 //   parent.value = props.parent
@@ -45,11 +45,7 @@ fetchCollection().then((_results) => (results.value = _results))
   >
     <!-- https://mokkapps.de/vue-tips/expose-slots-from-a-child-component-->
     <template v-for="(_, name) in $slots" #[name]="slotProps">
-      <slot
-        :name="name"
-        v-bind="slotProps || {}"
-        :resource-config="resourceConfig"
-      />
+      <slot :name v-bind="slotProps || {}" :resource-config="resourceConfig" />
     </template>
   </v-data-table-server>
 </template>
