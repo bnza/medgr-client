@@ -62,6 +62,10 @@ function _useResource<RT extends ApiResourceItem>(
     useApiResourceCollectionPaginationOptionsStore(key),
   )
 
+  const { resourceFilterParams } = storeToRefs(
+    useApiResourceCollectionsStore(key),
+  )
+
   const parentObject = computed(() =>
     'undefined' === typeof parent.value
       ? {}
@@ -69,7 +73,12 @@ function _useResource<RT extends ApiResourceItem>(
   )
 
   const fetchCollectionParams = computed(() =>
-    Object.assign({}, queryPaginationOptionsParams.value, parentObject.value),
+    Object.assign(
+      {},
+      queryPaginationOptionsParams.value,
+      resourceFilterParams.value,
+      parentObject.value,
+    ),
   )
   type Collection = JsonLdResourceCollection<RT> & ApiAclResource
   const fetchCollection = async () => {

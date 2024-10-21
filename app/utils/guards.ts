@@ -6,11 +6,15 @@ import { ApiRole, type ApiSpecialistRole } from '~/utils/consts/auth'
 import type { ApiResourceKey } from '~~/types/api'
 import { apiResourceKeys } from '~/utils/resources'
 import type { FetchResponse } from 'ofetch'
+import type { ApiResourceItem } from '~~/types'
 
 export const isLiteralObject = (
   value: unknown,
 ): value is Record<string | number | symbol, unknown> =>
   typeof value === 'object' && !Array.isArray(value) && value !== null
+
+export const isApiResourceItem = (value: unknown): value is ApiResourceItem =>
+  isLiteralObject(value) && 'id' in value
 export const isJsonLdValidationResponseError = (
   value: unknown,
 ): value is JsonLdConstraintViolationsList =>

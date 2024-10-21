@@ -19,7 +19,7 @@ const signOutAndFeedBack = async () => {
       <v-card-title class="text-secondary">Logout</v-card-title>
       <v-card-text> Are you sure you want to logout?</v-card-text>
       <v-card-actions>
-        <v-btn color="anchor" @click="isOpen = false">Cancel </v-btn>
+        <v-btn color="anchor" @click="isOpen = false">Cancel</v-btn>
         <v-spacer />
         <v-btn color="secondary" @click="signOutAndFeedBack()">Logout</v-btn>
       </v-card-actions>

@@ -1,16 +1,8 @@
 import type { ApiDataResourceKey } from '~~/types'
 
 export default function (key: ApiDataResourceKey) {
-  return defineStore('ui-resource-page-tab', () => {
+  return defineStore(`ui-resource-page-tab:${key}`, () => {
     const store = ref<Partial<Record<ApiDataResourceKey, string>>>({})
-    const tab = computed({
-      get() {
-        return store.value[key]
-      },
-      set(value: string) {
-        store.value[key] = value
-      },
-    })
-    return { state: readonly(store), tab }
+    return { tab: store }
   })()
 }

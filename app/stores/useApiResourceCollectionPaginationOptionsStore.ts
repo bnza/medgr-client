@@ -22,7 +22,7 @@ export default function (resourceCacheKey: ResourceCollectionCacheKey) {
   return defineStore(
     `api-resource-collection-pagination-options:${resourceCacheKey}`,
     () => {
-      const state = ref<PaginationOptionsState>(
+      const paginationOptionsState = ref<PaginationOptionsState>(
         structuredClone(defaultPaginationOptions),
       )
 
@@ -46,19 +46,26 @@ export default function (resourceCacheKey: ResourceCollectionCacheKey) {
 
       const paginationOptions = computed({
         get() {
-          return state.value
+          return paginationOptionsState.value
         },
         set(value) {
-          if (JSON.stringify(value) !== JSON.stringify(state.value)) {
-            state.value = value
+          if (
+            JSON.stringify(value) !==
+            JSON.stringify(paginationOptionsState.value)
+          ) {
+            paginationOptionsState.value = value
           }
         },
       })
 
       const queryPaginationOptionsParams = computed(() =>
-        vuetifyPaginationOptionToQsObject(state.value),
+        vuetifyPaginationOptionToQsObject(paginationOptionsState.value),
       )
-      return { state, paginationOptions, queryPaginationOptionsParams }
+      return {
+        state: paginationOptionsState,
+        paginationOptions,
+        queryPaginationOptionsParams,
+      }
     },
   )()
 }

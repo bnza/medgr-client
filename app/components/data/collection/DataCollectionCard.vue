@@ -63,11 +63,11 @@ const collectionTableComponent = computed(
         v-if="createButton"
         :app-path="resourceConfig.appPath"
       />
-      <!--          <lazy-navigation-resource-collection-search-->
-      <!--            v-if="searchButton"-->
-      <!--            :resource-config="resourceConfig"-->
-      <!--            :parent-->
-      <!--          />-->
+      <lazy-navigation-resource-collection-search
+        v-if="searchButton"
+        :resource-config="resourceConfig"
+        :parent
+      />
     </template>
     <Suspense>
       <component

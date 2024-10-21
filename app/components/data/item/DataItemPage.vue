@@ -32,7 +32,7 @@ const code = computed(() =>
       : '?',
 )
 
-const resourceItemSubmit = useResourceItemSubmit<ApiResourceItem>()
+const resourceItemSubmit = useResourceItemSubmit()
 provide(resourceItemSubmitInjectionKey, resourceItemSubmit)
 const { triggerSubmit } = resourceItemSubmit
 </script>
