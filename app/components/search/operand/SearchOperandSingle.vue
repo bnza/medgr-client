@@ -1,5 +1,5 @@
-<script setup>
-const operands = defineModel({
+<script setup lang="ts">
+const operands = defineModel<[string]>({
   required: true,
 })
 const operand = computed({
