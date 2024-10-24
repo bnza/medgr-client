@@ -15,8 +15,21 @@ export interface ApiResourceItem extends Record<string, unknown> {
 }
 
 export interface ApiResourceSite extends ApiResourceItem {
+  id: number
   code: string
   name: string
   description: string
+  public?: boolean
+}
+export interface ApiResourceStratigraphicUnit extends ApiResourceItem {
+  id: number
+  site:
+    | (Pick<ApiResourceSite, 'id' | 'code' | 'name'> & { '@id': string })
+    | string
+  year: number
+  number: number
+  code: string
+  interpretation?: string
+  description?: string
   public?: boolean
 }

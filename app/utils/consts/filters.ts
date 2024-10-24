@@ -59,7 +59,7 @@ const NumericEqual: Readonly<FilterDefinitionObject> = {
   id: 'NumericEqual',
   label: 'equals',
   multiple: false,
-  operandsComponent: 'Single',
+  operandsComponent: 'SingleNumeric',
   operandsNumber: 1,
   addToObject: (filterObj, filter) => {
     filterObj[filter.property] = filter.operands[0]
@@ -70,7 +70,7 @@ const NumericGreaterThan: Readonly<FilterDefinitionObject> = {
   id: 'NumericGreaterThan',
   label: 'greater than',
   multiple: false,
-  operandsComponent: 'Single',
+  operandsComponent: 'SingleNumeric',
   operandsNumber: 1,
   addToObject: (filterObj, filter) => {
     if (!(filter.property in filterObj)) {
@@ -84,7 +84,7 @@ const NumericGreaterThanOrEqual: Readonly<FilterDefinitionObject> = {
   id: 'NumericGreaterThanOrEqual',
   label: 'greater than or equal',
   multiple: false,
-  operandsComponent: 'Single',
+  operandsComponent: 'SingleNumeric',
   operandsNumber: 1,
   addToObject: (filterObj, filter) => {
     if (!(filter.property in filterObj)) {
@@ -98,7 +98,7 @@ const NumericLowerThan: Readonly<FilterDefinitionObject> = {
   id: 'NumericLowerThan',
   label: 'lower than',
   multiple: false,
-  operandsComponent: 'Single',
+  operandsComponent: 'SingleNumeric',
   operandsNumber: 1,
   addToObject: (filterObj, filter) => {
     if (!(filter.property in filterObj)) {
@@ -112,7 +112,7 @@ const NumericLowerThanOrEqual: Readonly<FilterDefinitionObject> = {
   id: 'NumericLowerThanOrEqual',
   label: 'lower than or equal',
   multiple: false,
-  operandsComponent: 'Single',
+  operandsComponent: 'SingleNumeric',
   operandsNumber: 1,
   addToObject: (filterObj, filter) => {
     if (!(filter.property in filterObj)) {
@@ -353,9 +353,8 @@ const stratigraphicUnit: Readonly<ResourceFiltersDefinitionObject> = {
   interpretation: {
     filters: { SearchPartial },
   },
-  'site.id': {
+  site: {
     filters: { SiteEqualAutocomplete },
-    propertyLabel: 'site',
   },
 
   public: {

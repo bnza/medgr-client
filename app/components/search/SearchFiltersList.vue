@@ -9,9 +9,15 @@ const text = computed(() =>
     ? 'All filters have been removed.'
     : 'No filter selected yet. Please add new filters clicking the plus button in the top right corner',
 )
+const { filter: parentFilter } = usePageParentStore()
 </script>
 
 <template>
+  <v-list v-if="parentFilter">
+    <v-container>
+      <search-filters-list-item :filter="parentFilter" is-parent />
+    </v-container>
+  </v-list>
   <v-empty-state
     v-if="isEmpty"
     min-height="400px"

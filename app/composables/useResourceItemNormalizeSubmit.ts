@@ -3,9 +3,9 @@ import type { ApiAction, ApiResourceItem } from '~~/types'
 
 type NormalizePost = typeof _normalizePost
 type NormalizePatch = typeof _normalizePatch
-const _normalizePost = (item: ApiResourceItem) => clone(item)
+const _normalizePost = (item: Partial<ApiResourceItem>) => clone(item)
 const _normalizePatch = (
-  newItem: ApiResourceItem,
+  newItem: Partial<ApiResourceItem>,
   oldItem: ApiResourceItem,
   diffItem: Partial<ApiResourceItem>,
 ) => diffItem

@@ -6,15 +6,14 @@ import type {
   ApiResourceKey,
 } from '~~/types'
 import ResourceRepository from '~/utils/repository/ResourceRepository'
-// import AutocompleteRepository from './AutocompleteRepository'
-// import ResourceRepository from './ResourceRepository'
 import ValidatorRepository from './ValidatorRepository'
+import AutocompleteRepository from '~/utils/repository/AutocompleteRepository'
 // import UserRepository from './UserRepository'
 
 export default class Api {
   readonly #fetcher: $Fetch
   readonly paths: Readonly<Record<ApiResourceKey, string>>
-  // #autocomplete: AutocompleteRepository
+  #autocomplete: AutocompleteRepository | undefined
   #resources: Map<ApiDataResourceKey, ResourceRepository<ApiResourceItem>>
   #validator: ValidatorRepository | undefined
   // #userRepository: UserRepository
@@ -38,13 +37,13 @@ export default class Api {
   //   return this.#configs[key]
   // }
 
-  // get autocomplete() {
-  //   if (!this.#autocomplete) {
-  //     this.#autocomplete = new AutocompleteRepository(this.#fetcher)
-  //   }
-  //   return this.#autocomplete
-  // }
-  //
+  get autocomplete() {
+    if (!this.#autocomplete) {
+      this.#autocomplete = new AutocompleteRepository(this.#fetcher)
+    }
+    return this.#autocomplete
+  }
+
   get validator() {
     if (!this.#validator) {
       this.#validator = new ValidatorRepository(this.#fetcher)

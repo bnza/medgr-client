@@ -12,6 +12,8 @@ export const maxLength = (maxLength: number) => (value: string) =>
 export const minLength = (minLength: number) => (value: string) =>
   value.length >= Math.round(minLength) ||
   `Must be more than ${Math.round(minLength)} characters`
+export const isNumeric = (value: unknown) =>
+  !Number.isNaN(Number(value)) || `Must be a number`
 export const isInteger = (value: unknown) =>
   Number.isInteger(Number(value)) || `Must be an integer number`
 export const greaterThan = (constraint: number) => (value: number) =>

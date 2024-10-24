@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import type { ApiDataResourceKey } from '~~/types'
+import type { ApiDataResourceKey, ResourceCollectionCacheKey } from '~~/types'
 import { resourceCollectionFiltersInjectionKey } from '~/composables/useResourceCollectionFilters'
+import usePageResourceCollectionParent from '~/composables/usePageResourceCollectionParent'
 
 const props = defineProps<{ resourceKey: ApiDataResourceKey }>()
 
-const resourceCollectionFilters = useResourceCollectionFilters(
-  props.resourceKey,
-)
+const { parent } = usePageResourceCollectionParent(true)
+
+const resourceCacheKey: ResourceCollectionCacheKey =
+  props.resourceKey + (parent.value ? `/${parent.value[0]}` : '')
+
+const resourceCollectionFilters = useResourceCollectionFilters(resourceCacheKey)
 provide(resourceCollectionFiltersInjectionKey, resourceCollectionFilters)
 
 const { isAddFilterDialogOpen } = resourceCollectionFilters
@@ -25,5 +29,3 @@ const { label } = useResourceCollection(props.resourceKey)
     </template>
   </lazy-data-card>
 </template>
-
-<style scoped></style>

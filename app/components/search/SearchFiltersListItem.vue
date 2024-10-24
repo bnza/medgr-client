@@ -2,7 +2,10 @@
 import type { Filter } from '~~/types'
 import { API_FILTERS } from '~/utils/consts/filters'
 
-const props = defineProps<{ filter: Filter }>()
+const props = withDefaults(
+  defineProps<{ filter: Filter; isParent?: boolean }>(),
+  { isParent: false },
+)
 defineEmits<{
   deleteFilter: [Filter]
 }>()
@@ -41,6 +44,7 @@ const operandValue = (operand: unknown) => {
     <v-row align="center" justify="space-evenly" dense>
       <v-col cols="1">
         <v-btn
+          v-if="!isParent"
           class="mb-4"
           color="error"
           icon

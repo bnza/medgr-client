@@ -6,7 +6,6 @@ import type {
   JsonLdResourceCollection,
   ResourceCollectionCacheKey,
 } from '~~/types'
-import useApiResourceCollectionPaginationOptionsStore from '~/stores/useApiResourceCollectionPaginationOptionsStore'
 
 export type UseResourceCollection = ReturnType<typeof _useResource>
 function useResourceCollection<RT extends ApiResourceItem>(
@@ -58,13 +57,20 @@ function _useResource<RT extends ApiResourceItem>(
             : false,
         )
   })
-  const { paginationOptions, queryPaginationOptionsParams } = storeToRefs(
-    useApiResourceCollectionPaginationOptionsStore(key),
-  )
 
-  const { resourceFilterParams } = storeToRefs(
-    useApiResourceCollectionsStore(key),
-  )
+  // const { paginationOptions, queryPaginationOptionsParams } = storeToRefs(
+  //   useApiResourceCollectionPaginationOptionsStore(key),
+  // )
+  //
+  // const { resourceFilterParams } = storeToRefs(
+  //   useApiResourceCollectionsStore(key),
+  // )
+
+  const {
+    paginationOptions,
+    queryPaginationOptionsParams,
+    resourceFilterParams,
+  } = storeToRefs(useApiResourceCollectionsStore(key))
 
   const parentObject = computed(() =>
     'undefined' === typeof parent.value

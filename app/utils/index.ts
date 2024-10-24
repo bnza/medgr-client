@@ -4,6 +4,8 @@ import type {
   Writeable,
 } from '~~/types'
 
+export * from './consts'
+
 export const routeParamIdToString = (id: string | Array<string>) =>
   Array.isArray(id) ? id[0] : id
 

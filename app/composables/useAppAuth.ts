@@ -1,4 +1,18 @@
 import { ApiRole, ROLE_COLORS } from '~/utils/consts/auth'
+import type { ApiResourceSite } from '~~/types'
+
+const _hasSitePrivileges = (
+  site: ApiResourceSite,
+  sessionData: SessionData | null | undefined,
+) => (sessionData?.privileges ? site.id in sessionData.privileges : false)
+
+const _getSitePrivilege = (
+  site: ApiResourceSite,
+  sessionData: SessionData | null | undefined,
+) =>
+  _hasSitePrivileges(site, sessionData)
+    ? sessionData?.privileges[site.id]
+    : false
 
 export function useAppAuth() {
   const { data, status } = useAuth()
@@ -18,6 +32,15 @@ export function useAppAuth() {
     return unref(isAuthenticated) && unref(roles).includes(role)
   }
 
+  const hasSitePrivileges = computed(
+    () => (site: ApiResourceSite) =>
+      hasRoleAdmin.value || _hasSitePrivileges(site, data.value),
+  )
+
+  const getSitePrivilege = computed(
+    () => (site: ApiResourceSite) =>
+      hasRoleAdmin.value || _getSitePrivilege(site, data.value),
+  )
   const hasRole = computed(() => _hasRole)
   const hasRoleAdmin = computed(() => _hasRole(ApiRole.Admin))
   const roleColor = computed(() => {
@@ -26,8 +49,10 @@ export function useAppAuth() {
   })
 
   return {
+    getSitePrivilege,
     hasRole,
     hasRoleAdmin,
+    hasSitePrivileges,
     isAuthenticated,
     isLoading,
     userIdentifier,

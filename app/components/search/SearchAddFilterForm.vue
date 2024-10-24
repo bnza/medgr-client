@@ -53,6 +53,8 @@ watch(
 type OperandKey = keyof typeof operandsComponentsMap
 const operandsComponentsMap = {
   Single: resolveComponent('SearchOperandSingle'),
+  SingleNumeric: resolveComponent('SearchOperandSingleNumeric'),
+  SiteAutocomplete: resolveComponent('SearchOperandSiteAutocomplete'),
 }
 
 const operandsComponentsVocabularyKey = ref<

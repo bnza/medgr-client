@@ -8,6 +8,7 @@ import type {
 
 import useResourceItemSubmit from '~/composables/useResourceItemSubmit'
 import useResourceItemPage from '~/composables/useResourceItemPage'
+import usePageResourceCollectionParent from '~/composables/usePageResourceCollectionParent'
 const props = withDefaults(
   defineProps<{
     codeKey?: keyof RT
@@ -35,6 +36,11 @@ const code = computed(() =>
 const resourceItemSubmit = useResourceItemSubmit()
 provide(resourceItemSubmitInjectionKey, resourceItemSubmit)
 const { triggerSubmit } = resourceItemSubmit
+
+const { parent } =
+  props.mode === 'create'
+    ? usePageResourceCollectionParent(true)
+    : { parent: ref(undefined) }
 </script>
 
 <template>
@@ -47,7 +53,11 @@ const { triggerSubmit } = resourceItemSubmit
     v-if="status === 'success' && 'undefined' !== typeof item"
     :title="label"
     :code
+    :color="DATA_API_ACTIONS_BAR_COLOR[props.mode]"
   >
+    <template #toolbar-prepend>
+      <navigation-resource-collection-back :replace="mode !== 'read'" />
+    </template>
     <template #toolbar-append>
       <slot name="toolbar-append" :item="item" />
       <v-btn
@@ -65,11 +75,7 @@ const { triggerSubmit } = resourceItemSubmit
         >
       </v-btn>
     </template>
-    <slot
-      :resource-config="resourceConfig"
-      :item="item"
-      :repository="repository"
-    />
+    <slot :resource-config :item :repository :parent />
   </data-card>
 </template>
 

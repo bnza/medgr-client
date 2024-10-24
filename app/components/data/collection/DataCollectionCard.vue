@@ -62,6 +62,7 @@ const collectionTableComponent = computed(
       <lazy-navigation-resource-item-create
         v-if="createButton"
         :app-path="resourceConfig.appPath"
+        :parent
       />
       <lazy-navigation-resource-collection-search
         v-if="searchButton"
