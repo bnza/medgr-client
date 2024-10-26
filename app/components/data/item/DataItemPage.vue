@@ -41,6 +41,8 @@ const { parent } =
   props.mode === 'create'
     ? usePageResourceCollectionParent(true)
     : { parent: ref(undefined) }
+
+const { collection, back } = useAppNavigation(props.mode === 'delete')
 </script>
 
 <template>
@@ -56,24 +58,37 @@ const { parent } =
     :color="DATA_API_ACTIONS_BAR_COLOR[props.mode]"
   >
     <template #toolbar-prepend>
-      <navigation-resource-collection-back :replace="mode !== 'read'" />
+      <navigation-resource-collection-back
+        :replace="mode !== 'read'"
+        :history="mode === 'read'"
+      />
     </template>
     <template #toolbar-append>
       <slot name="toolbar-append" :item="item" />
+      <v-btn-group v-if="mode === 'read'" rounded="lg" variant="text">
+        <lazy-navigation-resource-item-update
+          :id="item.id"
+          size="x-large"
+          :disabled="!item._acl?.canUpdate"
+          :app-path="resourceConfig.appPath"
+        />
+        <lazy-navigation-resource-item-delete
+          :id="item.id"
+          size="default"
+          :disabled="!item._acl?.canDelete"
+          :app-path="resourceConfig.appPath"
+          @click="collection = back || resourceConfig.appPath"
+        />
+      </v-btn-group>
       <v-btn
-        v-if="mode !== 'read'"
-        color="anchor"
-        data-testid="submit-button"
-        rounded="false"
-        variant="text"
-        icon
+        v-else
+        rounded="lg"
+        class="mr-4"
+        data-testid="submit-form-button"
+        variant="tonal"
+        :text="mode"
         @click="triggerSubmit = true"
-      >
-        <v-icon icon="fas fa-arrow-up-from-bracket" />
-        <v-tooltip activator="parent" location="bottom"
-          >Submit {{ mode }}</v-tooltip
-        >
-      </v-btn>
+      />
     </template>
     <slot :resource-config :item :repository :parent />
   </data-card>

@@ -23,7 +23,7 @@ const { parent: parentState } = usePageResourceCollectionParent()
     nuxt
     :to="`${appPath}/create`"
     variant="text"
-    data-testid="create-item-button"
+    data-testid="collection-create-link"
     @click="parentState = parent"
   >
     <v-icon color="primary" icon="fas fa-plus" />

@@ -29,7 +29,7 @@ const { hasSitePrivileges } = useAppAuth()
         <v-tab value="sus">stratigraphic units</v-tab>
       </v-tabs>
       <v-tabs-window v-model="tab">
-        <v-tabs-window-item value="data">
+        <v-tabs-window-item value="data" data-testid="tabs-item-data">
           <lazy-data-item-site-form
             :item
             mode="read"
@@ -37,7 +37,7 @@ const { hasSitePrivileges } = useAppAuth()
             :resource-config
           />
         </v-tabs-window-item>
-        <v-tabs-window-item value="sus">
+        <v-tabs-window-item value="sus" data-testid="tabs-item-sus">
           <lazy-data-collection-card
             resource-key="stratigraphicUnit"
             :parent="['site', item]"

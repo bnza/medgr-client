@@ -2,7 +2,6 @@
 import type { ApiAction, ApiResourceItem, ResourceConfig } from '~~/types'
 import type { VForm } from 'vuetify/components'
 import type ResourceRepository from '~/utils/repository/ResourceRepository'
-import useAppNavigateToStore from '~/stores/useAppNavigateToStore'
 
 const props = defineProps<{
   item: ApiResourceItem
@@ -16,10 +15,10 @@ const formRef = useTemplateRef<VForm>('form')
 
 const router = useRouter()
 const { showSuccess } = useAppSnackbarStore()
-const { to } = useAppNavigateToStore(true)
+const { to, collection, push } = useAppNavigation(props.mode !== 'read')
 watch(submittingItem, async (value) => {
   const form = formRef.value
-  let _to = to
+  let _to: string = props.mode === 'delete' ? collection.value : to.value
   if (value && form) {
     await form.validate()
     if (!form.isValid) {
@@ -32,6 +31,7 @@ watch(submittingItem, async (value) => {
           console.log('create')
           const response = await props.repository.postItem(value)
           _to = `${props.resourceConfig.appPath}/${response.id}`
+          push(to.value)
           break
         }
         case 'delete':
@@ -61,7 +61,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <v-form ref="form" :readonly @submit.prevent>
+  <v-form
+    ref="form"
+    class="mx-4"
+    :readonly
+    data-testid="data-item-form"
+    @submit.prevent
+  >
     <v-container>
       <lazy-data-item-delete-alert v-if="mode === 'delete'" />
       <slot />

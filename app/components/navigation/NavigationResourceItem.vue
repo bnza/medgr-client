@@ -11,10 +11,16 @@ const props = defineProps<{
 const aclComputed = computed(() =>
   Object.assign({}, defaultBaseAcl, props.acl || {}),
 )
+
+// This component should be used only in collection's tables so current route path is set in
+// delete collection redirect path
+const { path } = useRoute()
+
+const { collection } = useAppNavigation()
 </script>
 
 <template>
-  <div class="item-nav">
+  <v-btn-group variant="text" rounded="lg" class="item-nav">
     <slot name="prepend" />
     <navigation-resource-item-read
       :id
@@ -30,7 +36,8 @@ const aclComputed = computed(() =>
       :id
       :app-path
       :disabled="!aclComputed.canDelete"
+      @click="collection = path"
     />
     <slot name="append" />
-  </div>
+  </v-btn-group>
 </template>

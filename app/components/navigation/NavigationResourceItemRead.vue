@@ -9,6 +9,8 @@ withDefaults(
     disabled: false,
   },
 )
+const { push } = useAppNavigationStore()
+const { path } = useRoute()
 </script>
 
 <template>
@@ -20,10 +22,9 @@ withDefaults(
     nuxt
     :to="`${appPath}/${id}`"
     data-testid="read-item-button"
+    @click="push(path)"
   >
     <v-icon color="primary" icon="fas fa-arrow-right" size="xsmall" />
     <v-tooltip activator="parent" location="bottom">View item</v-tooltip>
   </v-btn>
 </template>
-
-<style scoped></style>

@@ -58,16 +58,23 @@ onBeforeRouteLeave(() => {
       <v-text-field v-model="password" type="password" label="password" />
     </v-form>
     <v-card-actions>
-      <v-btn color="anchor" :disabled="pending" @click="router.replace('/')">
-        cancel
-      </v-btn>
+      <v-btn
+        color="anchor"
+        variant="tonal"
+        rounded="lg"
+        text="cancel"
+        :disabled="pending"
+        @click="router.replace('/')"
+      />
       <v-spacer />
       <v-btn
         color="secondary"
+        rounded="lg"
+        text="login"
+        variant="tonal"
         :disabled
         @click="signInAndFeedback({ email, password })"
-        >login
-      </v-btn>
+      />
     </v-card-actions>
   </v-card>
 </template>

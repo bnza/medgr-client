@@ -29,7 +29,7 @@ useResourceItemNormalizeSubmit(props.mode, props.item, state)
         <v-checkbox v-model="state.public" label="public" />
       </v-col>
     </v-row>
-    <v-row no-gutters>
+    <v-row>
       <v-col cols="12" xs="6" sm="2" class="px-2">
         <v-text-field
           v-model="state.code"
@@ -48,7 +48,7 @@ useResourceItemNormalizeSubmit(props.mode, props.item, state)
         />
       </v-col>
     </v-row>
-    <v-row no-gutters>
+    <v-row>
       <v-col cols="12" xs="12" class="px-2">
         <v-textarea v-model="state.description" label="description" />
       </v-col>
