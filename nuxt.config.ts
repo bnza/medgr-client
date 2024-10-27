@@ -41,7 +41,7 @@ export default defineNuxtConfig({
       // Whether to refresh the session every `X` milliseconds. Set this to `false` to turn it off. The session will only be refreshed if a session already exists.
       enablePeriodically: false,
     },
-    disableServerSideAuth: true,
+    disableServerSideAuth: false,
     globalAppMiddleware: true,
     baseURL: process.env.NUXT_PUBLIC_API_BASE_URL
       ? process.env.NUXT_PUBLIC_API_BASE_URL + '/api'

@@ -6,3 +6,8 @@ export * from './resources'
 export * from './states'
 export type AsyncValidationType = 'unique'
 export type Writeable<T> = { -readonly [P in keyof T]: T[P] }
+export type UserChangePasswordBody = {
+  oldPassword: string
+  newPassword: string
+  repeatPassword: string
+}

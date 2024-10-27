@@ -28,7 +28,6 @@ watch(submittingItem, async (value) => {
     try {
       switch (props.mode) {
         case 'create': {
-          console.log('create')
           const response = await props.repository.postItem(value)
           _to = `${props.resourceConfig.appPath}/${response.id}`
           push(to.value)
@@ -44,7 +43,7 @@ watch(submittingItem, async (value) => {
           )
           break
       }
-      submitStatus.value = 'error'
+      submitStatus.value = 'success'
       showSuccess(`Successfully ${props.mode}d resource`)
       await router.replace(_to)
     } catch (e) {

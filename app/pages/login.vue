@@ -7,10 +7,22 @@ definePageMeta({
   },
 })
 
-const { isUserAction, set } = useLoginRedirectFromStore()
+const { status } = useAuth()
+const { isUserAction, set, from } = useLoginRedirectFromStore()
 if (!isUserAction) {
   set()
 }
+
+const router = useRouter()
+
+if (status.value === 'authenticated') {
+  router.push(from)
+}
+watch(status, (curr) => {
+  if (curr === 'authenticated') {
+    router.push(from)
+  }
+})
 </script>
 
 <template>

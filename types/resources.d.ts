@@ -33,3 +33,9 @@ export interface ApiResourceStratigraphicUnit extends ApiResourceItem {
   description?: string
   public?: boolean
 }
+export interface ApiResourceUser extends ApiResourceItem {
+  id: string
+  email: string
+  roles: Array<ApiRole | ApiSpecialistRole>
+  privileges: Record<number, number>
+}

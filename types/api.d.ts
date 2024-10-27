@@ -5,7 +5,7 @@ import type { JsonLdResourceItem } from '~~/types/jsonld'
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
 export type ReadonlyHeaders = VDataTable['$props']['headers']
-export type ApiDataResourceKey = 'site' | 'stratigraphicUnit'
+export type ApiDataResourceKey = 'site' | 'stratigraphicUnit' | 'user'
 export type ApiVocabularyResourceKey = 'vocabularySuRelationship'
 export type ApiResourceKey = ApiDataResourceKey | ApiVocabularyResourceKey
 // export type ApiResourceCollectionParent = [ApiDataResourceType, ApiId]

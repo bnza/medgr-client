@@ -23,6 +23,10 @@ export function useAppAuth() {
       ? data.value.email
       : null,
   )
+  const isCurrentUser = computed(
+    () => (email: string) =>
+      isAuthenticated.value && userIdentifier.value === email,
+  )
 
   const roles = computed(() =>
     unref(isAuthenticated) ? data.value?.roles || [] : [],
@@ -54,6 +58,7 @@ export function useAppAuth() {
     hasRoleAdmin,
     hasSitePrivileges,
     isAuthenticated,
+    isCurrentUser,
     isLoading,
     userIdentifier,
     roleColor,

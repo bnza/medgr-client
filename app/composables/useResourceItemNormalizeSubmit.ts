@@ -21,7 +21,7 @@ export default function useResourceItemNormalizeSubmit(
   if ('undefined' === typeof resourceItemSubmit) {
     throw new Error('No "resourceItemSubmit" provided')
   }
-  const { triggerSubmit, submittingItem } = resourceItemSubmit
+  const { triggerSubmit, submittingItem, submitStatus } = resourceItemSubmit
 
   watch(triggerSubmit, (flag) => {
     if (flag) {
@@ -35,5 +35,5 @@ export default function useResourceItemNormalizeSubmit(
     }
   })
 
-  return { triggerSubmit, submittingItem }
+  return { triggerSubmit, submittingItem, submitStatus }
 }

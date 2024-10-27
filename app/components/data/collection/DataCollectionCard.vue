@@ -28,12 +28,14 @@ const collectionTableComponentsMap: Partial<
   site: defineAsyncComponent(
     () => import('~/components/data/collection/DataCollectionSiteTable.vue'),
   ),
-
   stratigraphicUnit: defineAsyncComponent(
     () =>
       import(
         '~/components/data/collection/DataCollectionStratigraphicUnitTable.vue'
       ),
+  ),
+  user: defineAsyncComponent(
+    () => import('~/components/data/collection/DataCollectionUserTable.vue'),
   ),
 }
 const collectionTableComponent = computed(

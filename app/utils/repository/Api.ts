@@ -8,7 +8,7 @@ import type {
 import ResourceRepository from '~/utils/repository/ResourceRepository'
 import ValidatorRepository from './ValidatorRepository'
 import AutocompleteRepository from '~/utils/repository/AutocompleteRepository'
-// import UserRepository from './UserRepository'
+import UserRepository from './UserRepository'
 
 export default class Api {
   readonly #fetcher: $Fetch
@@ -16,7 +16,7 @@ export default class Api {
   #autocomplete: AutocompleteRepository | undefined
   #resources: Map<ApiDataResourceKey, ResourceRepository<ApiResourceItem>>
   #validator: ValidatorRepository | undefined
-  // #userRepository: UserRepository
+  #userRepository: UserRepository | undefined
 
   constructor(
     index: Record<ApiResourceKey, string>,
@@ -33,9 +33,6 @@ export default class Api {
   get fetch() {
     return this.#fetcher
   }
-  // getResourceConfig(key: ResourceKey) {
-  //   return this.#configs[key]
-  // }
 
   get autocomplete() {
     if (!this.#autocomplete) {
@@ -50,16 +47,16 @@ export default class Api {
     }
     return this.#validator
   }
-  //
-  // get userRepository() {
-  //   if (!this.#userRepository) {
-  //     this.#userRepository = new UserRepository(
-  //       this.paths['user'],
-  //       this.#fetcher,
-  //     )
-  //   }
-  //   return this.#userRepository
-  // }
+
+  get userRepository() {
+    if (!this.#userRepository) {
+      this.#userRepository = new UserRepository(
+        this.paths['user'],
+        this.#fetcher,
+      )
+    }
+    return this.#userRepository
+  }
 
   getRepository<RT extends ApiResourceItem>(
     resourceKey: ApiDataResourceKey,

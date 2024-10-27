@@ -64,8 +64,13 @@ const { collection, back } = useAppNavigation(props.mode === 'delete')
       />
     </template>
     <template #toolbar-append>
-      <slot name="toolbar-append" :item="item" />
-      <v-btn-group v-if="mode === 'read'" rounded="lg" variant="text">
+      <v-btn-group
+        v-if="mode === 'read'"
+        rounded="lg"
+        variant="text"
+        class="mr-2"
+      >
+        <slot name="toolbar-append" :item="item" />
         <lazy-navigation-resource-item-update
           :id="item.id"
           size="x-large"

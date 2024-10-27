@@ -13,6 +13,9 @@ export enum ApiSiteRole {
 export enum ApiSpecialistRole {
   Microstratigraphist = 'ROLE_MICROSTRATIGRAPHIST',
 }
+export enum AclVoters {
+  HasRoleAdmin = 'HasRoleAdmin',
+}
 export const ROLE_HIERARCHY_VALUES: Readonly<Record<ApiRole, number>> = {
   [ApiRole.Admin]: 1000,
   [ApiRole.Editor]: 100,

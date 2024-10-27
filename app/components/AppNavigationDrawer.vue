@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const store = useUiAppNavigationDrawerStore()
+const { hasRoleAdmin } = useAppAuth()
 const open = ref([])
 </script>
 
@@ -41,6 +42,23 @@ const open = ref([])
           router
           title="Stratigraphic Unit"
           data-testid="app-nav-drawer-li-sites"
+        />
+      </v-list-group>
+      <v-list-group v-if="hasRoleAdmin" value="Admin">
+        <template #activator="{ props }">
+          <v-list-item
+            v-bind="props"
+            prepend-icon="fas fa-screwdriver-wrench"
+            title="Admin"
+            data-testid="app-nav-drawer-li-admin"
+          />
+        </template>
+        <v-list-item
+          nuxt
+          to="/admin/users"
+          router
+          title="Users"
+          data-testid="app-nav-drawer-li-users"
         />
       </v-list-group>
       <v-list-item
