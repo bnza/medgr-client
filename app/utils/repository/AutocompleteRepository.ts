@@ -15,7 +15,9 @@ class AutocompleteRepository extends AbstractRepository {
     const url = authorizedOnly
       ? `/api/autocomplete/${unref(path)}/authorized?${query}`
       : `/api/autocomplete/${unref(path)}?${query}`
-    return this.$fetch<Array<ResponseType>>(url)
+    return this.$fetch<Array<ResponseType>>(url).then(
+      (response) => response?.['hydra:member'],
+    )
   }
 }
 

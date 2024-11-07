@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { DataItemPage } from '#components'
 import type { ApiAclResource, ApiResourceUser } from '~~/types'
+definePageMeta({
+  middleware: ['auth', 'acl'],
+  voters: [AclVoters.HasRoleAdmin],
+})
 </script>
 
 <template>

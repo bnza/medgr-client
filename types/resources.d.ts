@@ -39,3 +39,11 @@ export interface ApiResourceUser extends ApiResourceItem {
   roles: Array<ApiRole | ApiSpecialistRole>
   privileges: Record<number, number>
 }
+
+export interface ApiResourceSitesUser extends ApiResourceItem {
+  site:
+    | (Pick<ApiResourceSite, 'id' | 'code' | 'name'> & { '@id': string })
+    | string
+  user: (Pick<ApiResourceUser, 'id' | 'email'> & { '@id': string }) | string
+  privileges: number
+}

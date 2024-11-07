@@ -28,6 +28,10 @@ const collectionTableComponentsMap: Partial<
   site: defineAsyncComponent(
     () => import('~/components/data/collection/DataCollectionSiteTable.vue'),
   ),
+  sitesUser: defineAsyncComponent(
+    () =>
+      import('~/components/data/collection/DataCollectionSitesUserTable.vue'),
+  ),
   stratigraphicUnit: defineAsyncComponent(
     () =>
       import(

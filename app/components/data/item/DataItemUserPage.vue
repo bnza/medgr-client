@@ -45,7 +45,11 @@ const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
           />
         </v-tabs-window-item>
         <v-tabs-window-item value="sus" data-testid="tabs-item-sus">
-          <p>privileges</p>
+          <lazy-data-collection-card
+            resource-key="sitesUser"
+            :parent="['user', item]"
+            create-button
+          />
         </v-tabs-window-item>
       </v-tabs-window>
     </template>

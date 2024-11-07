@@ -15,6 +15,8 @@ export const isLiteralObject = (
 
 export const isApiResourceItem = (value: unknown): value is ApiResourceItem =>
   isLiteralObject(value) && 'id' in value
+export const isApiLdResourceItem = (value: unknown): value is ApiResourceItem =>
+  isLiteralObject(value) && '@id' in value
 export const isJsonLdValidationResponseError = (
   value: unknown,
 ): value is JsonLdConstraintViolationsList =>

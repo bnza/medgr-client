@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { DataItemPage } from '#components'
-import type { ApiAclResource, ApiResourceUser } from '~~/types'
+import type { ApiAclResource, ApiResourceSitesUser } from '~~/types'
 definePageMeta({
   middleware: ['auth', 'acl'],
   voters: [AclVoters.HasRoleAdmin],
@@ -9,14 +9,14 @@ definePageMeta({
 
 <template>
   <component
-    :is="DataItemPage<ApiResourceUser & ApiAclResource>"
-    mode="update"
-    resource-key="user"
-    code-key="code"
+    :is="DataItemPage<ApiResourceSitesUser & ApiAclResource>"
+    mode="delete"
+    resource-key="sitesUser"
+    code-key="id"
   >
     <template #default="{ item, repository, resourceConfig }">
-      <lazy-data-item-user-form
-        mode="update"
+      <lazy-data-item-sites-user-form
+        mode="delete"
         :item
         :repository
         :resource-config
