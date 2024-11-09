@@ -47,3 +47,13 @@ export interface ApiResourceSitesUser extends ApiResourceItem {
   user: (Pick<ApiResourceUser, 'id' | 'email'> & { '@id': string }) | string
   privileges: number
 }
+export interface ApiResourceMediaObject extends ApiResourceItem {
+  contentUrl: string
+  originalFilename: string
+  mimeType: string
+  size: number
+}
+export interface ApiResourceMediaObjectJoin extends ApiResourceItem {
+  item: ApiResourceItem
+  mediaObject: ApiResourceMediaObject
+}

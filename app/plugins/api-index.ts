@@ -10,7 +10,7 @@ export default defineNuxtPlugin({
     await callOnce(async () => {
       try {
         const index = await $fetch<JsonLdDocument>(
-          `${config.public.apiBaseURL}/api/index.jsonld`,
+          `${config.public.apiBaseUrl}/api/index.jsonld`,
         )
         useApiResourcesIndexStore(index)
       } catch (e) {

@@ -9,6 +9,7 @@ export type ApiDataResourceKey =
   | 'site'
   | 'sitesUser'
   | 'stratigraphicUnit'
+  | 'stratigraphicUnitsMediaObject'
   | 'user'
 export type ApiVocabularyResourceKey = 'vocabularySuRelationship'
 export type ApiResourceKey = ApiDataResourceKey | ApiVocabularyResourceKey

@@ -9,7 +9,7 @@ export function useApiFetchOptions() {
   const { signOut } = useAuth()
 
   const fetchOptions: FetchOptions = {
-    baseURL: config.public.apiBaseURL,
+    baseURL: config.public.apiBaseUrl,
     onRequest({ options }) {
       if (token.value) {
         options.headers.set('Authorization', token.value)

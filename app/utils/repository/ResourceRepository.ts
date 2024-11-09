@@ -65,7 +65,7 @@ class ResourceRepository<
   }
 
   async postItem(
-    item: Record<string, unknown>,
+    item: Record<string, unknown> | FormData,
     contentType = 'application/ld+json',
   ) {
     const headers: Record<string, string> = {

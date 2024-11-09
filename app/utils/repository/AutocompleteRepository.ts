@@ -1,12 +1,13 @@
 import type { $Fetch } from 'nitropack'
 import AbstractRepository from './AbstractRepository'
 import qs from 'qs'
+import type { ApiResourceItem, JsonLdResourceCollection } from '~~/types'
 
 class AutocompleteRepository extends AbstractRepository {
   constructor($fetch: $Fetch) {
     super($fetch)
   }
-  async search<ResponseType = unknown>(
+  async search<ResponseType extends ApiResourceItem>(
     path: string,
     params: Record<string, any>,
     authorizedOnly: boolean = false,
@@ -15,7 +16,7 @@ class AutocompleteRepository extends AbstractRepository {
     const url = authorizedOnly
       ? `/api/autocomplete/${unref(path)}/authorized?${query}`
       : `/api/autocomplete/${unref(path)}?${query}`
-    return this.$fetch<Array<ResponseType>>(url).then(
+    return this.$fetch<JsonLdResourceCollection<ResponseType>>(url).then(
       (response) => response?.['hydra:member'],
     )
   }

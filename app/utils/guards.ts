@@ -6,7 +6,11 @@ import { ApiRole, type ApiSpecialistRole } from '~/utils/consts/auth'
 import type { ApiResourceKey } from '~~/types/api'
 import { apiResourceKeys } from '~/utils/resources'
 import type { FetchResponse } from 'ofetch'
-import type { ApiResourceItem } from '~~/types'
+import type {
+  ApiResourceItem,
+  ApiResourceMediaObject,
+  ApiResourceMediaObjectJoin,
+} from '~~/types'
 
 export const isLiteralObject = (
   value: unknown,
@@ -15,6 +19,12 @@ export const isLiteralObject = (
 
 export const isApiResourceItem = (value: unknown): value is ApiResourceItem =>
   isLiteralObject(value) && 'id' in value
+
+export const isApiResourceItemOrIri = (
+  value: unknown,
+): value is ApiResourceItem | string =>
+  typeof value === 'string' || isApiResourceItem(value)
+
 export const isApiLdResourceItem = (value: unknown): value is ApiResourceItem =>
   isLiteralObject(value) && '@id' in value
 export const isJsonLdValidationResponseError = (
@@ -28,6 +38,20 @@ export const isJsonLdResponseHydraError = (
   isLiteralObject(value) && value['@type'] === 'hydra:Error'
 export const isAppRole = (value: string): value is ApiRole =>
   Object.values<string>(ApiRole).includes(value)
+
+export const isApiLdResourceMediaObjectItem = (
+  value: unknown,
+): value is ApiResourceMediaObject =>
+  isApiResourceItem(value) && 'contentUrl' in value
+
+export const isJsonLdResourceMediaObjectJoinItem = (
+  value: unknown,
+): value is ApiResourceMediaObjectJoin =>
+  isApiResourceItem(value) &&
+  'item' in value &&
+  isApiResourceItemOrIri(value.item) &&
+  'mediaObject' in value &&
+  isApiLdResourceMediaObjectItem(value.mediaObject)
 
 export const isSpecialistRole = (value: string): value is ApiSpecialistRole =>
   !isAppRole(value)

@@ -69,7 +69,7 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      apiBaseURL: 'http://localhost',
+      apiBaseUrl: 'http://localhost',
     },
   },
   ssr: false,
