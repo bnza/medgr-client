@@ -10,9 +10,26 @@ const props = defineProps<{
 const { deletingItem } = injectMediaObjectJoin()
 const mediaObject = props.item.mediaObject
 const mediaUrl = props.apiBaseUrl + mediaObject.contentUrl
-const thumbnail = mediaUrl.replace(/\.(\w+)$/, '.thumb.jpeg')
+const hasThumbnail = [
+  'application/pdf',
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+].includes(mediaObject.mimeType)
+const thumbnail = hasThumbnail
+  ? mediaUrl.replace(/\.(\w+)$/, '.thumb.jpeg')
+  : ''
 const fileName = mediaObject.originalFilename.replace(/\.(\w+)$/, '')
 const extension = mediaObject.originalFilename.slice(fileName.length + 1)
+const icons: Record<string, string> = {
+  'application/vnd.oasis.opendocument.spreadsheet': 'far fa-file-excel',
+  'application/vnd.ms-excel': 'far fa-file-excel',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+    'far fa-file-excel',
+}
+const icon = icons[mediaObject.mimeType] || 'fa fa-file'
+console.log('icons', icons, 'icon', icon)
 
 defineEmits<{ delete: [id: ApiId] }>()
 </script>
@@ -26,6 +43,7 @@ defineEmits<{ delete: [id: ApiId] }>()
     color="surface-variant"
   >
     <v-img
+      v-if="hasThumbnail"
       :lazy-src="thumbnail"
       :src="thumbnail"
       gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
@@ -38,6 +56,21 @@ defineEmits<{ delete: [id: ApiId] }>()
       <template #placeholder>
         <v-row align-content="center" class="fill-height" justify="center">
           <v-progress-circular color="warning" indeterminate />
+        </v-row>
+      </template>
+    </v-img>
+    <v-img
+      v-else
+      gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+      height="200"
+      width="200"
+      class="bg-grey-lighten-2 align-end"
+      cover
+    >
+      <v-card-title class="text-body-2 text-white">{{ fileName }}</v-card-title>
+      <template #placeholder>
+        <v-row align-content="center" class="fill-height" justify="center">
+          <v-icon :icon />
         </v-row>
       </template>
     </v-img>

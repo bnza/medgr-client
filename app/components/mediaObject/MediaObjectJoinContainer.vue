@@ -24,7 +24,7 @@ const parentIri = computed(() => props.parent[1]['@id'])
 </script>
 
 <template>
-  <v-container>
+  <v-container data-testid="media-object-join-container">
     <media-object-join-delete-dialog />
     <media-object-join-create-dialog v-model="isCreateDialogOpen" :parent-iri />
     <v-row dense justify="end" style="min-height: 48px">

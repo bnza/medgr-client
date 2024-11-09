@@ -18,7 +18,7 @@ const { submitStatus, deletingItem, deleteAndFeedback } =
                 height="6"
                 indeterminate
                 rounded
-              ></v-progress-linear>
+              />
             </v-col>
           </v-row>
         </v-container>

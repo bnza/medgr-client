@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { ApiResourceCollectionParent, ApiResourceItem } from '~~/types'
 import useMediaObjectJoinValidation from '~/composables/validation/useMediaObjectJoinValidation'
 import { VForm } from 'vuetify/components'
 
@@ -73,14 +72,14 @@ watch(model, (flag) => {
           </v-row>
         </v-container>
         <v-container v-else style="height: 150px">
-          <v-form @submit.prevent ref="form">
+          <v-form ref="form" @submit.prevent>
             <v-row align-content="center" class="fill-height" justify="center">
               <v-col class="text-subtitle-1 text-center" cols="12">
                 <v-file-input
+                  v-model="state.file"
                   :rules="getRules('file')"
                   clearable
                   label="File input"
-                  v-model="state.file"
                   :accept
                 />
               </v-col>
@@ -89,9 +88,9 @@ watch(model, (flag) => {
         </v-container>
       </v-card-text>
       <v-card-actions>
-        <v-btn color="anchor" @click="model = false" :disabled> close </v-btn>
+        <v-btn color="anchor" :disabled @click="model = false"> close </v-btn>
         <v-spacer />
-        <v-btn color="primary" @click="submit()" :disabled> submit </v-btn>
+        <v-btn color="primary" :disabled @click="submit()"> submit </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

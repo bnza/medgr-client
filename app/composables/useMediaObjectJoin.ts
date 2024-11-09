@@ -66,7 +66,6 @@ const useMediaObjectJoin = async (
       showSuccess('Successfully created media')
     } catch (e) {
       submitStatus.value = 'error'
-      showError(e)
     }
   }
 
