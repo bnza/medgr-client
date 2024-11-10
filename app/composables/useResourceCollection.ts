@@ -58,14 +58,6 @@ function _useResource<RT extends ApiResourceItem>(
         )
   })
 
-  // const { paginationOptions, queryPaginationOptionsParams } = storeToRefs(
-  //   useApiResourceCollectionPaginationOptionsStore(key),
-  // )
-  //
-  // const { resourceFilterParams } = storeToRefs(
-  //   useApiResourceCollectionsStore(key),
-  // )
-
   const {
     paginationOptions,
     queryPaginationOptionsParams,
@@ -78,6 +70,7 @@ function _useResource<RT extends ApiResourceItem>(
       : { [parent.value[0]]: parent.value[1].id },
   )
 
+  const filteredItemsCount = ref(0)
   const fetchCollectionParams = computed(() =>
     Object.assign(
       {},
@@ -99,6 +92,7 @@ function _useResource<RT extends ApiResourceItem>(
     )
     const items = computed(() => data.value?.['hydra:member'] || [])
     const totalItems = computed(() => data.value?.['hydra:totalItems'] || 0)
+    filteredItemsCount.value = totalItems.value
     return {
       items,
       totalItems,
@@ -108,11 +102,17 @@ function _useResource<RT extends ApiResourceItem>(
     }
   }
 
+  const exportCollection = () =>
+    repository.exportCollection(fetchCollectionParams.value)
+
   return {
+    collectionCacheKey: key,
     headers,
     label,
     paginationOptions,
     parent,
+    exportCollection,
+    filteredItemsCount: readonly(filteredItemsCount),
     fetchCollection,
     resourceConfig,
   }

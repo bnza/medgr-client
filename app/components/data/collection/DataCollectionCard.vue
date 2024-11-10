@@ -17,7 +17,7 @@ const props = withDefaults(
   },
 )
 
-const { label, resourceConfig } = useResourceCollection(
+const { collectionCacheKey, label, resourceConfig } = useResourceCollection(
   props.resourceKey,
   props.parent,
 )
@@ -45,6 +45,8 @@ const collectionTableComponentsMap: Partial<
 const collectionTableComponent = computed(
   () => collectionTableComponentsMap[props.resourceKey],
 )
+
+const { isAuthenticated } = useAppAuth()
 </script>
 
 <template>
@@ -61,10 +63,10 @@ const collectionTableComponent = computed(
     <!--          />-->
     <!--        </template>-->
     <template #toolbar-append>
-      <!--          <lazy-navigation-resource-collection-download-->
-      <!--            v-if="downloadButton && isAuthenticated"-->
-      <!--            :resource-page-key-->
-      <!--          />-->
+      <lazy-navigation-resource-collection-download
+        v-if="downloadButton && isAuthenticated"
+        :resource-collection-cache-key="collectionCacheKey"
+      />
       <lazy-navigation-resource-item-create
         v-if="createButton"
         :app-path="resourceConfig.appPath"
