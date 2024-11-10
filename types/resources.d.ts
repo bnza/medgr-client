@@ -57,3 +57,17 @@ export interface ApiResourceMediaObjectJoin extends ApiResourceItem {
   item: ApiResourceItem
   mediaObject: ApiResourceMediaObject
 }
+export interface ApiResourceStratigraphicUnitsRelationship
+  extends ApiResourceItem {
+  sxSU: Pick<ApiResourceStratigraphicUnit, 'id' | 'code'> & { '@id': string }
+  relationship: string
+  dxSU: Pick<ApiResourceStratigraphicUnit, 'id' | 'code'> & { '@id': string }
+}
+export type StratigraphicUnitRelationshipKey =
+  | 'c'
+  | 'C'
+  | 'e'
+  | 'f'
+  | 'F'
+  | 'x'
+  | 'X'

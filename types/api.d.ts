@@ -10,6 +10,7 @@ export type ApiDataResourceKey =
   | 'sitesUser'
   | 'stratigraphicUnit'
   | 'stratigraphicUnitsMediaObject'
+  | 'stratigraphicUnitsRelationship'
   | 'user'
 export type ApiVocabularyResourceKey = 'vocabularySuRelationship'
 export type ApiResourceKey = ApiDataResourceKey | ApiVocabularyResourceKey
@@ -49,4 +50,7 @@ export type ResourceCollectionParent<
 
 export type ApiAction = 'create' | 'update' | 'read' | 'delete'
 
-export type ApiResourceCollectionParent = [ApiDataResourceKey, ApiResourceItem]
+export type ApiResourceCollectionParent = [
+  ApiDataResourceKey | string,
+  ApiResourceItem,
+]

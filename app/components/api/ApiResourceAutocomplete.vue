@@ -40,6 +40,9 @@ const loading = ref(false)
 const updateItems = async () => {
   loading.value = true
   try {
+    console.log(
+      await autocomplete.search(props.path, params.value, props.authorizedOnly),
+    )
     items.value = await autocomplete.search(
       props.path,
       params.value,

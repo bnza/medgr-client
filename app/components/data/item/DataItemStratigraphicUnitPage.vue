@@ -20,6 +20,7 @@ const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
     <template #default="{ item, repository, resourceConfig }">
       <v-tabs v-model="tab" color="anchor">
         <v-tab value="data">data</v-tab>
+        <v-tab value="relationships">relationships</v-tab>
         <v-tab value="potteries">potteries</v-tab>
         <v-tab value="media">media</v-tab>
       </v-tabs>
@@ -31,6 +32,9 @@ const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
             :repository
             :resource-config
           />
+        </v-tabs-window-item>
+        <v-tabs-window-item value="relationships">
+          <sus-relationship-container :sx-su="item" />
         </v-tabs-window-item>
         <v-tabs-window-item value="potteries">
           <p>pottery</p>

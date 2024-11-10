@@ -7,6 +7,7 @@ import site from './data/site'
 import sitesUser from './data/sitesUser'
 import stratigraphicUnit from './data/stratigraphicUnit'
 import stratigraphicUnitsMediaObject from './data/stratigraphicUnitsMediaObject'
+import stratigraphicUnitsRelationship from './data/stratigraphicUnitsRelationship'
 import user from './data/user'
 import vocabularies from './vocabularies'
 
@@ -15,6 +16,7 @@ export const data: Record<ApiDataResourceKey, StaticResourceConfig> = {
   sitesUser,
   stratigraphicUnit,
   stratigraphicUnitsMediaObject,
+  stratigraphicUnitsRelationship,
   user,
 } as const
 
