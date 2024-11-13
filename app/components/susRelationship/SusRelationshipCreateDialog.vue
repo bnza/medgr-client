@@ -51,8 +51,8 @@ const submitCreate = async () => {
     max-width="400px"
     @after-leave="dxSU = undefined"
   >
-    <v-card title="new relationship">
-      <v-card-text data-testid="add-su-relationship-card">
+    <v-card title="new relationship" data-testid="add-su-relationship-card">
+      <v-card-text>
         <v-container>
           <v-form ref="form" @submit.prevent>
             <v-row dense justify="center">

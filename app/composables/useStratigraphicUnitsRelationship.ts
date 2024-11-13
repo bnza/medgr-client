@@ -75,6 +75,7 @@ const useStratigraphicUnitsRelationship = (
           relationship: creatingRelationshipTypeIri.value,
           dxSU,
         })
+        showSuccess('Successfully created item')
         submitStatus.value = 'success'
         creatingRelationshipType.value = undefined
       } catch (e) {
