@@ -37,9 +37,39 @@ watch(
   },
 )
 
+const operandsComponent = shallowRef<ReturnType<typeof resolveComponent>>()
+
+const operandsComponentsMap = {
+  Single: resolveComponent('SearchOperandSingle'),
+  SingleNumeric: resolveComponent('SearchOperandSingleNumeric'),
+  SiteAutocomplete: resolveComponent('SearchOperandSiteAutocomplete'),
+  VocabularyAutocomplete: resolveComponent(
+    'SearchOperandVocabularyAutocomplete',
+  ),
+}
+
+const operandsComponentsVocabularyKey = ref<
+  ApiVocabularyResourceKey | undefined
+>()
+
 watch(
   () => filter.filter,
-  (_, oldFilter) => {
+  (newFilter, oldFilter) => {
+    if (newFilter) {
+      if (!(newFilter in API_FILTERS)) {
+        throw new Error(`Invalid filter key "${newFilter}"`)
+      }
+      const filterObject = API_FILTERS[newFilter]
+      if (!(filterObject.operandsComponent in operandsComponentsMap)) {
+        throw new Error(
+          `Invalid filter component key "${filterObject.operandsComponent}"`,
+        )
+      }
+      operandsComponent.value =
+        operandsComponentsMap[filterObject.operandsComponent]
+      operandsComponentsVocabularyKey.value =
+        filterObject.operandComponentVocabularyKey
+    }
     if (!oldFilter) {
       return
     }
@@ -49,33 +79,6 @@ watch(
     immediate: true,
   },
 )
-
-type OperandKey = keyof typeof operandsComponentsMap
-const operandsComponentsMap = {
-  Single: resolveComponent('SearchOperandSingle'),
-  SingleNumeric: resolveComponent('SearchOperandSingleNumeric'),
-  SiteAutocomplete: resolveComponent('SearchOperandSiteAutocomplete'),
-}
-
-const operandsComponentsVocabularyKey = ref<
-  ApiVocabularyResourceKey | undefined
->(undefined)
-const operandsComponent = computed(() => {
-  const operatorId = filter.filter
-  if (!operatorId) {
-    return ''
-  }
-  const operatorObject = API_FILTERS[operatorId]
-  const operandsKey = operatorObject.operandsComponent
-  const isOperandKey = (key: string): key is OperandKey =>
-    key in operandsComponentsMap
-  if (!isOperandKey(operandsKey)) {
-    throw new Error(`Invalid component key "${operandsKey}"`)
-  }
-  // operandsComponentsVocabularyKey.value =
-  //   operatorObject.operandComponentVocabularyKey
-  return operandsComponentsMap[operandsKey]
-})
 
 const submit = () => {
   form.value?.validate()

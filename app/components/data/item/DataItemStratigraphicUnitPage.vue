@@ -8,6 +8,7 @@ import { DataItemPage } from '#components'
 
 const resourceKey: ApiDataResourceKey = 'stratigraphicUnit'
 const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
+const {} = useAppAuth()
 </script>
 
 <template>
@@ -37,7 +38,11 @@ const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
           <sus-relationship-container :sx-su="item" />
         </v-tabs-window-item>
         <v-tabs-window-item value="potteries">
-          <p>pottery</p>
+          <lazy-data-collection-card
+            resource-key="pottery"
+            :parent="['stratigraphicUnit', item]"
+            :create-button="item._acl.canUpdate"
+          />
         </v-tabs-window-item>
         <v-tabs-window-item value="media">
           <lazy-media-object-join-container

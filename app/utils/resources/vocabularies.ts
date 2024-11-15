@@ -5,6 +5,9 @@ import type {
 import type { StratigraphicUnitRelationshipKey } from '~~/types'
 
 export default {
+  vocabularyPotteryFunctionalGroup: {},
+  vocabularyPotteryPart: {},
+  vocabularyPotteryTypology: {},
   vocabularySuRelationship: {},
 } as Record<ApiVocabularyResourceKey, VocabularyStaticResourceConfig>
 

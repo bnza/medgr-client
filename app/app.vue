@@ -1,6 +1,11 @@
 <script setup lang="ts">
-const ready = ref(true)
+const ready = ref(false)
 const name = computed(() => (ready.value ? 'default' : 'empty'))
+const { fetch } = useApiVocabulariesStore()
+callOnce(async () => {
+  await fetch()
+})
+Promise.all([fetch()]).then((_) => (ready.value = true))
 </script>
 <template>
   <v-app theme="dark">

@@ -63,6 +63,27 @@ export interface ApiResourceStratigraphicUnitsRelationship
   relationship: string
   dxSU: Pick<ApiResourceStratigraphicUnit, 'id' | 'code'> & { '@id': string }
 }
+
+export interface ApiVocabularyItem extends ApiResourceItem {
+  value: string
+  description?: string
+}
+
+export interface ApiResourcePottery extends ApiResourceItem {
+  stratigraphicUnit: Pick<ApiResourceStratigraphicUnit, 'id' | 'code' | 'site'>
+  number: number
+  code: string
+  fragmentsNumber: number
+  typology: string
+  part?: string
+  functionalGroup: string
+  interpretation?: string
+  description?: string
+  chronologyLower?: number
+  chronologyUpper?: number
+  public?: boolean
+}
+
 export type StratigraphicUnitRelationshipKey =
   | 'c'
   | 'C'

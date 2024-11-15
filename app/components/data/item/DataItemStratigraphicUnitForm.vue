@@ -5,9 +5,7 @@ import type {
   ResourceCollectionParent,
   ResourceConfig,
 } from '~~/types'
-import useResourceItemForm from '~/composables/useResourceItemForm'
 import type ResourceRepository from '~/utils/repository/ResourceRepository'
-import useResourceItemNormalizeSubmit from '~/composables/useResourceItemNormalizeSubmit'
 import useStratigraphicUnitValidation from '~/composables/validation/useStratigraphicUnitValidation'
 
 const props = defineProps<{

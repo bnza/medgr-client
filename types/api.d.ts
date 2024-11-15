@@ -6,13 +6,20 @@ type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
 export type ReadonlyHeaders = VDataTable['$props']['headers']
 export type ApiDataResourceKey =
+  | 'pottery'
   | 'site'
   | 'sitesUser'
   | 'stratigraphicUnit'
   | 'stratigraphicUnitsMediaObject'
   | 'stratigraphicUnitsRelationship'
   | 'user'
-export type ApiVocabularyResourceKey = 'vocabularySuRelationship'
+
+export type ApiVocabularyResourceKey =
+  | 'vocabularyPotteryFunctionalGroup'
+  | 'vocabularyPotteryPart'
+  | 'vocabularyPotteryTypology'
+  | 'vocabularySuRelationship'
+
 export type ApiResourceKey = ApiDataResourceKey | ApiVocabularyResourceKey
 // export type ApiResourceCollectionParent = [ApiDataResourceType, ApiId]
 export type ResourceConfig = Readonly<{

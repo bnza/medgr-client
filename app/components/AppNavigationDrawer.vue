@@ -31,6 +31,13 @@ const open = ref([])
         </template>
         <v-list-item
           nuxt
+          to="/data/potteries"
+          router
+          title="Pottery"
+          data-testid="app-nav-drawer-li-potteries"
+        />
+        <v-list-item
+          nuxt
           to="/data/sites"
           router
           title="Site"

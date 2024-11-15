@@ -25,6 +25,9 @@ const { collectionCacheKey, label, resourceConfig } = useResourceCollection(
 const collectionTableComponentsMap: Partial<
   Record<ApiDataResourceKey, ReturnType<typeof defineAsyncComponent>>
 > = {
+  pottery: defineAsyncComponent(
+    () => import('~/components/data/collection/DataCollectionPotteryTable.vue'),
+  ),
   site: defineAsyncComponent(
     () => import('~/components/data/collection/DataCollectionSiteTable.vue'),
   ),

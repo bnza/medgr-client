@@ -296,15 +296,15 @@ const pottery: Readonly<ResourceFiltersDefinitionObject> = {
       Exists,
     },
   },
-  'part.id': {
+  part: {
     propertyLabel: 'part',
     filters: { VocabularyPotteryPartEqualAutocomplete, Exists },
   },
-  'typology.id': {
+  typology: {
     propertyLabel: 'typology',
     filters: { VocabularyPotteryTypologyEqualAutocomplete },
   },
-  'functionalGroup.id': {
+  functionalGroup: {
     propertyLabel: 'functional group',
     filters: { VocabularyPotteryFunctionalGroupEqualAutocomplete },
   },
@@ -356,7 +356,6 @@ const stratigraphicUnit: Readonly<ResourceFiltersDefinitionObject> = {
   site: {
     filters: { SiteEqualAutocomplete },
   },
-
   public: {
     filters: { BooleanIsFalse, BooleanIsTrue },
   },
@@ -387,7 +386,7 @@ const sample: Readonly<ResourceFiltersDefinitionObject> = {
 export const RESOURCE_PAGES_STATE: Readonly<
   Partial<Record<ApiDataResourceKey, ResourceFiltersDefinitionObject>>
 > = {
-  // pottery,
+  pottery,
   // samples,
   site,
   stratigraphicUnit,
