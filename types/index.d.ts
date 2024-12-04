@@ -11,3 +11,4 @@ export type UserChangePasswordBody = {
   newPassword: string
   repeatPassword: string
 }
+export type UiMode = 'default' | 'map'

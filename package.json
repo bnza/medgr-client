@@ -15,9 +15,11 @@
     "@sidebase/nuxt-auth": "^0.9.4",
     "deep-object-diff": "^1.1.9",
     "nuxt": "^3.13.0",
+    "ol": "^10.2.1",
     "qs": "^6.13.0",
     "vue": "latest",
     "vue-router": "latest",
+    "vue3-openlayers": "^11.2.1",
     "vuetify-nuxt-module": "^0.18.3"
   },
   "devDependencies": {

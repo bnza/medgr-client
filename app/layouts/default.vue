@@ -1,7 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { state } = storeToRefs(useAppUiModeStore())
+</script>
 
 <template>
   <app-bar />
   <app-navigation-drawer />
-  <NuxtPage />
+  <KeepAlive>
+    <lazy-app-map v-if="state === 'map'" />
+  </KeepAlive>
+  <NuxtPage v-if="state === 'default'" />
 </template>
