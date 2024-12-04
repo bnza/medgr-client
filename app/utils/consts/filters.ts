@@ -240,11 +240,11 @@ export const API_FILTERS: Readonly<Record<FilterKey, FilterDefinitionObject>> =
   }
 
 const pottery: Readonly<ResourceFiltersDefinitionObject> = {
-  'site.id': {
+  'stratigraphicUnit.site': {
     filters: { SiteEqualAutocomplete },
     propertyLabel: 'site',
   },
-  'stratigraphicUnit.id': {
+  stratigraphicUnit: {
     filters: { StratigraphicUnitEqualAutocomplete },
     propertyLabel: 'stratigraphic unit',
   },
@@ -362,13 +362,13 @@ const stratigraphicUnit: Readonly<ResourceFiltersDefinitionObject> = {
 }
 
 const sample: Readonly<ResourceFiltersDefinitionObject> = {
-  'stratigraphicUnit.site.id': {
+  'stratigraphicUnit.site': {
     filters: { SiteEqualAutocomplete },
     propertyLabel: 'site',
   },
-  'stratigraphicUnit.id': {
+  stratigraphicUnit: {
     filters: { StratigraphicUnitEqualAutocomplete },
-    propertyLabel: 'SU',
+    propertyLabel: 'stratigraphic unit',
   },
   number: {
     filters: {
@@ -387,7 +387,7 @@ export const RESOURCE_PAGES_STATE: Readonly<
   Partial<Record<ApiDataResourceKey, ResourceFiltersDefinitionObject>>
 > = {
   pottery,
-  // samples,
+  sample,
   site,
   stratigraphicUnit,
 }

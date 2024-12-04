@@ -28,6 +28,9 @@ const collectionTableComponentsMap: Partial<
   pottery: defineAsyncComponent(
     () => import('~/components/data/collection/DataCollectionPotteryTable.vue'),
   ),
+  sample: defineAsyncComponent(
+    () => import('~/components/data/collection/DataCollectionSampleTable.vue'),
+  ),
   site: defineAsyncComponent(
     () => import('~/components/data/collection/DataCollectionSiteTable.vue'),
   ),

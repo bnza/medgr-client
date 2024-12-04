@@ -43,6 +43,9 @@ const operandsComponentsMap = {
   Single: resolveComponent('SearchOperandSingle'),
   SingleNumeric: resolveComponent('SearchOperandSingleNumeric'),
   SiteAutocomplete: resolveComponent('SearchOperandSiteAutocomplete'),
+  StratigraphicUnitAutocomplete: resolveComponent(
+    'SearchOperandStratigraphicUnitAutocomplete',
+  ),
   VocabularyAutocomplete: resolveComponent(
     'SearchOperandVocabularyAutocomplete',
   ),

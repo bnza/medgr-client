@@ -38,6 +38,13 @@ const open = ref([])
         />
         <v-list-item
           nuxt
+          to="/data/samples"
+          router
+          title="Sample"
+          data-testid="app-nav-drawer-li-sites"
+        />
+        <v-list-item
+          nuxt
           to="/data/sites"
           router
           title="Site"

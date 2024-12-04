@@ -83,6 +83,11 @@ export interface ApiResourcePottery extends ApiResourceItem {
   chronologyUpper?: number
   public?: boolean
 }
+export interface ApiResourceSample extends ApiResourceItem {
+  stratigraphicUnit: Pick<ApiResourceStratigraphicUnit, 'id' | 'code' | 'site'>
+  number: number
+  description?: string
+}
 
 export type StratigraphicUnitRelationshipKey =
   | 'c'

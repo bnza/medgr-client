@@ -8,7 +8,7 @@ import { DataItemPage } from '#components'
 
 const resourceKey: ApiDataResourceKey = 'stratigraphicUnit'
 const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
-const {} = useAppAuth()
+// const {isAuthenticated} = useAppAuth()
 </script>
 
 <template>
@@ -23,6 +23,7 @@ const {} = useAppAuth()
         <v-tab value="data">data</v-tab>
         <v-tab value="relationships">relationships</v-tab>
         <v-tab value="potteries">potteries</v-tab>
+        <v-tab value="samples">samples</v-tab>
         <v-tab value="media">media</v-tab>
       </v-tabs>
       <v-tabs-window v-model="tab">
@@ -40,6 +41,13 @@ const {} = useAppAuth()
         <v-tabs-window-item value="potteries">
           <lazy-data-collection-card
             resource-key="pottery"
+            :parent="['stratigraphicUnit', item]"
+            :create-button="item._acl.canUpdate"
+          />
+        </v-tabs-window-item>
+        <v-tabs-window-item value="samples">
+          <lazy-data-collection-card
+            resource-key="sample"
             :parent="['stratigraphicUnit', item]"
             :create-button="item._acl.canUpdate"
           />
