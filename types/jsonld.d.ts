@@ -55,8 +55,8 @@ export type JsonLdResourceItem<T extends ApiResourceItem> = JsonLdItem & T
 
 export type JsonLdResourceCollection<T extends ApiResourceItem> =
   JsonLdDocument & {
-    'hydra:totalItems': number
-    'hydra:member': Array<JsonLdResourceItem<T>>
+    totalItems: number
+    member: Array<JsonLdResourceItem<T>>
   }
 
 export interface JsonLdConstraintViolationsList extends JsonLdItem {

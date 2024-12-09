@@ -90,8 +90,8 @@ function _useResource<RT extends ApiResourceItem>(
         }),
       { watch: [fetchCollectionParams] },
     )
-    const items = computed(() => data.value?.['hydra:member'] || [])
-    const totalItems = computed(() => data.value?.['hydra:totalItems'] || 0)
+    const items = computed(() => data.value?.['member'] || [])
+    const totalItems = computed(() => data.value?.['totalItems'] || 0)
     filteredItemsCount.value = totalItems.value
     return {
       items,

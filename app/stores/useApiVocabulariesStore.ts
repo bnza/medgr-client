@@ -31,7 +31,7 @@ export default defineStore('api-vocabularies', () => {
           .then((results) => [
             key,
             Object.fromEntries(
-              results['hydra:member'].map((item) => [item['@id'], item]),
+              results['member'].map((item) => [item['@id'], item]),
             ),
           ]),
       ),

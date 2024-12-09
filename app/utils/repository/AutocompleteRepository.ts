@@ -17,7 +17,7 @@ class AutocompleteRepository extends AbstractRepository {
       ? `/api/autocomplete/${unref(path)}/authorized?${query}`
       : `/api/autocomplete/${unref(path)}?${query}`
     return this.$fetch<JsonLdResourceCollection<ResponseType>>(url).then(
-      (response) => response?.['hydra:member'],
+      (response) => response?.['member'],
     )
   }
 }
