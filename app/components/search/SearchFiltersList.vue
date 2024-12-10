@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { injectResourceCollectionFilters } from '~/composables/useResourceCollectionFilters'
+import type { ApiDataResourceKey } from '~~/types'
 
+defineProps<{ resourceKey: ApiDataResourceKey }>()
 const { deleteFilter, filters, isEmpty, isChanged } =
   injectResourceCollectionFilters()
 
@@ -30,6 +32,7 @@ const { filter: parentFilter } = usePageParentStore()
         v-for="filter in filters.values()"
         :key="filter.id"
         :filter
+        :resource-key
         @delete-filter="deleteFilter($event)"
       />
     </v-container>

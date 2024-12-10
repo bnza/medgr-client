@@ -4,7 +4,7 @@ import type {
   ResourceCollectionCacheKey,
   ResourcePropertyFiltersDefinitionObject,
 } from '~~/types'
-import { RESOURCE_PAGES_STATE } from '~/utils/consts/filters'
+import { RESOURCES_FILTERS_MAP } from '~/utils/consts/filters'
 
 type ResourceFilterDefinitionEntry = [
   string,
@@ -75,7 +75,7 @@ const getResourceFiltersDefinitions = (
   resourceCacheKey: ResourceCollectionCacheKey,
 ) => {
   const key = extractResourceKeyFromCacheKey(resourceCacheKey)
-  const resourceFiltersDefinitions = RESOURCE_PAGES_STATE[key]
+  const resourceFiltersDefinitions = RESOURCES_FILTERS_MAP[key]
   if (!resourceFiltersDefinitions) {
     console.error(
       `No resource filter definition found: keys "${resourceCacheKey}", "${key}"`,

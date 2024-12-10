@@ -37,7 +37,11 @@ function useResourceCollectionFilters(
   )
 
   const availableProperties = computed(() =>
-    getResourceAvailableProps(resourceCacheKey, state, protectedFields.value),
+    getResourceAvailableProps(
+      resourceCacheKey,
+      Object.fromEntries(filters),
+      protectedFields.value,
+    ),
   )
   const getAvailableOperators = (prop: string) =>
     getPropertyAvailableOperators(resourceCacheKey, [...filters.values()], prop)

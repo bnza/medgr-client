@@ -2,6 +2,8 @@
 import type { ApiDataResourceKey } from '~~/types'
 
 const resourceKey: ApiDataResourceKey = 'sample'
+
+const { parse } = useAppDate()
 </script>
 
 <template>
@@ -12,6 +14,9 @@ const resourceKey: ApiDataResourceKey = 'sample'
         :acl="item._acl"
         :app-path="resourceConfig.appPath"
       />
+    </template>
+    <template #[`item.takingDate`]="{ item }">
+      <p>{{ parse(item.takingDate)?.toLocaleDateString() }}</p>
     </template>
   </lazy-data-collection-table>
 </template>

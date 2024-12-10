@@ -1,5 +1,5 @@
-<script setup lang="ts">
-const operands = defineModel<[string]>({
+<script setup>
+const operands = defineModel({
   required: true,
 })
 const operand = computed({
@@ -8,16 +8,16 @@ const operand = computed({
   },
 
   set(value) {
-    operands.value = [value]
+    operands.value = [Boolean(value)]
   },
 })
 </script>
 
 <template>
-  <v-text-field
+  <v-checkbox
     v-model="operand"
-    data-testid="search-operand-numeric"
     label="value"
-    :rules="[required, isNumeric]"
+    :rules="[defined]"
+    :indeterminate="'undefined' === typeof operand"
   />
 </template>

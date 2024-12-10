@@ -40,7 +40,9 @@ watch(
 const operandsComponent = shallowRef<ReturnType<typeof resolveComponent>>()
 
 const operandsComponentsMap = {
+  Exists: resolveComponent('SearchOperandBoolean'),
   Single: resolveComponent('SearchOperandSingle'),
+  SingleDate: resolveComponent('SearchOperandSingleDate'),
   SingleNumeric: resolveComponent('SearchOperandSingleNumeric'),
   SiteAutocomplete: resolveComponent('SearchOperandSiteAutocomplete'),
   StratigraphicUnitAutocomplete: resolveComponent(

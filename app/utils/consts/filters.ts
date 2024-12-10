@@ -30,6 +30,13 @@ const addMultiplePropEntryToFilterObject = (
   )
 }
 
+const dateTimeISOToDateISO = (date: unknown) => {
+  if ('string' === typeof date) {
+    return new Date(date).toLocaleDateString()
+  }
+  return ''
+}
+
 const SearchExact: Readonly<FilterDefinitionObject> = {
   id: 'SearchExact',
   label: 'equals',
@@ -119,6 +126,72 @@ const NumericLowerThanOrEqual: Readonly<FilterDefinitionObject> = {
       filterObj[filter.property] = []
     }
     filterObj[filter.property]['lte'] = filter.operands[0]
+  },
+}
+
+const DateEqual: Readonly<FilterDefinitionObject> = {
+  id: 'DateEqual',
+  label: 'equals',
+  multiple: true,
+  operandsComponent: 'SingleDate',
+  operandsNumber: 1,
+  addToObject: (filterObj, filter) => {
+    filterObj[filter.property] = filter.operands[0]
+  },
+  operandToString: dateTimeISOToDateISO,
+}
+
+const DateAfterThan: Readonly<FilterDefinitionObject> = {
+  id: 'DateAfterThan',
+  label: 'after',
+  multiple: false,
+  operandsComponent: 'SingleDate',
+  operandsNumber: 1,
+  addToObject: (filterObj, filter) => {
+    if (!(filter.property in filterObj)) {
+      filterObj[filter.property] = []
+    }
+    filterObj[filter.property]['strictly_after'] = filter.operands[0]
+  },
+}
+const DateAfterThanOrEqual: Readonly<FilterDefinitionObject> = {
+  id: 'DateAfterThanOrEqual',
+  label: 'after or equal',
+  multiple: false,
+  operandsComponent: 'SingleDate',
+  operandsNumber: 1,
+  addToObject: (filterObj, filter) => {
+    if (!(filter.property in filterObj)) {
+      filterObj[filter.property] = []
+    }
+    filterObj[filter.property]['after'] = filter.operands[0]
+  },
+}
+
+const DateBeforeThan: Readonly<FilterDefinitionObject> = {
+  id: 'DateBeforeThan',
+  label: 'before',
+  multiple: false,
+  operandsComponent: 'SingleDate',
+  operandsNumber: 1,
+  addToObject: (filterObj, filter) => {
+    if (!(filter.property in filterObj)) {
+      filterObj[filter.property] = []
+    }
+    filterObj[filter.property]['strictly_before'] = filter.operands[0]
+  },
+}
+const DateBeforeThanOrEqual: Readonly<FilterDefinitionObject> = {
+  id: 'DateAfterThanOrEqual',
+  label: 'before or equal',
+  multiple: false,
+  operandsComponent: 'SingleDate',
+  operandsNumber: 1,
+  addToObject: (filterObj, filter) => {
+    if (!(filter.property in filterObj)) {
+      filterObj[filter.property] = []
+    }
+    filterObj[filter.property]['before'] = filter.operands[0]
   },
 }
 
@@ -222,6 +295,11 @@ const VocabularyPotteryPartEqualAutocomplete: Readonly<FilterDefinitionObject> =
 
 export const API_FILTERS: Readonly<Record<FilterKey, FilterDefinitionObject>> =
   {
+    DateEqual,
+    DateAfterThan,
+    DateAfterThanOrEqual,
+    DateBeforeThan,
+    DateBeforeThanOrEqual,
     Exists,
     SearchExact,
     SearchPartial,
@@ -379,11 +457,28 @@ const sample: Readonly<ResourceFiltersDefinitionObject> = {
       NumericLowerThanOrEqual,
     },
   },
+  collector: {
+    filters: {
+      Exists,
+      SearchPartial,
+    },
+  },
+  takingDate: {
+    filters: {
+      Exists,
+      DateEqual,
+      DateAfterThan,
+      DateAfterThanOrEqual,
+      DateBeforeThan,
+      DateBeforeThanOrEqual,
+    },
+    propertyLabel: 'date taken',
+  },
   description: {
     filters: { SearchPartial },
   },
 }
-export const RESOURCE_PAGES_STATE: Readonly<
+export const RESOURCES_FILTERS_MAP: Readonly<
   Partial<Record<ApiDataResourceKey, ResourceFiltersDefinitionObject>>
 > = {
   pottery,

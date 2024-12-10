@@ -37,6 +37,18 @@ export default {
       title: 'number',
     },
     {
+      key: 'collector',
+      value: 'collector',
+      title: 'collector',
+      sortable: true,
+    },
+    {
+      key: 'takingDate',
+      value: 'takingDate',
+      title: 'date taken',
+      sortable: true,
+    },
+    {
       key: 'description',
       value: 'description',
       title: 'description',

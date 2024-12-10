@@ -23,7 +23,7 @@ const { label } = useResourceCollection(props.resourceKey)
     <template #toolbar-append>
       <lazy-search-add-filter-button v-model="isAddFilterDialogOpen" />
     </template>
-    <lazy-search-filters-list />
+    <lazy-search-filters-list :resource-key />
     <template #actions>
       <lazy-search-filters-list-actions />
     </template>

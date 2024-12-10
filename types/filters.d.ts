@@ -3,6 +3,11 @@ import type { VocabularyResourceKey } from '~~/types/api'
 export type FilterKey =
   | 'SearchExact'
   | 'SearchPartial'
+  | 'DateEqual'
+  | 'DateAfterThan'
+  | 'DateAfterThanOrEqual'
+  | 'DateBeforeThan'
+  | 'DateBeforeThanOrEqual'
   | 'Exists'
   | 'NumericEqual'
   | 'NumericGreaterThan'
@@ -36,6 +41,7 @@ export type FilterDefinitionObject = {
   operandListItemPropertyKey?: string
   operandsNumber: number
   addToObject: (filterObject: Record<string, any>, filter: Filter) => void
+  operandToString?: (value: unknown) => string
 }
 
 type ResourcePropertyFiltersDefinitionObject = {
