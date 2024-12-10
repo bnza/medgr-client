@@ -11,7 +11,7 @@ export enum ApiSiteRole {
   User = 'ROLE_SITE_USER',
 }
 export enum ApiSpecialistRole {
-  Microstratigraphist = 'ROLE_MICROSTRATIGRAPHIST',
+  GeoArchaeologist = 'ROLE_GEO_ARCHAELOGIST',
 }
 export enum AclVoters {
   HasRoleAdmin = 'HasRoleAdmin',

@@ -1,23 +1,33 @@
 <script setup lang="ts">
 import type {
   ApiAction,
-  ApiResourceStratigraphicUnit,
+  ApiResourceSample,
   ResourceCollectionParent,
   ResourceConfig,
 } from '~~/types'
 import type ResourceRepository from '~/utils/repository/ResourceRepository'
+
 import useSampleValidation from '~/composables/validation/useSampleValidation'
+import useAppDate from '~/composables/useAppDate'
 
 const props = defineProps<{
   mode: ApiAction
-  item: ApiResourceStratigraphicUnit
-  repository: ResourceRepository<ApiResourceStratigraphicUnit>
+  item: ApiResourceSample
+  repository: ResourceRepository<ApiResourceSample>
   resourceConfig: ResourceConfig
   parent?: ResourceCollectionParent
 }>()
 
-const { isAuthenticated, readonly, state } =
-  useResourceItemForm<ApiResourceStratigraphicUnit>(props.mode, props.item)
+const { parse } = useAppDate()
+const normalizeState = (state: ApiResourceSample) => {
+  state.takingDate = parse(state.takingDate)
+  return state
+}
+const { readonly, state } = useResourceItemForm<ApiResourceSample>(
+  props.mode,
+  props.item,
+  normalizeState,
+)
 
 if (props.mode === 'create' && props.parent) {
   Object.assign(state, Object.fromEntries([props.parent]))
@@ -27,7 +37,7 @@ const getRules = readonly.value
   ? (_: string) => undefined
   : useSampleValidation(props.item)
 
-const normalizePost = (item: Partial<ApiResourceStratigraphicUnit>) => {
+const normalizePost = (item: Partial<ApiResourceSample>) => {
   item = clone(item)
   if (isApiResourceItem(item?.stratigraphicUnit)) {
     item.stratigraphicUnit = item.stratigraphicUnit['@id']
@@ -65,6 +75,18 @@ useResourceItemNormalizeSubmit(props.mode, props.item, state, normalizePost)
     <v-row>
       <v-col cols="12" xs="12" class="px-2">
         <v-textarea v-model="state.description" label="description" />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" xs="12" sm="6" class="px-2">
+        <v-text-field v-model="state.collector" label="collector" />
+      </v-col>
+      <v-col cols="12" xs="12" sm="6" class="px-2">
+        <date-field-picker
+          v-model="state.takingDate"
+          :readonly
+          label="data taken"
+        />
       </v-col>
     </v-row>
   </lazy-data-item-form>

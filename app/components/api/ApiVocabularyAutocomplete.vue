@@ -13,7 +13,6 @@ const props = withDefaults(
   },
 )
 const { getVocabulary } = useApiVocabulariesStore()
-console.log(getVocabulary(props.vocabularyKey))
 const vocabularies = Object.values(getVocabulary(props.vocabularyKey))
 </script>
 

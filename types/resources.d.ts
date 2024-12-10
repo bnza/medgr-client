@@ -87,6 +87,8 @@ export interface ApiResourceSample extends ApiResourceItem {
   stratigraphicUnit: Pick<ApiResourceStratigraphicUnit, 'id' | 'code' | 'site'>
   number: number
   description?: string
+  collector?: string
+  takingDate?: string | Date
 }
 
 export type StratigraphicUnitRelationshipKey =
