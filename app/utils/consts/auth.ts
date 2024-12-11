@@ -11,7 +11,7 @@ export enum ApiSiteRole {
   User = 'ROLE_SITE_USER',
 }
 export enum ApiSpecialistRole {
-  GeoArchaeologist = 'ROLE_GEO_ARCHAELOGIST',
+  GeoArchaeologist = 'ROLE_GEO_ARCHAEOLOGIST',
 }
 export enum AclVoters {
   HasRoleAdmin = 'HasRoleAdmin',

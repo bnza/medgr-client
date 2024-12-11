@@ -6,6 +6,8 @@ import type {
   Filter,
 } from '~~/types'
 import { isApiResourceItem } from '~/utils/guards'
+import { SymbolKind } from 'vscode-languageserver-types'
+import Boolean = SymbolKind.Boolean
 
 const addMultiplePropEntryToFilterObject = (
   filterObj: Record<string, any>,
@@ -211,6 +213,17 @@ const Exists: Readonly<FilterDefinitionObject> = {
   },
 }
 
+const BooleanEqual: Readonly<FilterDefinitionObject> = {
+  id: 'BooleanEqual',
+  label: 'is (true/false)',
+  multiple: false,
+  operandsComponent: 'BooleanEqual',
+  operandsNumber: 0,
+  addToObject: (filterObj, filter) => {
+    filterObj[filter.property] = Number(filter.operands[0])
+  },
+}
+
 const BooleanIsTrue: Readonly<FilterDefinitionObject> = {
   id: 'BooleanIsTrue',
   label: 'is true',
@@ -231,6 +244,17 @@ const BooleanIsFalse: Readonly<FilterDefinitionObject> = {
   addToObject: (filterObj, filter) => {
     filterObj[filter.property] = 0
   },
+}
+
+const SampleEqualAutocomplete: Readonly<FilterDefinitionObject> = {
+  id: 'SampleEqualAutocomplete',
+  label: 'equals',
+  multiple: false,
+  propertyLabel: 'sample',
+  operandsComponent: 'SampleAutocomplete',
+  operandListItemPropertyKey: 'code',
+  operandsNumber: 1,
+  addToObject: addMultiplePropEntryToFilterObject,
 }
 
 const SiteEqualAutocomplete: Readonly<FilterDefinitionObject> = {
@@ -308,15 +332,142 @@ export const API_FILTERS: Readonly<Record<FilterKey, FilterDefinitionObject>> =
     NumericGreaterThanOrEqual,
     NumericLowerThan,
     NumericLowerThanOrEqual,
+    BooleanEqual,
     BooleanIsTrue,
     BooleanIsFalse,
+    SampleEqualAutocomplete,
     SiteEqualAutocomplete,
     StratigraphicUnitEqualAutocomplete,
     VocabularyPotteryPartEqualAutocomplete,
     VocabularyPotteryFunctionalGroupEqualAutocomplete,
     VocabularyPotteryTypologyEqualAutocomplete,
   }
-
+const microStratigraphicUnit: Readonly<ResourceFiltersDefinitionObject> = {
+  'stratigraphicUnit.site': {
+    filters: { SiteEqualAutocomplete },
+    propertyLabel: 'site',
+  },
+  stratigraphicUnit: {
+    filters: { StratigraphicUnitEqualAutocomplete },
+    propertyLabel: 'stratigraphic unit',
+  },
+  sample: {
+    filters: { SampleEqualAutocomplete },
+  },
+  number: {
+    filters: {
+      NumericEqual,
+      NumericGreaterThan,
+      NumericGreaterThanOrEqual,
+      NumericLowerThan,
+      NumericLowerThanOrEqual,
+    },
+  },
+  collector: {
+    filters: {
+      Exists,
+      SearchPartial,
+    },
+  },
+  inclusionsGeology: {
+    filters: {
+      NumericEqual,
+      NumericGreaterThan,
+      NumericGreaterThanOrEqual,
+      NumericLowerThan,
+      NumericLowerThanOrEqual,
+    },
+    propertyLabel: 'geology (% incl.)',
+  },
+  inclusionsBuildingMaterials: {
+    filters: {
+      NumericEqual,
+      NumericGreaterThan,
+      NumericGreaterThanOrEqual,
+      NumericLowerThan,
+      NumericLowerThanOrEqual,
+    },
+    propertyLabel: 'building materials (% incl.)',
+  },
+  inclusionsDomesticRefuse: {
+    filters: {
+      NumericEqual,
+      NumericGreaterThan,
+      NumericGreaterThanOrEqual,
+      NumericLowerThan,
+      NumericLowerThanOrEqual,
+    },
+    propertyLabel: 'domestic refuse (% incl.)',
+  },
+  inclusionsOrganicRefuse: {
+    filters: {
+      NumericEqual,
+      NumericGreaterThan,
+      NumericGreaterThanOrEqual,
+      NumericLowerThan,
+      NumericLowerThanOrEqual,
+    },
+    propertyLabel: 'organic refuse (% incl.)',
+  },
+  mesofaunaRootBioturbation: {
+    filters: {
+      NumericEqual,
+      NumericGreaterThan,
+      NumericGreaterThanOrEqual,
+      NumericLowerThan,
+      NumericLowerThanOrEqual,
+    },
+    propertyLabel: 'mesofauna/root bioturbation',
+  },
+  earthwormInternalChamber: {
+    filters: {
+      NumericEqual,
+      NumericGreaterThan,
+      NumericGreaterThanOrEqual,
+      NumericLowerThan,
+      NumericLowerThanOrEqual,
+    },
+    propertyLabel: 'earthworm internal chamber',
+  },
+  organicOrganoMineral: {
+    filters: {
+      NumericEqual,
+      NumericGreaterThan,
+      NumericGreaterThanOrEqual,
+      NumericLowerThan,
+      NumericLowerThanOrEqual,
+    },
+    propertyLabel: 'organic/organo mineral',
+  },
+  earthwormGranule: {
+    filters: {
+      NumericEqual,
+      NumericGreaterThan,
+      NumericGreaterThanOrEqual,
+      NumericLowerThan,
+      NumericLowerThanOrEqual,
+    },
+    propertyLabel: 'earthworm granule',
+  },
+  lenticularPlateyPeds: {
+    filters: { BooleanEqual },
+    propertyLabel: 'lenticular platey peds',
+  },
+  crumbsOrGranule: {
+    filters: { BooleanEqual },
+    propertyLabel: 'crumbs or granule',
+  },
+  saBlockyPeds: {
+    filters: { BooleanEqual },
+    propertyLabel: 'SA blocky peds',
+  },
+  cracks: {
+    filters: { BooleanEqual },
+  },
+  infillings: {
+    filters: { BooleanEqual },
+  },
+}
 const pottery: Readonly<ResourceFiltersDefinitionObject> = {
   'stratigraphicUnit.site': {
     filters: { SiteEqualAutocomplete },
@@ -481,6 +632,7 @@ const sample: Readonly<ResourceFiltersDefinitionObject> = {
 export const RESOURCES_FILTERS_MAP: Readonly<
   Partial<Record<ApiDataResourceKey, ResourceFiltersDefinitionObject>>
 > = {
+  microStratigraphicUnit,
   pottery,
   sample,
   site,

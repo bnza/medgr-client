@@ -14,11 +14,13 @@ export type FilterKey =
   | 'NumericGreaterThanOrEqual'
   | 'NumericLowerThan'
   | 'NumericLowerThanOrEqual'
+  | 'SampleEqualAutocomplete'
   | 'SiteEqualAutocomplete'
   | 'StratigraphicUnitEqualAutocomplete'
   | 'VocabularyPotteryPartEqualAutocomplete'
   | 'VocabularyPotteryTypologyEqualAutocomplete'
   | 'VocabularyPotteryFunctionalGroupEqualAutocomplete'
+  | 'BooleanEqual'
   | 'BooleanIsTrue'
   | 'BooleanIsFalse'
 

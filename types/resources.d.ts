@@ -84,11 +84,39 @@ export interface ApiResourcePottery extends ApiResourceItem {
   public?: boolean
 }
 export interface ApiResourceSample extends ApiResourceItem {
-  stratigraphicUnit: Pick<ApiResourceStratigraphicUnit, 'id' | 'code' | 'site'>
+  stratigraphicUnit: Pick<
+    ApiResourceStratigraphicUnit,
+    'id' | 'code' | 'year' | 'site'
+  >
   number: number
   description?: string
   collector?: string
   takingDate?: string | Date
+}
+
+export interface ApiResourceMicroStratigraphicUnit extends ApiResourceItem {
+  sample: Pick<ApiResourceStratigraphicUnit, 'id' | 'number'>
+  stratigraphicUnit: Pick<ApiResourceStratigraphicUnit, 'id' | 'code' | 'site'>
+  number?: number
+  depositType: string
+  keyAttributes?: string
+  inclusionsGeology: number
+  inclusionsBuildingMaterials: number
+  inclusionsDomesticRefuse: number
+  inclusionsOrganicRefuse: number
+  colourPpl: string
+  colourXpl: string
+  colourOil: string
+  lenticularPlateyPeds: boolean
+  crumbsOrGranules: boolean
+  saBlockyPeds: boolean
+  cracks: boolean
+  infillings: boolean
+  mesofaunaRootBioturbation: number
+  earthwormInternalChamber: number
+  organicOrganoMineral: number
+  earthwormGranule: number
+  interpretation?: string
 }
 
 export type StratigraphicUnitRelationshipKey =

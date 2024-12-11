@@ -41,9 +41,11 @@ const operandsComponent = shallowRef<ReturnType<typeof resolveComponent>>()
 
 const operandsComponentsMap = {
   Exists: resolveComponent('SearchOperandBoolean'),
+  BooleanEqual: resolveComponent('SearchOperandBoolean'),
   Single: resolveComponent('SearchOperandSingle'),
   SingleDate: resolveComponent('SearchOperandSingleDate'),
   SingleNumeric: resolveComponent('SearchOperandSingleNumeric'),
+  SampleAutocomplete: resolveComponent('SearchOperandSampleAutocomplete'),
   SiteAutocomplete: resolveComponent('SearchOperandSiteAutocomplete'),
   StratigraphicUnitAutocomplete: resolveComponent(
     'SearchOperandStratigraphicUnitAutocomplete',

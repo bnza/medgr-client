@@ -11,12 +11,15 @@ const operand = computed({
     operands.value = [Boolean(value)]
   },
 })
+const label = computed(() =>
+  'undefined' === typeof operand.value ? 'no value' : String(operand.value),
+)
 </script>
 
 <template>
   <v-checkbox
     v-model="operand"
-    label="value"
+    :label
     :rules="[defined]"
     :indeterminate="'undefined' === typeof operand"
   />

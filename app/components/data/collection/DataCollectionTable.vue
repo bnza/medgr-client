@@ -7,17 +7,20 @@ import type {
 } from '~~/types'
 import type { AsyncDataRequestStatus } from '#app'
 
-const props = defineProps<{
-  resourceKey: ApiDataResourceKey
-  parent?: ApiResourceCollectionParent
-}>()
+const props = withDefaults(
+  defineProps<{
+    resourceKey: ApiDataResourceKey
+    parent?: ApiResourceCollectionParent
+    multiSort: boolean
+  }>(),
+  {
+    multiSort: false,
+    parent: undefined,
+  },
+)
 
 const { headers, fetchCollection, resourceConfig } =
   useResourceCollection<ApiResourceItem>(props.resourceKey, props.parent)
-
-// if (props.parent) {
-//   parent.value = props.parent
-// }
 
 const results = ref({
   totalItems: ref(0),
@@ -41,6 +44,7 @@ fetchCollection().then((_results) => (results.value = _results))
     :items-per-page-options="[10, 25, 50, 100]"
     :page="results.paginationOptions?.page || 1"
     :sort-by="results.paginationOptions?.sortBy"
+    :multi-sort
     @update:options="results.paginationOptions = $event"
   >
     <!-- https://mokkapps.de/vue-tips/expose-slots-from-a-child-component-->

@@ -8,9 +8,11 @@ const props = withDefaults(
     parent?: ApiResourceCollectionParent
     path: string
     watch?: ReadonlyArray<string | number>
+    itemTitle?: string
   }>(),
   {
     authorizedOnly: false,
+    itemTitle: 'code',
     parent: undefined,
     orderBy: () => ['id', 'asc'],
     watch: undefined,
@@ -85,6 +87,7 @@ watch(() => props.watch, updateItems)
     return-object
     :items
     item-value="id"
+    :item-title
     :loading
     @update:search="search = $event"
     @update:model-value="modelUpdated = true"

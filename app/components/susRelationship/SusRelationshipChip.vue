@@ -8,7 +8,7 @@ const { isEditable, deletingRelation } = injectStratigraphicUnitsRelationship()
 
 <template>
   <v-chip class="text-white" data-testid="su-relationship-chip">
-    {{ item.dxSU.code.replace(/^\w+\.\d{2}/, '') }}
+    {{ item.dxSU.code.replace(/^\w+\./, '') }}
     <template #close>
       <v-icon
         v-if="isEditable"

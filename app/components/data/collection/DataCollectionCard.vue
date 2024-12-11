@@ -25,6 +25,12 @@ const { collectionCacheKey, label, resourceConfig } = useResourceCollection(
 const collectionTableComponentsMap: Partial<
   Record<ApiDataResourceKey, ReturnType<typeof defineAsyncComponent>>
 > = {
+  microStratigraphicUnit: defineAsyncComponent(
+    () =>
+      import(
+        '~/components/data/collection/DataCollectionMicroStratigraphicUnitTable.vue'
+      ),
+  ),
   pottery: defineAsyncComponent(
     () => import('~/components/data/collection/DataCollectionPotteryTable.vue'),
   ),
