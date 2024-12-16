@@ -13,6 +13,12 @@ export default {
       maxWidth: '200',
     },
     {
+      key: 'code',
+      value: 'code',
+      title: 'code',
+      width: '200',
+    },
+    {
       key: 'stratigraphicUnit.site.code',
       value: 'stratigraphicUnit.site.code',
       title: 'site',
@@ -25,8 +31,8 @@ export default {
       width: '200',
     },
     {
-      key: 'stratigraphicUnit.number',
-      value: 'stratigraphicUnit.code',
+      key: 'stratigraphicUnits',
+      value: 'stratigraphicUnits',
       title: 'SU',
       width: '200',
       sortable: false,

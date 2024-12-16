@@ -15,6 +15,18 @@ const { parse } = useAppDate()
         :app-path="resourceConfig.appPath"
       />
     </template>
+    <template #[`item.code`]="{ item }">
+      <p class="text-secondary">{{ item.code }}</p>
+    </template>
+    <template #[`item.stratigraphicUnits`]="{ item }">
+      <p
+        v-for="su in item.stratigraphicUnits"
+        :key="su.id"
+        class="text-secondary"
+      >
+        {{ su.stratigraphicUnit.code }}
+      </p>
+    </template>
     <template #[`item.takingDate`]="{ item }">
       <p>{{ parse(item.takingDate)?.toLocaleDateString() }}</p>
     </template>

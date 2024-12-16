@@ -595,7 +595,7 @@ const sample: Readonly<ResourceFiltersDefinitionObject> = {
     filters: { SiteEqualAutocomplete },
     propertyLabel: 'site',
   },
-  stratigraphicUnit: {
+  'stratigraphicUnits.stratigraphicUnit': {
     filters: { StratigraphicUnitEqualAutocomplete },
     propertyLabel: 'stratigraphic unit',
   },
