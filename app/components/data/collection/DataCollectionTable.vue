@@ -11,7 +11,7 @@ const props = withDefaults(
   defineProps<{
     resourceKey: ApiDataResourceKey
     parent?: ApiResourceCollectionParent
-    multiSort: boolean
+    multiSort?: boolean
   }>(),
   {
     multiSort: false,

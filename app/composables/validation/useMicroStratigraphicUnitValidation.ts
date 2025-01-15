@@ -1,14 +1,19 @@
 import type { ApiResourceMicroStratigraphicUnit } from '~~/types'
 import { useAsyncValidator } from '~/composables/validation/useAsyncValidator'
-import { required, validateState, isInteger } from '~/utils/validations'
+import {
+  required,
+  validateState,
+  greaterThanOrEqual,
+  isInteger,
+} from '~/utils/validations'
 
 export default function <RT extends ApiResourceMicroStratigraphicUnit>(
   item: Partial<RT>,
 ) {
   const uniqueMicroStratigraphicUnit = useAsyncValidator({
-    prop: ['stratigraphicUnit.id', 'sample.id', 'number'],
-    path: 'sample',
-    message: 'Duplicate (SU, sample, number) tuple',
+    prop: ['sample.id', 'number'],
+    path: 'micro_stratigraphic_units',
+    message: 'Duplicate (sample, number) pair',
     item,
   })
   const rules = {
@@ -21,11 +26,19 @@ export default function <RT extends ApiResourceMicroStratigraphicUnit>(
       uniqueMicroStratigraphicUnit,
     ],
     number: [
-      validateState<RT>('number', required),
       validateState<RT>('number', isInteger),
       validateState<RT>('number', greaterThanOrEqual(1)),
       uniqueMicroStratigraphicUnit,
     ],
+    inclusionsGeology: [required, isInteger, greaterThanOrEqual(0)],
+    inclusionsDomesticRefuse: [required, isInteger, greaterThanOrEqual(0)],
+    inclusionsOrganicRefuse: [required, isInteger, greaterThanOrEqual(0)],
+    inclusionsBuildingMaterials: [required, isInteger, greaterThanOrEqual(0)],
+    inclusionPercentageSum: [
+      (value: number) =>
+        value === 100 || 'Inclusions percentage sum is incorrect',
+    ],
+    depositType: [required],
   }
 
   return (key: keyof typeof rules) => rules[key]

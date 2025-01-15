@@ -34,12 +34,33 @@ const normalizePost = (item: Partial<ApiResourceSample>) => {
   if (isApiResourceItem(item?.stratigraphicUnit)) {
     item.stratigraphicUnit = item.stratigraphicUnit['@id']
   }
-  if (item?.number) {
-    item.number = Number(item.number)
+  if (isApiResourceItem(item?.sample)) {
+    item.sample = item.sample['@id']
   }
+  const numericFields = [
+    'number',
+    'inclusionsGeology',
+    'inclusionsBuildingMaterials',
+    'inclusionsDomesticRefuse',
+    'inclusionsOrganicRefuse',
+  ]
+  numericFields.forEach((prop) => {
+    if (item?.[prop]) {
+      item[prop] = Number(item[prop])
+    }
+  })
   return item
 }
 useResourceItemNormalizeSubmit(props.mode, props.item, state, normalizePost)
+
+const inclusionsPercentageSum = computed(
+  () =>
+    Number(state.inclusionsGeology) +
+    Number(state.inclusionsDomesticRefuse) +
+    Number(state.inclusionsOrganicRefuse) +
+    Number(state.inclusionsBuildingMaterials),
+)
+
 const panel = ref([
   'identification',
   'description',
@@ -57,7 +78,6 @@ const panel = ref([
           <v-col cols="12" xs="12" sm="4" class="px-2">
             <api-resource-stratigraphic-unit-autocomplete
               v-model="state.stratigraphicUnit"
-              readonly
               :disabled="mode === 'update'"
               :validation-value="state"
               :rules="getRules('stratigraphicUnit')"
@@ -86,7 +106,11 @@ const panel = ref([
       <data-expansion-panel value="description" title="description">
         <v-row>
           <v-col cols="12" xs="12" md="6" class="px-2">
-            <v-text-field v-model="state.depositType" label="deposit type" />
+            <v-text-field
+              v-model="state.depositType"
+              label="deposit type"
+              :rules="getRules('depositType')"
+            />
           </v-col>
           <v-col cols="12" xs="12" md="6" class="px-2">
             <v-text-field
@@ -117,6 +141,7 @@ const panel = ref([
           <v-col cols="3" class="px-2">
             <v-text-field
               v-model="state.inclusionsGeology"
+              :rules="getRules('inclusionsGeology')"
               label="geology"
               suffix="%"
             />
@@ -124,6 +149,7 @@ const panel = ref([
           <v-col cols="3" class="px-2">
             <v-text-field
               v-model="state.inclusionsBuildingMaterials"
+              :rules="getRules('inclusionsBuildingMaterials')"
               label="building materials"
               suffix="%"
             />
@@ -131,6 +157,7 @@ const panel = ref([
           <v-col cols="3" class="px-2">
             <v-text-field
               v-model="state.inclusionsDomesticRefuse"
+              :rules="getRules('inclusionsDomesticRefuse')"
               label="domestic refuse"
               suffix="%"
             />
@@ -138,10 +165,19 @@ const panel = ref([
           <v-col cols="3" class="px-2">
             <v-text-field
               v-model="state.inclusionsOrganicRefuse"
+              :rules="getRules('inclusionsOrganicRefuse')"
               label="organic refuse"
               suffix="%"
             />
           </v-col>
+        </v-row>
+        <v-row dense>
+          <v-input
+            :model-value="inclusionsPercentageSum"
+            :rules="getRules('inclusionPercentageSum')"
+            validate-on="eager"
+            suffix="%"
+          />
         </v-row>
       </data-expansion-panel>
       <data-expansion-panel

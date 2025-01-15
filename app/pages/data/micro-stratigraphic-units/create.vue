@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import { DataItemPage } from '#components'
-import type { ApiAclResource, ApiResourcePottery } from '~~/types'
+import type {
+  ApiAclResource,
+  ApiResourceMicroStratigraphicUnit,
+} from '~~/types'
 </script>
 
 <template>
   <component
-    :is="DataItemPage<ApiResourcePottery & ApiAclResource>"
-    resource-key="pottery"
+    :is="DataItemPage<ApiResourceMicroStratigraphicUnit & ApiAclResource>"
+    resource-key="microStratigraphicUnit"
     mode="create"
   >
     <template #default="{ item, repository, resourceConfig, parent }">
-      <lazy-data-item-pottery-form
-        :mode="'create'"
+      <lazy-data-item-micro-stratigraphic-unit-form
+        mode="create"
         :item
         :parent
         :repository

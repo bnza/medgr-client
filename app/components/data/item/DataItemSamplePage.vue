@@ -8,6 +8,8 @@ import type {
 const resourceKey: ApiDataResourceKey = 'sample'
 
 const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
+
+const { hasSitePrivileges, hasRole } = useAppAuth()
 </script>
 
 <template>
@@ -20,6 +22,7 @@ const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
     <template #default="{ item, repository, resourceConfig }">
       <v-tabs v-model="tab" color="anchor">
         <v-tab value="data">data</v-tab>
+        <v-tab value="mu">microstratigraphic units</v-tab>
       </v-tabs>
       <v-tabs-window v-model="tab">
         <v-tabs-window-item value="data">
@@ -28,6 +31,13 @@ const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
             mode="read"
             :repository
             :resource-config
+          />
+        </v-tabs-window-item>
+        <v-tabs-window-item value="mu">
+          <lazy-data-collection-card
+            resource-key="microStratigraphicUnit"
+            :parent="['sample', item]"
+            :create-button="hasSitePrivileges(item.stratigraphicUnit?.site)"
           />
         </v-tabs-window-item>
       </v-tabs-window>

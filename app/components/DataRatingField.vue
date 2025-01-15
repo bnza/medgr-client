@@ -9,7 +9,7 @@ defineProps<{ readonly: boolean; label: string }>()
     class="mb-2"
     :text="label"
   />
-  <v-rating v-model="model" :readonly>
+  <v-rating v-model="model" :readonly clearable>
     <template #item="{ isFilled }">
       <v-icon :color="isFilled ? 'primary' : 'grey-lighten-1'">
         {{ isFilled ? 'fas fa-circle' : 'far fa-circle' }}

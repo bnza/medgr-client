@@ -1,8 +1,12 @@
-export const required = (value: string | undefined) =>
-  Boolean(value) || 'This field is required'
+export const required = (value: string | number | undefined) =>
+  value === 0 || Boolean(value) || 'This field is required'
 
 export const defined = (value: string | undefined) =>
   'undefined' !== typeof value || 'This field is required'
+
+export const empty = (value: unknown) =>
+  '' === value || ['undefined', 'null'].includes(typeof value)
+
 export const email = (value: string) =>
   /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value) || `Invalid email`
 export const maxLength = (maxLength: number) => (value: string) =>
@@ -13,13 +17,18 @@ export const minLength = (minLength: number) => (value: string) =>
   value.length >= Math.round(minLength) ||
   `Must be more than ${Math.round(minLength)} characters`
 export const isNumeric = (value: unknown) =>
-  !Number.isNaN(Number(value)) || `Must be a number`
+  'undefined' === typeof value ||
+  !Number.isNaN(Number(value)) ||
+  `Must be a number`
 export const isInteger = (value: unknown) =>
-  Number.isInteger(Number(value)) || `Must be an integer number`
+  empty(value) || Number.isInteger(Number(value)) || `Must be an integer number`
 export const greaterThan = (constraint: number) => (value: number) =>
-  value > constraint || `Must be greater than ${Math.round(constraint)}`
+  empty(value) ||
+  value > constraint ||
+  `Must be greater than ${Math.round(constraint)}`
 
 export const greaterThanOrEqual = (constraint: number) => (value: number) =>
+  empty(value) ||
   value >= constraint ||
   `Must be greater than or equal to ${Math.round(constraint)}`
 
