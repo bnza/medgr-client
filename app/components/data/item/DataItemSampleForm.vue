@@ -30,7 +30,14 @@ const { readonly, state } = useResourceItemForm<ApiResourceSample>(
 )
 
 if (props.mode === 'create' && props.parent) {
-  Object.assign(state, Object.fromEntries([props.parent]))
+  const parent = props.parent
+  if (
+    props.parent &&
+    props.parent[0] === 'stratigraphicUnits.stratigraphicUnit'
+  ) {
+    parent[0] = 'stratigraphicUnit'
+  }
+  Object.assign(state, Object.fromEntries([parent]))
 }
 
 const getRules = readonly.value

@@ -48,7 +48,7 @@ const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
         <v-tabs-window-item value="samples">
           <lazy-data-collection-card
             resource-key="sample"
-            :parent="['stratigraphicUnit', item]"
+            :parent="['stratigraphicUnits.stratigraphicUnit', item]"
             :create-button="item._acl.canUpdate"
           />
         </v-tabs-window-item>
