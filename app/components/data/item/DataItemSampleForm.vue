@@ -98,7 +98,7 @@ const panel = ref(['identification', 'description'])
             <date-field-picker
               v-model="state.takingDate"
               :readonly
-              label="data taken"
+              label="date taken"
             />
           </v-col>
         </v-row>
