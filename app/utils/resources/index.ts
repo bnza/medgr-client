@@ -5,6 +5,7 @@ import type {
 } from '~~/types/api'
 import microStratigraphicUnit from '~/utils/resources/data/microStratigraphicUnit'
 import pottery from '~/utils/resources/data/pottery'
+import potteriesMediaObject from '~/utils/resources/data/potteriesMediaObject'
 import sample from './data/sample'
 import site from './data/site'
 import sitesUser from './data/sitesUser'
@@ -17,6 +18,7 @@ import vocabularies from './vocabularies'
 export const data: Record<ApiDataResourceKey, StaticResourceConfig> = {
   microStratigraphicUnit,
   pottery,
+  potteriesMediaObject,
   sample,
   site,
   sitesUser,

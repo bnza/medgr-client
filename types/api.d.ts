@@ -8,6 +8,7 @@ export type ReadonlyHeaders = VDataTable['$props']['headers']
 export type ApiDataResourceKey =
   | 'microStratigraphicUnit'
   | 'pottery'
+  | 'potteriesMediaObject'
   | 'sample'
   | 'site'
   | 'sitesUser'

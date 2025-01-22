@@ -28,9 +28,7 @@ const useMediaObjectJoin = async (
 
   const { items, refresh, status: fetchStatus } = await fetchCollection()
 
-  const repository = useNuxtApp().$api.getRepository(
-    'stratigraphicUnitsMediaObject',
-  )
+  const repository = useNuxtApp().$api.getRepository(resourceKey)
   const { showSuccess, showError } = useAppSnackbarStore()
 
   const submitStatus = ref<AsyncDataRequestStatus>('idle')
