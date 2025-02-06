@@ -369,6 +369,12 @@ const microStratigraphicUnit: Readonly<ResourceFiltersDefinitionObject> = {
       SearchPartial,
     },
   },
+  keyAttributes: {
+    filters: {
+      SearchPartial,
+    },
+    propertyLabel: 'key attribute',
+  },
   inclusionsGeology: {
     filters: {
       NumericEqual,

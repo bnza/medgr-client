@@ -46,7 +46,7 @@ const useMediaObjectJoin = async (
       submitStatus.value = 'success'
       showSuccess('Successfully deleted media')
       deletingItem.value = undefined
-    } catch (e) {
+    } catch (e: unknown) {
       submitStatus.value = 'error'
       showError(e)
     }
@@ -62,7 +62,8 @@ const useMediaObjectJoin = async (
       refresh()
       submitStatus.value = 'success'
       showSuccess('Successfully created media')
-    } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e: unknown) {
       submitStatus.value = 'error'
     }
   }

@@ -29,6 +29,9 @@ const results = ref({
 })
 
 fetchCollection().then((_results) => (results.value = _results))
+const height = computed(() =>
+  props.parent ? 'calc(100vh - 370px)' : 'calc(100vh - 220px)',
+)
 </script>
 
 <template>
@@ -36,7 +39,7 @@ fetchCollection().then((_results) => (results.value = _results))
     :loading="results.status === 'pending'"
     fixed-header
     fixed-footer
-    height="calc(100vh - 300px)"
+    :height
     :headers
     :items="results.items"
     :items-length="results.totalItems"
