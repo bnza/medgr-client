@@ -69,7 +69,8 @@ onUnmounted(() => {
   >
     <v-container>
       <lazy-data-item-delete-alert v-if="mode === 'delete'" />
-      <slot />
+      <loading-component v-if="submitStatus === 'success'" />
+      <slot v-else />
     </v-container>
   </v-form>
 </template>

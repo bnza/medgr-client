@@ -35,7 +35,7 @@ const code = computed(() =>
 
 const resourceItemSubmit = useResourceItemSubmit()
 provide(resourceItemSubmitInjectionKey, resourceItemSubmit)
-const { triggerSubmit } = resourceItemSubmit
+const { triggerSubmit, submitStatus } = resourceItemSubmit
 
 const { parent } =
   props.mode === 'create'
@@ -86,12 +86,13 @@ const { collection, back } = useAppNavigation(props.mode === 'delete')
         />
       </v-btn-group>
       <v-btn
-        v-else
+        v-else-if="submitStatus !== 'success'"
         rounded="lg"
         class="mr-4"
         data-testid="submit-form-button"
         variant="tonal"
         :text="mode"
+        :disabled="submitStatus === 'pending'"
         @click="triggerSubmit = true"
       />
     </template>
