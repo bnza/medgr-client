@@ -23,7 +23,7 @@ const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
         <v-tab value="media">media</v-tab>
       </v-tabs>
       <v-tabs-window v-model="tab">
-        <v-tabs-window-item value="data">
+        <v-tabs-window-item value="data" data-testid="tabs-item-data">
           <lazy-data-item-micro-stratigraphic-unit-form
             :item
             mode="read"

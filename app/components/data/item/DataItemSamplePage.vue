@@ -25,7 +25,7 @@ const { hasSitePrivileges, hasRole } = useAppAuth()
         <v-tab value="mu">microstratigraphic units</v-tab>
       </v-tabs>
       <v-tabs-window v-model="tab">
-        <v-tabs-window-item value="data">
+        <v-tabs-window-item value="data" data-testid="tabs-item-data">
           <lazy-data-item-sample-form
             :item
             mode="read"
@@ -33,7 +33,7 @@ const { hasSitePrivileges, hasRole } = useAppAuth()
             :resource-config
           />
         </v-tabs-window-item>
-        <v-tabs-window-item value="mu">
+        <v-tabs-window-item value="mu" data-testid="tabs-item-mu">
           <lazy-data-collection-card
             resource-key="microStratigraphicUnit"
             :parent="['sample', item]"
