@@ -53,10 +53,10 @@ watch(model, (flag) => {
 </script>
 
 <template>
-  <v-dialog v-model="model" max-width="400px" persistent>
+  <v-dialog v-model="model" max-width="600px" persistent>
     <v-card data-testid="create-media-object-card">
       <v-card-text class="text-center">
-        <v-container v-if="submitStatus === 'pending'" style="height: 150px">
+        <v-container v-if="submitStatus === 'pending'" style="height: 300px">
           <v-row align-content="center" class="fill-height" justify="center">
             <v-col class="text-subtitle-1 text-center" cols="12">
               Request in progress
@@ -71,7 +71,7 @@ watch(model, (flag) => {
             </v-col>
           </v-row>
         </v-container>
-        <v-container v-else style="height: 150px">
+        <v-container v-else style="height: 300px">
           <v-form ref="form" @submit.prevent>
             <v-row align-content="center" class="fill-height" justify="center">
               <v-col class="text-subtitle-1 text-center" cols="12">
@@ -82,6 +82,11 @@ watch(model, (flag) => {
                   label="File input"
                   :accept
                 />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-textarea v-model="state.description" label="description" />
               </v-col>
             </v-row>
           </v-form>

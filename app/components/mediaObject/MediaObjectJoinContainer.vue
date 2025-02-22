@@ -21,10 +21,24 @@ const apiBaseUrl = config.public.apiBaseUrl
 
 const isCreateDialogOpen = ref(false)
 const parentIri = computed(() => props.parent[1]['@id'])
+
+const isCarouselOpen = ref(false)
+const carouselModel = ref(0)
+const openCarousel = (index: number) => {
+  carouselModel.value = index
+  isCarouselOpen.value = true
+}
 </script>
 
 <template>
-  <v-container data-testid="media-object-join-container">
+  <media-object-carousel
+    v-if="isCarouselOpen"
+    v-model="carouselModel"
+    :items
+    :api-base-url
+    @close="isCarouselOpen = false"
+  />
+  <v-container v-else data-testid="media-object-join-container">
     <media-object-join-delete-dialog />
     <media-object-join-create-dialog v-model="isCreateDialogOpen" :parent-iri />
     <v-row dense justify="end" style="min-height: 48px">
@@ -44,8 +58,14 @@ const parentIri = computed(() => props.parent[1]['@id'])
       </v-col>
     </v-row>
     <v-row v-if="items.length > 0" no-gutters>
-      <v-col v-for="item of items" :key="item['@id']" cols="3">
-        <media-object-card :item :api-base-url :can-update />
+      <v-col v-for="(item, index) of items" :key="item['@id']" cols="3">
+        <media-object-card
+          :item
+          :index
+          :api-base-url
+          :can-update
+          @click="openCarousel($event)"
+        />
       </v-col>
     </v-row>
     <v-row v-else justify="center">

@@ -52,11 +52,18 @@ const useMediaObjectJoin = async (
     }
   }
 
-  const createAndFeedback = async (item: { item: string; file: File }) => {
+  const createAndFeedback = async (item: {
+    item: string
+    file: File
+    description?: string
+  }) => {
     submitStatus.value = 'pending'
     const formData = new FormData()
     formData.append('item', item.item)
     formData.append('file', item.file)
+    if (item.description) {
+      formData.append('description', item.description)
+    }
     try {
       await repository.postItem(formData, 'multipart/form-data')
       refresh()

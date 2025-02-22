@@ -56,6 +56,7 @@ export interface ApiResourceMediaObject extends ApiResourceItem {
 export interface ApiResourceMediaObjectJoin extends ApiResourceItem {
   item: ApiResourceItem
   mediaObject: ApiResourceMediaObject
+  description?: string
 }
 export interface ApiResourceStratigraphicUnitsRelationship
   extends ApiResourceItem {
