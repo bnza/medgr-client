@@ -59,9 +59,9 @@ export type JsonLdResourceCollection<T extends ApiResourceItem> =
     member: Array<JsonLdResourceItem<T>>
   }
 
-export interface JsonLdConstraintViolationsList extends JsonLdItem {
-  '@context': '/api/contexts/ConstraintViolationList'
-  '@type': 'ConstraintViolationList'
+export interface JsonLdConstraintViolations extends JsonLdItem {
+  '@context': '/api/contexts/ConstraintViolation'
+  '@type': 'ConstraintViolation'
   title: string
   description: string
   violations: Array<{

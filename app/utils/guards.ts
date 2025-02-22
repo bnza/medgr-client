@@ -1,5 +1,5 @@
 import type {
-  JsonLdConstraintViolationsList,
+  JsonLdConstraintViolations,
   JsonLdHydraError,
 } from '~~/types/jsonld'
 import { ApiRole, type ApiSpecialistRole } from '~/utils/consts/auth'
@@ -31,8 +31,8 @@ export const isApiLdResourceItem = (value: unknown): value is ApiResourceItem =>
   isLiteralObject(value) && '@id' in value
 export const isJsonLdValidationResponseError = (
   value: unknown,
-): value is JsonLdConstraintViolationsList =>
-  isLiteralObject(value) && value['@type'] === 'ConstraintViolationList'
+): value is JsonLdConstraintViolations =>
+  isLiteralObject(value) && value['@type'] === 'ConstraintViolation'
 
 export const isJsonLdResponseHydraError = (
   value: unknown,
