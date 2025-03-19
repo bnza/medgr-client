@@ -67,6 +67,11 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@sidebase/nuxt-auth',
   ],
+  router: {
+    options: {
+      hashMode: true,
+    },
+  },
   runtimeConfig: {
     public: {
       apiBaseUrl: 'http://localhost',

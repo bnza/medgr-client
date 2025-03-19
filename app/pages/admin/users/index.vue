@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  middleware: ['auth', 'acl'],
+  middleware: ['sidebase-auth', 'acl'],
   voters: [AclVoters.HasRoleAdmin],
 })
 provide(userPasswordInjectionKey, useUserPassword())

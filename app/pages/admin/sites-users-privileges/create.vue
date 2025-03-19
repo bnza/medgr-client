@@ -3,7 +3,7 @@ import { DataItemPage } from '#components'
 import type { ApiAclResource, ApiResourceSitesUser } from '~~/types'
 
 definePageMeta({
-  middleware: ['auth', 'acl'],
+  middleware: ['sidebase-auth', 'acl'],
   voters: [AclVoters.HasRoleAdmin],
 })
 </script>
