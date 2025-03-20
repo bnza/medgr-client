@@ -6,8 +6,6 @@ import type {
   Filter,
 } from '~~/types'
 import { isApiResourceItem } from '~/utils/guards'
-import { SymbolKind } from 'vscode-languageserver-types'
-import Boolean = SymbolKind.Boolean
 
 const addMultiplePropEntryToFilterObject = (
   filterObj: Record<string, any>,

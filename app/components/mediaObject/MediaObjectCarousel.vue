@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ApiResourceMediaObjectJoin } from '~~/types'
-import { VCarousel } from 'vuetify/lib/components/VCarousel'
+import { VCarousel } from 'vuetify/components'
 
 defineProps<{
   apiBaseUrl: string
