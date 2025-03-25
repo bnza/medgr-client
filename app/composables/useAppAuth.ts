@@ -1,5 +1,6 @@
 import { ApiRole, ROLE_COLORS } from '~/utils/consts/auth'
 import type { ApiResourceSite } from '~~/types'
+import type { SessionData } from '#auth'
 
 const _hasSitePrivileges = (
   site: ApiResourceSite,

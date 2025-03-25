@@ -23,3 +23,16 @@ export const clone = <T extends Record<string, any>>(
 export const extractResourceKeyFromCacheKey = (
   key: ResourceCollectionCacheKey,
 ): ApiDataResourceKey => key.replace(/\/.+/, '')
+
+export const camelToSnakeCase = (str: string): string => {
+  if (!str) {
+    return str
+  }
+  const firstLetter = str.charAt(0)
+  const rest = str.substring(1)
+
+  return (
+    firstLetter.toLowerCase() +
+    rest.replace(/([A-Z])/g, (_, p1) => '_' + p1.toLowerCase())
+  )
+}

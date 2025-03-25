@@ -13,6 +13,7 @@ import stratigraphicUnit from './data/stratigraphicUnit'
 import stratigraphicUnitsMediaObject from './data/stratigraphicUnitsMediaObject'
 import stratigraphicUnitsRelationship from './data/stratigraphicUnitsRelationship'
 import user from './data/user'
+import workUnit from './workUnit'
 import vocabularies from './vocabularies'
 
 export const data: Record<ApiDataResourceKey, StaticResourceConfig> = {
@@ -28,11 +29,12 @@ export const data: Record<ApiDataResourceKey, StaticResourceConfig> = {
   user,
 } as const
 
-export const resources = Object.freeze(Object.assign({}, data, vocabularies))
+export const resources = Object.freeze(
+  Object.assign({}, data, vocabularies, { workUnit }),
+)
 
 export const apiResourceKeys = [
-  ...Object.keys(data),
-  ...Object.keys(vocabularies),
+  ...Object.keys(resources),
 ] as const as ApiResourceKey[]
 
 export { vocabularies }

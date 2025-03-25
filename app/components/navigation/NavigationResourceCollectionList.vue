@@ -2,7 +2,7 @@
 withDefaults(
   defineProps<{
     path: string
-    replace: boolean
+    replace?: boolean
     tooltipText?: string
   }>(),
   {

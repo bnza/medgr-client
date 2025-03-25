@@ -1,12 +1,8 @@
-import type { $Fetch } from 'nitropack'
 import AbstractRepository from './AbstractRepository'
 import qs from 'qs'
 import type { ApiResourceItem, JsonLdResourceCollection } from '~~/types'
 
 class AutocompleteRepository extends AbstractRepository {
-  constructor($fetch: $Fetch) {
-    super($fetch)
-  }
   async search<ResponseType extends ApiResourceItem>(
     path: string,
     params: Record<string, any>,

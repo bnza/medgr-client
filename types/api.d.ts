@@ -23,8 +23,16 @@ export type ApiVocabularyResourceKey =
   | 'vocabularyPotteryTypology'
   | 'vocabularySuRelationship'
 
-export type ApiResourceKey = ApiDataResourceKey | ApiVocabularyResourceKey
-// export type ApiResourceCollectionParent = [ApiDataResourceType, ApiId]
+export type ApiResourceKey =
+  | ApiDataResourceKey
+  | ApiVocabularyResourceKey
+  | 'workUnit'
+
+export type ImportableDataResourceKey = Extract<
+  ApiDataResourceKey,
+  'stratigraphicUnit'
+>
+
 export type ResourceConfig = Readonly<{
   apiPath: string
   appPath: string

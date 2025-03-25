@@ -1,6 +1,19 @@
 <script setup lang="ts">
 import useMediaObjectJoinValidation from '~/composables/validation/useMediaObjectJoinValidation'
 import { VForm } from 'vuetify/components'
+import type { OptionalProp } from '~~/types'
+
+type MediaObjectState = {
+  item: string
+  file: File
+  description?: string
+}
+
+type PartialMediaObjectState = OptionalProp<MediaObjectState, 'file'>
+
+const isMediaObjectState = (
+  state: PartialMediaObjectState,
+): state is MediaObjectState => !state.file
 
 const props = withDefaults(
   defineProps<{
@@ -22,9 +35,10 @@ const props = withDefaults(
 )
 
 const accept = computed(() => props.mimeTypes.join(','))
-const state: { item: string; file: File | undefined } = reactive({
+const state: PartialMediaObjectState = reactive({
   item: props.parentIri,
   file: undefined,
+  description: undefined,
 })
 
 const model = defineModel<boolean>({ required: true })
@@ -36,10 +50,15 @@ const disabled = computed(() => submitStatus.value === 'pending')
 
 const submit = async () => {
   await form.value?.validate()
+
   if (!form.value?.isValid) {
     return
   }
-  await createAndFeedback(state)
+
+  if (isMediaObjectState(state)) {
+    await createAndFeedback(state)
+  }
+
   if (submitStatus.value === 'success') {
     model.value = false
     state.file = undefined
@@ -72,7 +91,7 @@ watch(model, (flag) => {
           </v-row>
         </v-container>
         <v-container v-else style="height: 300px">
-          <v-form ref="form" @submit.prevent>
+          <v-form :ref="'form'" @submit.prevent>
             <v-row align-content="center" class="fill-height" justify="center">
               <v-col class="text-subtitle-1 text-center" cols="12">
                 <v-file-input

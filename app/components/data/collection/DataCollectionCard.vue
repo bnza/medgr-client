@@ -5,11 +5,13 @@ const props = withDefaults(
   defineProps<{
     resourceKey: ApiDataResourceKey
     parent?: ApiResourceCollectionParent
+    uploadButton?: boolean
     downloadButton?: boolean
     createButton?: boolean
     searchButton?: boolean
   }>(),
   {
+    uploadButton: false,
     downloadButton: true,
     createButton: false,
     searchButton: true,
@@ -75,6 +77,10 @@ const { isAuthenticated } = useAppAuth()
     <!--          />-->
     <!--        </template>-->
     <template #toolbar-append>
+      <lazy-navigation-resource-collection-import
+        v-if="uploadButton && isAuthenticated"
+        :app-path="resourceConfig.appPath"
+      />
       <lazy-navigation-resource-collection-download
         v-if="downloadButton && isAuthenticated"
         :resource-collection-cache-key="collectionCacheKey"

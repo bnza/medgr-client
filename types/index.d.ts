@@ -12,3 +12,5 @@ export type UserChangePasswordBody = {
   repeatPassword: string
 }
 export type UiMode = 'default' | 'map'
+export type OptionalProp<T, K extends keyof T> = Omit<T, K> &
+  Partial<Pick<T, K>>

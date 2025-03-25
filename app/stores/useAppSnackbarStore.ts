@@ -37,7 +37,7 @@ export default defineStore('app-snackbar', () => {
     )
   }
 
-  const showError = (value: string | Error | FetchResponse<unknown>) => {
+  const showError = (value: unknown) => {
     let values: string[] = []
     if (isFetchResponse(value)) {
       values = responseErrorToString(value)
@@ -49,6 +49,10 @@ export default defineStore('app-snackbar', () => {
 
     if ('string' === typeof value) {
       values = [value]
+    }
+
+    if (values.length === 0) {
+      throw new Error(`Unsupported fetch response: ${typeof value}`)
     }
 
     values.forEach((text) => {

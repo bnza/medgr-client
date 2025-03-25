@@ -4,19 +4,24 @@ import type {
   ApiResourceItem,
   ApiDataResourceKey,
   ApiResourceKey,
+  ImportableDataResourceKey,
 } from '~~/types'
-import ResourceRepository from '~/utils/repository/ResourceRepository'
+import ResourceRepository from './ResourceRepository'
 import ValidatorRepository from './ValidatorRepository'
-import AutocompleteRepository from '~/utils/repository/AutocompleteRepository'
+import AutocompleteRepository from './AutocompleteRepository'
 import UserRepository from './UserRepository'
+import ImportCsvFileRepository from './ImportCsvFileRepository'
+import WorkUnitRepository from './WorkUnitRepository'
 
 export default class Api {
   readonly #fetcher: $Fetch
   readonly paths: Readonly<Record<ApiResourceKey, string>>
   #autocomplete: AutocompleteRepository | undefined
   #resources: Map<ApiDataResourceKey, ResourceRepository<ApiResourceItem>>
+  #imports: Map<ImportableDataResourceKey, ImportCsvFileRepository>
   #validator: ValidatorRepository | undefined
   #userRepository: UserRepository | undefined
+  #workUnitRepository: WorkUnitRepository | undefined
 
   constructor(
     index: Record<ApiResourceKey, string>,
@@ -27,6 +32,10 @@ export default class Api {
     this.#resources = new Map<
       ApiDataResourceKey,
       ResourceRepository<ApiResourceItem>
+    >()
+    this.#imports = new Map<
+      ImportableDataResourceKey,
+      ImportCsvFileRepository
     >()
   }
 
@@ -69,5 +78,29 @@ export default class Api {
     }
     // @ts-expect-error: map value has been set above!
     return this.#resources.get(resourceKey)
+  }
+
+  getWorkUnitRepository(): WorkUnitRepository {
+    if (!this.#workUnitRepository) {
+      this.#workUnitRepository = new WorkUnitRepository(
+        this.#fetcher,
+        this.paths['workUnit'],
+      )
+    }
+    return this.#workUnitRepository
+  }
+
+  getImportRepository(resourceKey: ImportableDataResourceKey) {
+    if (!this.#imports.has(resourceKey)) {
+      this.#imports.set(
+        resourceKey,
+        new ImportCsvFileRepository(
+          this.#fetcher,
+          resourceKey,
+          this.paths['workUnit'],
+        ),
+      )
+    }
+    return this.#imports.get(resourceKey)!
   }
 }

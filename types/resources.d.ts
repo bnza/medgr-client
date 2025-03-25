@@ -1,3 +1,5 @@
+import type { JsonLdItem } from '~~/types/jsonld'
+
 export type ApiId = string | number
 
 export type BaseAcl = {
@@ -128,3 +130,30 @@ export type StratigraphicUnitRelationshipKey =
   | 'F'
   | 'x'
   | 'X'
+
+export interface ApiWorkUnitStatus extends JsonLdItem {
+  value: number
+}
+
+export interface ApiResourceWorkUnit extends ApiResourceItem {
+  id: string
+  name: string
+  class: string
+  service: string
+  description: string
+  stepsCount: number
+  currentStepNumber: number
+  status: ApiWorkUnitStatus
+  startedAt: number
+  terminatedAt: number
+  children: ApiResourceWorkUnit[]
+  errors: ApiResourceWorkUnitError[]
+}
+
+export interface ApiResourceWorkUnitError extends ApiResourceItem {
+  id: string
+  workUnit: ApiResourceWorkUnit
+  class: string
+  message: string
+  values: unknown[]
+}

@@ -3,7 +3,7 @@ const props = withDefaults(
   defineProps<{
     replace?: boolean
     tooltipText?: string
-    history: boolean
+    history?: boolean
   }>(),
   {
     replace: false,

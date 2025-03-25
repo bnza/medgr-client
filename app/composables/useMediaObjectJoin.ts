@@ -4,6 +4,7 @@ import type {
   ApiResourceMediaObjectJoin,
 } from '~~/types'
 import type { AsyncDataRequestStatus } from '#app'
+import { isFetchResponse } from '~/utils/guards'
 
 export const mediaObjectJoinInjectionKey = Symbol() as InjectionKey<
   Awaited<ReturnType<typeof useMediaObjectJoin>>
@@ -48,7 +49,9 @@ const useMediaObjectJoin = async (
       deletingItem.value = undefined
     } catch (e: unknown) {
       submitStatus.value = 'error'
-      showError(e)
+      if (typeof e === 'string' || e instanceof Error || isFetchResponse(e)) {
+        showError(e)
+      }
     }
   }
 

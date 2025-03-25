@@ -1,4 +1,5 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import { process } from 'std-env'
+
 export default defineNuxtConfig({
   app: {
     baseURL: '/app',
@@ -29,8 +30,8 @@ export default defineNuxtConfig({
         dataType: {
           id: 'string',
           email: 'string',
-          roles: 'string[]',
-          privileges: 'number[]',
+          roles: 'ApiRole[]',
+          privileges: 'Record<number,number>[]',
         },
       },
     },
