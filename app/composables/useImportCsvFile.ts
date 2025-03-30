@@ -10,9 +10,12 @@ const useImportCsvFile = (resourceKey: ImportableDataResourceKey) => {
 
   const importFile = async (file: File) => {
     try {
+      submitStatus.value = 'pending'
       const job = await repository.uploadFile(file)
-      submitStatus.value = 'success'
-      return repository.runJob(job.id)
+      return repository.runJob(job.id).then((job) => {
+        submitStatus.value = 'success'
+        return job
+      })
     } catch (e) {
       submitStatus.value = 'error'
       showError(e)

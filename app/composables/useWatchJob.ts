@@ -50,7 +50,7 @@ export default function (job: Ref<JsonLdResourceItem<ApiResourceWorkUnit>>) {
       return
     }
 
-    cachedJob.value = await repository.fetchItem(job.value.id, true)
+    cachedJob.value = await repository.fetchCachedItem(job.value.id, true)
 
     timeoutIdCached.value = setTimeout(watchCachedJob, 500)
   }

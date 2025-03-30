@@ -13,7 +13,7 @@ const color = computed(() => {
   } else if (isRunning(props.job)) {
     return 'warning'
   }
-  return null
+  return 'grey'
 })
 
 const duration = computed(() => {
@@ -66,12 +66,12 @@ watch(
           :color
         />
       </v-col>
-      <v-col cols="1" class="text-center">
+      <v-col v-if="!isIdle(job)" cols="1" class="text-center">
         {{ currentStepNumber }} / {{ job.stepsCount }}
       </v-col>
     </v-row>
     <template #append>
-      <v-list-item-action class="flex-column align-end">
+      <v-list-item-action v-if="!isIdle(job)" class="flex-column align-end">
         <small class="mb-4 text-high-emphasis opacity-60"
           >{{ duration }} sec</small
         >

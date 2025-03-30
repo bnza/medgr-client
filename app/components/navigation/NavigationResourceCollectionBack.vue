@@ -25,7 +25,7 @@ onUnmounted(() => {
 
 <template>
   <v-tooltip location="bottom" :text="tooltipText">
-    <template #activator="{ actProps }">
+    <template #activator="{ props: actProps }">
       <NuxtLink
         :to
         :replace

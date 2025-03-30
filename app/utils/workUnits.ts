@@ -9,6 +9,9 @@ const StatusValues = {
 } as const
 
 type StatusValue = (typeof StatusValues)[keyof typeof StatusValues]
+export type StatusText = Lowercase<
+  Exclude<keyof typeof StatusValues, 'CANCELLED'>
+>
 
 type StatusCheckArgumentValue = ApiResourceWorkUnit | ApiWorkUnitStatus | number
 
@@ -44,7 +47,7 @@ export function isSuccess(value: StatusCheckArgumentValue) {
   return is(value, StatusValues.SUCCESS)
 }
 export function isError(value: StatusCheckArgumentValue) {
-  return is(value, StatusValues.SUCCESS)
+  return is(value, StatusValues.ERROR)
 }
 
 export function isCancelled(value: StatusCheckArgumentValue) {
@@ -54,7 +57,9 @@ export function isTerminated(value: StatusCheckArgumentValue) {
   return !isIdle(value) && !isRunning(value)
 }
 
-export function statusToColor(value: StatusCheckArgumentValue): string | null {
+export function statusToColor(
+  value: StatusCheckArgumentValue,
+): string | undefined {
   if (isSuccess(value)) {
     return 'success'
   } else if (isError(value)) {
@@ -62,7 +67,7 @@ export function statusToColor(value: StatusCheckArgumentValue): string | null {
   } else if (isRunning(value)) {
     return 'warning'
   }
-  return null
+  return
 }
 
 export function statusToIcon(value: StatusCheckArgumentValue): string {
@@ -74,4 +79,15 @@ export function statusToIcon(value: StatusCheckArgumentValue): string {
     return 'fas fa-circle-xmark'
   }
   return 'fas fa-circle'
+}
+
+export function statusToText(value: StatusCheckArgumentValue): StatusText {
+  if (isSuccess(value)) {
+    return 'success'
+  } else if (isError(value)) {
+    return 'error'
+  } else if (isRunning(value)) {
+    return 'running'
+  }
+  return 'idle'
 }

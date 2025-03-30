@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const store = useUiAppNavigationDrawerStore()
-const { hasRoleAdmin } = useAppAuth()
+const { hasRoleAdmin, hasRole } = useAppAuth()
 const open = ref([])
 </script>
 
@@ -63,6 +63,23 @@ const open = ref([])
           router
           title="Stratigraphic Unit"
           data-testid="app-nav-drawer-li-sites"
+        />
+      </v-list-group>
+      <v-list-group v-if="hasRole(ApiRole.Editor)" value="Jobs">
+        <template #activator="{ props }">
+          <v-list-item
+            v-bind="props"
+            prepend-icon="fas fa-toolbox"
+            title="Jobs"
+            data-testid="app-nav-drawer-li-jobs"
+          />
+        </template>
+        <v-list-item
+          nuxt
+          to="/jobs/imported_files"
+          router
+          title="Imported files"
+          data-testid="app-nav-drawer-li-imported-files"
         />
       </v-list-group>
       <v-list-group v-if="hasRoleAdmin" value="Admin">

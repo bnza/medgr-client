@@ -17,9 +17,9 @@ class ImportCsvFileRepository extends WorkUnitRepository {
   constructor(
     $fetch: $Fetch,
     readonly resourceKey: ImportableDataResourceKey,
-    override readonly workUnitApiBasePath: string,
+    readonly workUnitApiBasePath: string,
   ) {
-    super($fetch, workUnitApiBasePath)
+    super(workUnitApiBasePath, $fetch)
     this.apiResourceKeyInflection = pluralize(resourceKey)
   }
 

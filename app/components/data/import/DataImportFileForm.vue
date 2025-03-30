@@ -50,21 +50,35 @@ const submit = async () => {
       </v-col>
     </v-row>
   </v-container>
-  <v-container v-else style="height: 300px">
-    <v-row>
-      <v-form :ref="'form'" class="mt-12" style="width: 100%" @submit.prevent>
-        <v-row align-content="center" justify="center">
-          <v-col class="text-subtitle-1 text-center" cols="12">
-            <v-file-input
-              v-model="state.file"
-              :rules="getRules('file')"
-              clearable
-              label="File input"
-              :accept
-            />
-          </v-col>
-        </v-row>
-      </v-form>
+  <v-container
+    v-else-if="submitStatus === 'idle'"
+    style="height: 300px"
+    class="mx-12"
+  >
+    <v-row justify="center" data-testid="import-file-alert-row">
+      <v-col cols="12" sm="12" lg="6">
+        <v-alert
+          class="my-4"
+          variant="outlined"
+          text="Be careful when import file to the database. This action cannot be undone."
+          title="Import file"
+          type="warning"
+          icon="fas fa-exclamation-triangle"
+        />
+      </v-col>
+    </v-row>
+    <v-row align-content="center" justify="center">
+      <v-col cols="12">
+        <v-form :ref="'form'" class="mt-12" @submit.prevent>
+          <v-file-input
+            v-model="state.file"
+            :rules="getRules('file')"
+            clearable
+            label="File input"
+            :accept
+          />
+        </v-form>
+      </v-col>
     </v-row>
     <v-row>
       <v-btn class="ml-12" color="anchor" :disabled @click="$router.back()">
@@ -76,6 +90,11 @@ const submit = async () => {
       </v-btn>
     </v-row>
   </v-container>
+  <v-banner
+    v-else-if="submitStatus === 'error'"
+    color="error"
+    icon="fas fa-circle-xmark"
+  >
+    File upload or job run failed. Please contact the system administrator.
+  </v-banner>
 </template>
-
-<style scoped></style>

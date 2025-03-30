@@ -2,7 +2,7 @@ import { AclVoters } from '~/utils'
 
 type VoteResult = { granted: boolean; message?: string; redirectTo?: string }
 export default defineNuxtRouteMiddleware((to) => {
-  const { hasRoleAdmin } = useAppAuth()
+  const { hasRoleAdmin, hasRole } = useAppAuth()
   // @ts-expect-error cannot set custom props in page meta
   const voters: AclVoters[] = to.meta.voters || []
   const { showError } = useAppSnackbarStore()
@@ -15,9 +15,18 @@ export default defineNuxtRouteMiddleware((to) => {
     }
     return voteResult
   }
+  const hasRoleEditorVoter = (): VoteResult => {
+    const voteResult: VoteResult = { granted: hasRole.value(ApiRole.Editor) }
+    if (!voteResult.granted) {
+      voteResult.message = 'Insufficient privileges: role EDITOR required'
+      voteResult.redirectTo = '/'
+    }
+    return voteResult
+  }
 
   const allVoters: Record<AclVoters, () => VoteResult> = {
     [AclVoters.HasRoleAdmin]: hasRoleAdminVoter,
+    [AclVoters.HasRoleEditor]: hasRoleEditorVoter,
   } as const
 
   const vote = voters.reduce(

@@ -61,7 +61,7 @@ onUnmounted(() => {
 
 <template>
   <v-form
-    ref="form"
+    :ref="'form'"
     class="mx-4"
     :readonly
     data-testid="data-item-form"

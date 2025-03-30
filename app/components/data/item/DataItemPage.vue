@@ -14,9 +14,11 @@ const props = withDefaults(
     codeKey?: keyof RT
     mode: ApiAction
     resourceKey: ApiDataResourceKey
+    appendIcons?: boolean
   }>(),
   {
     codeKey: 'id',
+    appendIcons: true,
   },
 )
 
@@ -72,12 +74,14 @@ const { collection, back } = useAppNavigation(props.mode === 'delete')
       >
         <slot name="toolbar-append" :item="item" />
         <lazy-navigation-resource-item-update
+          v-if="appendIcons"
           :id="item.id"
           size="x-large"
           :disabled="!item._acl?.canUpdate"
           :app-path="resourceConfig.appPath"
         />
         <lazy-navigation-resource-item-delete
+          v-if="appendIcons"
           :id="item.id"
           size="default"
           :disabled="!item._acl?.canDelete"

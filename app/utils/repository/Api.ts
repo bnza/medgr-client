@@ -83,8 +83,8 @@ export default class Api {
   getWorkUnitRepository(): WorkUnitRepository {
     if (!this.#workUnitRepository) {
       this.#workUnitRepository = new WorkUnitRepository(
-        this.#fetcher,
         this.paths['workUnit'],
+        this.#fetcher,
       )
     }
     return this.#workUnitRepository

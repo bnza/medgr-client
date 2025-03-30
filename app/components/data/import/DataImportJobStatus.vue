@@ -2,12 +2,11 @@
 import type { ApiResourceWorkUnit, JsonLdResourceItem } from '~~/types'
 import { statusToColor } from '~/utils/workUnits'
 import useWatchJob from '~/composables/useWatchJob'
+import type { AsyncComponentOptions } from 'vue'
 
-const props = defineProps<{
-  job: JsonLdResourceItem<ApiResourceWorkUnit>
-}>()
-
-const job = toRef(props.job)
+const job = defineModel<JsonLdResourceItem<ApiResourceWorkUnit>>({
+  required: true,
+})
 
 const { watchJob, unwatchJob } = useWatchJob(job)
 
@@ -43,16 +42,49 @@ const opened = computed(() => {
 
 const color = computed(() => statusToColor(job.value))
 const icon = computed(() => statusToIcon(job.value))
+const statusText = computed(() => statusToText(job.value))
+
+const emptyComponent: AsyncComponentOptions = {
+  loader: () =>
+    new Promise((resolve) => {
+      resolve({ render: () => h('div', '') })
+    }),
+}
+
+const dataImportReportComponentsMap: Record<
+  StatusText,
+  ReturnType<typeof defineAsyncComponent>
+> = {
+  idle: defineAsyncComponent(emptyComponent),
+  running: defineAsyncComponent(emptyComponent),
+  error: defineAsyncComponent(
+    () => import('~/components/data/import/DataImportErrorReport.vue'),
+  ),
+  success: defineAsyncComponent(
+    () => import('~/components/data/import/DataImportSuccessReport.vue'),
+  ),
+}
+
+const dataImportReportComponent = computed(
+  () => dataImportReportComponentsMap[statusText.value],
+)
 </script>
 
 <template>
+  <v-banner density="compact" :icon :color>
+    <p v-for="error in job.errors" :key="error['@id'] as string">
+      {{ error.message }}
+    </p>
+    <p v-if="isSuccess(job)">Successfully imported file.</p>
+  </v-banner>
   <v-list :opened>
     <data-import-job-list-item :job />
   </v-list>
-  <v-alert density="compact" :icon :color>
-    Suspendisse enim turpis, dictum sed, iaculis a, condimentum nec, nisi.
-    Vivamus quis mi. Quisque ut nisi. Maecenas malesuada.
-  </v-alert>
+  <component
+    :is="dataImportReportComponent"
+    data-testid="data-import-report"
+    :job
+  />
 </template>
 
 <style scoped></style>

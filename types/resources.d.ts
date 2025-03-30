@@ -157,3 +157,11 @@ export interface ApiResourceWorkUnitError extends ApiResourceItem {
   message: string
   values: unknown[]
 }
+
+export interface ApiResourceImportedFile extends ApiResourceItem {
+  id: string
+  service: string
+  userId: string
+  uploadDate: string
+  mediaObject: ApiResourceMediaObject
+}

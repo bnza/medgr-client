@@ -1,31 +1,29 @@
-import type { $Fetch } from 'nitropack'
 import type {
   ApiResourceItem,
   JsonLdResourceCollection,
-  JsonLdResourceDocument,
   JsonLdResourceItem,
 } from '~~/types'
-import AbstractRepository from '~/utils/repository/AbstractRepository'
+import ResourceBaseRepository from '~/utils/repository/ResourceBaseRepository'
 class ResourceRepository<
   ResourceType extends ApiResourceItem,
-> extends AbstractRepository {
-  constructor(
-    readonly baseUrl: string,
-    $fetch: $Fetch,
-  ) {
-    super($fetch)
-  }
-
-  getItemUrl(id: string | number) {
-    return `${this.baseUrl}/${id}`
-  }
-
-  fetchItem(id: string | number) {
-    const url = this.getItemUrl(id)
-    return this.$fetch<JsonLdResourceDocument<ResourceType>>(url, {
-      method: 'GET',
-    })
-  }
+> extends ResourceBaseRepository<ResourceType> {
+  // constructor(
+  //   readonly baseUrl: string,
+  //   $fetch: $Fetch,
+  // ) {
+  //   super($fetch)
+  // }
+  //
+  // getItemUrl(id: string | number) {
+  //   return `${this.baseUrl}/${id}`
+  // }
+  //
+  // fetchItem(id: string | number) {
+  //   const url = this.getItemUrl(id)
+  //   return this.$fetch<JsonLdResourceDocument<ResourceType>>(url, {
+  //     method: 'GET',
+  //   })
+  // }
 
   async exportCollection(query: Record<string, unknown>) {
     return this.$fetch<string>(this.baseUrl.replace(/(\/\w+)$/, '/export$1'), {

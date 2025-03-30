@@ -13,10 +13,17 @@ export default function () {
           dateAdapter.parseISO(date.slice(0, 10)) as Date,
         )
       : date
+  const parseIso = (date: string | Date | undefined) => {
+    if ('string' === typeof date) {
+      return new Date(date)
+    }
+    return date
+  }
 
   return {
     dateAdapter,
     parse,
+    parseIso,
     removeDateTimezoneOffset,
   }
 }

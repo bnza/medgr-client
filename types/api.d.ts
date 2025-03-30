@@ -6,6 +6,7 @@ type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
 export type ReadonlyHeaders = VDataTable['$props']['headers']
 export type ApiDataResourceKey =
+  | 'importedFile'
   | 'microStratigraphicUnit'
   | 'pottery'
   | 'potteriesMediaObject'
