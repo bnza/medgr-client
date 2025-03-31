@@ -2,16 +2,6 @@ import type { ApiResourceWorkUnit, JsonLdResourceItem } from '~~/types'
 import ResourceBaseRepository from '~/utils/repository/ResourceBaseRepository'
 
 class WorkUnitRepository extends ResourceBaseRepository<ApiResourceWorkUnit> {
-  // constructor(
-  //   $fetch: $Fetch,
-  //   readonly workUnitApiBasePath: string,
-  // ) {
-  //   super($fetch)
-  // }
-  // getItemUrl(id: string): string {
-  //   return `${this.workUnitApiBasePath}/${id}`
-  // }
-
   runJob(id: string) {
     return this.$fetch<JsonLdResourceItem<ApiResourceWorkUnit>>(
       `${this.getItemUrl(id)}/run`,
@@ -35,18 +25,6 @@ class WorkUnitRepository extends ResourceBaseRepository<ApiResourceWorkUnit> {
       },
     })
   }
-
-  // fetchItemStatus(id: string) {
-  //   return this.$fetch<JsonLdResourceItem<ApiResourceWorkUnit>>(
-  //     `${this.getItemUrl(id)}/status`,
-  //     {
-  //       method: 'GET',
-  //       headers: {
-  //         Accept: 'application/ld+json',
-  //       },
-  //     },
-  //   )
-  // }
 }
 
 export default WorkUnitRepository

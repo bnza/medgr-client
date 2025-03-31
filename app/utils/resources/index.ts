@@ -3,6 +3,7 @@ import type {
   ApiResourceKey,
   StaticResourceConfig,
 } from '~~/types/api'
+import importFile from '~/utils/resources/data/importFile'
 import importedFile from '~/utils/resources/data/importedFile'
 import microStratigraphicUnit from '~/utils/resources/data/microStratigraphicUnit'
 import pottery from '~/utils/resources/data/pottery'
@@ -18,6 +19,7 @@ import workUnit from './workUnit'
 import vocabularies from './vocabularies'
 
 export const data: Record<ApiDataResourceKey, StaticResourceConfig> = {
+  importFile,
   importedFile,
   microStratigraphicUnit,
   pottery,
