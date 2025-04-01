@@ -71,7 +71,12 @@ const dataImportReportComponent = computed(
 </script>
 
 <template>
-  <v-banner density="compact" :icon :color>
+  <v-banner
+    density="compact"
+    :icon
+    :color
+    data-testid="import-file-status-banner"
+  >
     <p v-for="error in job.errors" :key="error['@id'] as string">
       {{ error.message }}
     </p>
@@ -82,7 +87,7 @@ const dataImportReportComponent = computed(
   </v-list>
   <component
     :is="dataImportReportComponent"
-    data-testid="data-import-report"
+    data-testid="import-file-report"
     :job
   />
 </template>

@@ -41,7 +41,7 @@ const { parseIso } = useAppDate()
               :model-value="state.mediaObject.description"
               label="description"
               rows="2"
-            ></v-textarea>
+            />
           </v-col>
         </v-row>
       </data-expansion-panel>

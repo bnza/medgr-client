@@ -32,6 +32,7 @@ watch(
       :item
       :repository
       :resource-config
+      data-testid="imported-file-success-form"
     />
   </v-sheet>
 </template>

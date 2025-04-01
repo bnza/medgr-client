@@ -70,7 +70,12 @@ const submit = async () => {
     </v-row>
     <v-row align-content="center" justify="center">
       <v-col cols="10">
-        <v-form :ref="'form'" class="mt-12" @submit.prevent>
+        <v-form
+          :ref="'form'"
+          class="mt-12"
+          data-testid="import-file-form"
+          @submit.prevent
+        >
           <v-file-input
             v-model="state.file"
             :rules="getRules('file')"

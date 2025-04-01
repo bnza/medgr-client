@@ -26,7 +26,13 @@ const href = computed(() =>
     <v-alert-title>{{ error.message }}</v-alert-title>
     <p v-if="errorFile">
       Detailed data verification report can be downloaded
-      <a :href download target="_blank">here</a>
+      <a
+        :href
+        download
+        target="_blank"
+        data-testid="verification-failure-report-link"
+        >here</a
+      >
     </p>
   </v-alert>
 </template>
