@@ -22,11 +22,13 @@ const href = computed(() =>
 </script>
 
 <template>
-  <p>{{ error.message }}</p>
-  <p v-if="errorFile">
-    Detailed data verification report can be downloaded
-    <a :href download target="_blank">here</a>
-  </p>
+  <v-alert>
+    <v-alert-title>{{ error.message }}</v-alert-title>
+    <p v-if="errorFile">
+      Detailed data verification report can be downloaded
+      <a :href download target="_blank">here</a>
+    </p>
+  </v-alert>
 </template>
 
 <style scoped></style>

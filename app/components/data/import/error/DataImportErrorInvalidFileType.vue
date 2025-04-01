@@ -12,10 +12,5 @@ defineProps<{
 </script>
 
 <template>
-  <v-alert icon="fas fa-circle-exclamation" title="Unexpected error"
-    >{{ error.message }}<br />
-    <span class="text-secondary"
-      >Please contact your system administrator.</span
-    >
-  </v-alert>
+  <v-alert>{{ error.message }}</v-alert>
 </template>

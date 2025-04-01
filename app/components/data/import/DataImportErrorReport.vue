@@ -9,13 +9,19 @@ defineProps<{
   job: JsonLdResourceItem<ApiResourceWorkUnit>
 }>()
 
-const errorComponent = (
-  error: JsonLdResourceItem<ApiResourceWorkUnitError>,
-) => {
+const errorComponent = (error: ApiResourceWorkUnitError) => {
   const errorsComponents: Record<string, () => Promise<any>> = {
     'App\\Exception\\Import\\FileDataValidationException': () =>
       import(
         '~/components/data/import/error/DataImportErrorFileValidation.vue'
+      ),
+    'App\\Exception\\Import\\InvalidHeadersException': () =>
+      import(
+        '~/components/data/import/error/DataImportErrorInvalidHeaders.vue'
+      ),
+    'App\\Exception\\Import\\InvalidFileTypeException': () =>
+      import(
+        '~/components/data/import/error/DataImportErrorInvalidFileType.vue'
       ),
   }
   const defaultComponent = () =>
@@ -28,7 +34,7 @@ const errorComponent = (
 </script>
 
 <template>
-  <v-sheet>
+  <v-sheet class="mt-12">
     <component
       :is="errorComponent(error)"
       v-for="error in job.errors"

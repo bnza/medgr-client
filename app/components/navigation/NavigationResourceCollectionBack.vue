@@ -4,11 +4,13 @@ const props = withDefaults(
     replace?: boolean
     tooltipText?: string
     history?: boolean
+    disabled?: boolean
   }>(),
   {
     replace: false,
     tooltipText: 'Back',
     history: false,
+    disabled: false,
   },
 )
 const { back, pop } = useAppNavigation()
@@ -26,14 +28,16 @@ onUnmounted(() => {
 <template>
   <v-tooltip location="bottom" :text="tooltipText">
     <template #activator="{ props: actProps }">
-      <NuxtLink
-        :to
-        :replace
-        data-testid="navigation-link-back"
-        @click="clicked = true"
-      >
-        <v-icon class="mx-3" v-bind="actProps" icon="fas fa-arrow-left" />
-      </NuxtLink>
+      <v-btn :disabled class="ma-0 pa-0" icon>
+        <NuxtLink
+          :to
+          :replace
+          data-testid="navigation-link-back"
+          @click="clicked = true"
+        >
+          <v-icon class="mx-3" v-bind="actProps" icon="fas fa-arrow-left" />
+        </NuxtLink>
+      </v-btn>
     </template>
   </v-tooltip>
 </template>
