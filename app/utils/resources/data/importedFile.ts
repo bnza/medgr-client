@@ -35,6 +35,11 @@ export default {
       title: 'type',
     },
     {
+      key: 'mediaObject.description',
+      value: 'mediaObject.description',
+      title: 'description',
+    },
+    {
       key: 'uploadDate',
       value: 'uploadDate',
       title: 'upload date',

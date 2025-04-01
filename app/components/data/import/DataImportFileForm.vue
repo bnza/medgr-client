@@ -18,8 +18,9 @@ const accept = computed(() => props.mimeTypes.join(','))
 const { submitStatus, importFile } = useImportCsvFile(props.resourceType)
 const disabled = computed(() => submitStatus.value === 'pending')
 
-const state = reactive<{ file?: File }>({
+const state = reactive<{ file?: File; description?: string }>({
   file: undefined,
+  description: undefined,
 })
 
 const job = defineModel<JsonLdResourceItem<ApiResourceWorkUnit> | undefined>({
@@ -34,7 +35,7 @@ const submit = async () => {
   }
 
   if (state.file instanceof File) {
-    job.value = await importFile(state.file)
+    job.value = await importFile(state)
   }
 }
 </script>
@@ -68,26 +69,26 @@ const submit = async () => {
       </v-col>
     </v-row>
     <v-row align-content="center" justify="center">
-      <v-col cols="12">
+      <v-col cols="10">
         <v-form :ref="'form'" class="mt-12" @submit.prevent>
           <v-file-input
             v-model="state.file"
             :rules="getRules('file')"
             clearable
-            label="File input"
+            label="file"
             :accept
           />
+          <v-textarea v-model="state.description" label="description" />
         </v-form>
       </v-col>
     </v-row>
-    <v-row>
-      <v-btn class="ml-12" color="anchor" :disabled @click="$router.back()">
-        close
-      </v-btn>
-      <v-spacer />
-      <v-btn class="mr-12" color="primary" :disabled @click="submit()">
-        submit
-      </v-btn>
+    <v-row justify="space-around">
+      <v-col cols="1">
+        <v-btn color="anchor" :disabled @click="$router.back()"> close </v-btn>
+      </v-col>
+      <v-col cols="1" justify="center">
+        <v-btn color="primary" :disabled @click="submit()"> submit </v-btn>
+      </v-col>
     </v-row>
   </v-container>
   <v-banner

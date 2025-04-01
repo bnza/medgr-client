@@ -13,7 +13,7 @@ type PartialMediaObjectState = OptionalProp<MediaObjectState, 'file'>
 
 const isMediaObjectState = (
   state: PartialMediaObjectState,
-): state is MediaObjectState => !state.file
+): state is MediaObjectState => Boolean(state.file)
 
 const props = withDefaults(
   defineProps<{

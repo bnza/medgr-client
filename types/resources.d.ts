@@ -54,6 +54,7 @@ export interface ApiResourceMediaObject extends ApiResourceItem {
   originalFilename: string
   mimeType: string
   size: number
+  description: ?string
 }
 
 export type ApiResourceImportFile = ApiResourceMediaObject

@@ -27,9 +27,15 @@ class ImportCsvFileRepository extends WorkUnitRepository {
     return `${this.workUnitApiBasePath}/import/csv/${this.apiResourceKeyInflection}`
   }
 
-  uploadFile(file: File) {
+  uploadFile(
+    file: File,
+    description: string | undefined,
+  ): Promise<JsonLdResourceItem<ApiResourceWorkUnit>> {
     const item = new FormData()
     item.append('file', file)
+    if (description) {
+      item.append('description', description)
+    }
     return this.$fetch<JsonLdResourceItem<ApiResourceWorkUnit>>(
       this.uploadUrl,
       {

@@ -8,10 +8,16 @@ const useImportCsvFile = (resourceKey: ImportableDataResourceKey) => {
 
   const repository = useNuxtApp().$api.getImportRepository(resourceKey)
 
-  const importFile = async (file: File) => {
+  const importFile = async ({
+    file,
+    description,
+  }: {
+    file: File
+    description: string | undefined
+  }) => {
     try {
       submitStatus.value = 'pending'
-      const job = await repository.uploadFile(file)
+      const job = await repository.uploadFile(file, description)
       return repository.runJob(job.id).then((job) => {
         submitStatus.value = 'success'
         return job

@@ -35,6 +35,15 @@ const { parseIso } = useAppDate()
             <v-text-field v-model="state.service" label="service" />
           </v-col>
         </v-row>
+        <v-row>
+          <v-col>
+            <v-textarea
+              :model-value="state.mediaObject.description"
+              label="description"
+              rows="2"
+            ></v-textarea>
+          </v-col>
+        </v-row>
       </data-expansion-panel>
       <data-expansion-panel value="file" title="file">
         <v-row>
