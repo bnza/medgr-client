@@ -16,12 +16,20 @@ export default defineNuxtConfig({
     provider: {
       type: 'local',
       endpoints: {
-        // From @sidebase/nuxt-auth 0.8 Endpoints requires NOT to have the trailing slash
-        // in order to use baseURL
-        // @see joinPathToApiURL function
-        signIn: { path: 'login', method: 'post' },
-        signOut: { path: 'logout', method: 'post' },
-        getSession: { path: 'users/me', method: 'get' },
+        signIn: { path: '/login', method: 'post' },
+        signOut: { path: '/token/invalidate' },
+        getSession: { path: '/users/me', method: 'get' },
+      },
+      refresh: {
+        isEnabled: true,
+        refreshOnlyToken: false,
+        endpoint: {
+          path: '/token/refresh',
+        },
+        token: {
+          signInResponseRefreshTokenPointer: '/refresh_token',
+          refreshRequestTokenPointer: '/refresh_token',
+        },
       },
       pages: {
         login: '/login',
@@ -45,7 +53,7 @@ export default defineNuxtConfig({
     disableServerSideAuth: false,
     globalAppMiddleware: true,
     baseURL: process.env.NUXT_PUBLIC_API_BASE_URL
-      ? process.env.NUXT_PUBLIC_API_BASE_URL + '/api'
+      ? process.env.NUXT_PUBLIC_API_BASE_URL
       : 'http://localhost/api',
   },
   compatibilityDate: '2024-04-03',
