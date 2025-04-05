@@ -83,7 +83,7 @@ watch(
     <data-import-job-list-item
       v-for="child of job.children"
       :key="child.id"
-      :job="child"
+      :job="child as JsonLdResourceItem<ApiResourceWorkUnit>"
     />
   </v-list-group>
 </template>

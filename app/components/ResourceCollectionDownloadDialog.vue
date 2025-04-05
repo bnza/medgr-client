@@ -66,7 +66,7 @@ const submit = async () => {
       </v-card-text>
       <v-card-actions>
         <v-tooltip location="bottom" text="Close">
-          <template #activator="{ tooltipProps }">
+          <template #activator="{ props: tooltipProps }">
             <v-btn
               :disabled="status === 'pending'"
               color="anchor"
@@ -78,7 +78,7 @@ const submit = async () => {
         </v-tooltip>
         <v-spacer />
         <v-tooltip location="bottom" text="Download">
-          <template #activator="{ tooltipProps }">
+          <template #activator="{ props: tooltipProps }">
             <v-btn
               :disabled="status === 'pending'"
               data-testid="submit-download-resource-button"

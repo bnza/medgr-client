@@ -10,7 +10,11 @@ const role = computed(() =>
 </script>
 
 <template>
-  <resource-not-found v-if="!data" path="/" error="Unauthenticated user" />
+  <resource-not-found
+    v-if="!data"
+    path="/"
+    :error="new Error('Unauthenticated user')"
+  />
   <lazy-data-card v-else title="Current user:" :code="data.email">
     <template #toolbar-append>
       <user-password-dialog-open-button size="small" mode="change" />

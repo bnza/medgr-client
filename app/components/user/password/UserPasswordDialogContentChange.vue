@@ -37,7 +37,7 @@ const getRules = useUserChangePasswordValidation()
 </script>
 
 <template>
-  <v-form ref="form" @submit.prevent>
+  <v-form :ref="'form'" @submit.prevent>
     <v-container>
       <v-row class="mx-4 pt-4" justify="center">
         <v-text-field
@@ -71,7 +71,7 @@ const getRules = useUserChangePasswordValidation()
           label="repeat password"
           :append-inner-icon="icons[Form.RepeatPassword]"
           @click:append-inner="toggleShow(Form.RepeatPassword)"
-          @input="form.validate()"
+          @input="form?.validate()"
         />
       </v-row>
     </v-container>

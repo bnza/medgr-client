@@ -1,19 +1,23 @@
 import { diff } from 'deep-object-diff'
-import type { ApiAction, ApiResourceItem } from '~~/types'
+import type { ApiAction, ApiResourceItem, Writeable } from '~~/types'
 
-type NormalizePost = typeof _normalizePost
 type NormalizePatch = typeof _normalizePatch
-const _normalizePost = (item: Partial<ApiResourceItem>) => clone(item)
+const _normalizePost = <RT extends ApiResourceItem>(item: Partial<RT>) =>
+  clone<Partial<RT>>(item)
 const _normalizePatch = (
   newItem: Partial<ApiResourceItem>,
   oldItem: ApiResourceItem,
   diffItem: Partial<ApiResourceItem>,
 ) => diffItem
-export default function useResourceItemNormalizeSubmit(
+export default function useResourceItemNormalizeSubmit<
+  ResourceType extends ApiResourceItem,
+>(
   mode: ApiAction,
   item: ApiResourceItem,
-  state: ApiResourceItem,
-  normalizePost: NormalizePost = _normalizePost,
+  state: Partial<ResourceType>,
+  normalizePost: (
+    item: Partial<ResourceType>,
+  ) => Record<string, unknown> = _normalizePost,
   normalizePatch: NormalizePatch = _normalizePatch,
 ) {
   const resourceItemSubmit = inject(resourceItemSubmitInjectionKey)

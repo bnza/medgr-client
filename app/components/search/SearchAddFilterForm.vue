@@ -39,7 +39,10 @@ watch(
 
 const operandsComponent = shallowRef<ReturnType<typeof resolveComponent>>()
 
-const operandsComponentsMap = {
+const operandsComponentsMap: Record<
+  string,
+  ReturnType<typeof resolveComponent>
+> = {
   Exists: resolveComponent('SearchOperandBoolean'),
   BooleanEqual: resolveComponent('SearchOperandBoolean'),
   Single: resolveComponent('SearchOperandSingle'),
@@ -67,13 +70,15 @@ watch(
         throw new Error(`Invalid filter key "${newFilter}"`)
       }
       const filterObject = API_FILTERS[newFilter]
-      if (!(filterObject.operandsComponent in operandsComponentsMap)) {
+      if (filterObject.operandsComponent in operandsComponentsMap) {
+        operandsComponent.value =
+          operandsComponentsMap[filterObject.operandsComponent]
+      } else {
         throw new Error(
           `Invalid filter component key "${filterObject.operandsComponent}"`,
         )
       }
-      operandsComponent.value =
-        operandsComponentsMap[filterObject.operandsComponent]
+
       operandsComponentsVocabularyKey.value =
         filterObject.operandComponentVocabularyKey
     }
@@ -101,7 +106,7 @@ defineExpose({ submit })
 </script>
 
 <template>
-  <v-form ref="form" @submit.prevent>
+  <v-form :ref="'form'" @submit.prevent>
     <v-container>
       <v-row>
         <v-col>

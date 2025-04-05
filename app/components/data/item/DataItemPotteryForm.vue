@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type {
   ApiAction,
-  ApiResourceStratigraphicUnit,
+  ApiResourcePottery,
+  ApiSubmitResourcePottery,
   ResourceCollectionParent,
   ResourceConfig,
 } from '~~/types'
@@ -10,14 +11,14 @@ import usePotteryValidation from '~/composables/validation/usePotteryValidation'
 
 const props = defineProps<{
   mode: ApiAction
-  item: ApiResourceStratigraphicUnit
-  repository: ResourceRepository<ApiResourceStratigraphicUnit>
+  item: ApiResourcePottery
+  repository: ResourceRepository<ApiResourcePottery>
   resourceConfig: ResourceConfig
   parent?: ResourceCollectionParent
 }>()
 
 const { isAuthenticated, readonly, state } =
-  useResourceItemForm<ApiResourceStratigraphicUnit>(props.mode, props.item)
+  useResourceItemForm<ApiResourcePottery>(props.mode, props.item)
 
 if (props.mode === 'create' && props.parent) {
   Object.assign(state, Object.fromEntries([props.parent]))
@@ -27,18 +28,20 @@ const getRules = readonly.value
   ? (_: string) => undefined
   : usePotteryValidation(props.item)
 
-const normalizePost = (item: Partial<ApiResourceStratigraphicUnit>) => {
-  item = clone(item)
-  if (isApiResourceItem(item?.stratigraphicUnit)) {
-    item.stratigraphicUnit = item.stratigraphicUnit['@id']
+const normalizePost = (item: Partial<ApiResourcePottery>) => {
+  const submitItem: ApiSubmitResourcePottery = {
+    ...clone(item),
+    stratigraphicUnit: isApiLdResourceItem(item?.stratigraphicUnit)
+      ? item.stratigraphicUnit['@id']
+      : '',
   }
-  if (item?.number) {
-    item.number = Number(item.number)
+  if (submitItem?.number) {
+    submitItem.number = Number(item.number)
   }
-  if (item?.fragmentsNumber) {
-    item.fragmentsNumber = Number(item.fragmentsNumber)
+  if (submitItem?.fragmentsNumber) {
+    submitItem.fragmentsNumber = Number(item.fragmentsNumber)
   }
-  return item
+  return submitItem
 }
 useResourceItemNormalizeSubmit(props.mode, props.item, state, normalizePost)
 

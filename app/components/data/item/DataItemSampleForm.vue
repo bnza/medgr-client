@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type {
   ApiAction,
+  ApiResourceCollectionParent,
   ApiResourceSample,
-  ResourceCollectionParent,
   ResourceConfig,
 } from '~~/types'
 import type ResourceRepository from '~/utils/repository/ResourceRepository'
@@ -15,7 +15,7 @@ const props = defineProps<{
   item: ApiResourceSample
   repository: ResourceRepository<ApiResourceSample>
   resourceConfig: ResourceConfig
-  parent?: ResourceCollectionParent
+  parent?: ApiResourceCollectionParent
 }>()
 
 const { parse } = useAppDate()
@@ -23,11 +23,14 @@ const normalizeState = (state: ApiResourceSample) => {
   state.takingDate = parse(state.takingDate)
   return state
 }
+
 const { readonly, state } = useResourceItemForm<ApiResourceSample>(
   props.mode,
   props.item,
   normalizeState,
 )
+
+state.takingDate = parse(state.takingDate)
 
 if (props.mode === 'create' && props.parent) {
   const parent = props.parent
@@ -45,14 +48,14 @@ const getRules = readonly.value
   : useSampleValidation(props.item)
 
 const normalizePost = (item: Partial<ApiResourceSample>) => {
-  item = clone(item)
+  const newItem = { ...clone(item), stratigraphicUnit: '' }
   if (isApiResourceItem(item?.stratigraphicUnit)) {
-    item.stratigraphicUnit = item.stratigraphicUnit['@id']
+    newItem.stratigraphicUnit = item.stratigraphicUnit['@id']
   }
-  if (item?.number) {
-    item.number = Number(item.number)
+  if (newItem?.number) {
+    newItem.number = Number(newItem.number)
   }
-  return item
+  return newItem
 }
 useResourceItemNormalizeSubmit(props.mode, props.item, state, normalizePost)
 
@@ -96,7 +99,7 @@ const panel = ref(['identification', 'description'])
           </v-col>
           <v-col cols="12" xs="12" sm="6" class="px-2">
             <date-field-picker
-              v-model="state.takingDate"
+              v-model="state.takingDate as Date | undefined"
               :readonly
               label="date taken"
             />

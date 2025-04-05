@@ -15,7 +15,7 @@ const form = useTemplateRef<VForm>('form')
         {{ !!filter ? 'Edit' : 'Add' }} filter
       </v-card-title>
       <v-card-text class="h-75" data-testid="filter-edit-content">
-        <lazy-search-add-filter-form ref="form" />
+        <lazy-search-add-filter-form :ref="'form'" />
       </v-card-text>
       <v-card-actions>
         <v-btn
@@ -31,7 +31,7 @@ const form = useTemplateRef<VForm>('form')
           class="ml-8"
           data-testid="close-button"
           color="primary"
-          @click="form.submit()"
+          @click="form?.submit()"
         >
           Add
         </v-btn>

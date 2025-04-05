@@ -2,6 +2,7 @@
 import type {
   ApiAction,
   ApiResourceStratigraphicUnit,
+  ApiSubmitResourceStratigraphicUnit,
   ResourceCollectionParent,
   ResourceConfig,
 } from '~~/types'
@@ -28,17 +29,20 @@ const getRules = readonly.value
   : useStratigraphicUnitValidation(props.item)
 
 const normalizePost = (item: Partial<ApiResourceStratigraphicUnit>) => {
-  item = clone(item)
-  if (isApiResourceItem(item?.site)) {
-    item.site = item.site['@id']
+  const newItem: ApiSubmitResourceStratigraphicUnit = {
+    ...clone(item),
+    site: '',
   }
-  if (item?.year) {
-    item.year = Number(item.year)
+  if (isApiLdResourceItem(item.site)) {
+    newItem.site = item.site['@id']
   }
-  if (item?.number) {
-    item.number = Number(item.number)
+  if (newItem?.year) {
+    newItem.year = Number(newItem.year)
   }
-  return item
+  if (newItem?.number) {
+    newItem.number = Number(newItem.number)
+  }
+  return newItem
 }
 useResourceItemNormalizeSubmit(props.mode, props.item, state, normalizePost)
 

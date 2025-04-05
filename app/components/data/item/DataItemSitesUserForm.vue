@@ -2,7 +2,7 @@
 import type {
   ApiAction,
   ApiResourceSitesUser,
-  ApiResourceStratigraphicUnit,
+  ApiSubmitResourceSitesUser,
   ResourceCollectionParent,
   ResourceConfig,
 } from '~~/types'
@@ -14,8 +14,8 @@ import useResourceItemNormalizeSubmit from '~/composables/useResourceItemNormali
 
 const props = defineProps<{
   mode: ApiAction
-  item: Partial<ApiResourceSitesUser>
-  repository: ResourceRepository<ApiResourceStratigraphicUnit>
+  item: ApiResourceSitesUser
+  repository: ResourceRepository<ApiResourceSitesUser>
   resourceConfig: ResourceConfig
   parent?: ResourceCollectionParent
 }>()
@@ -43,23 +43,21 @@ const isSiteEditor = computed({
   },
 })
 const normalizePost = (item: Partial<ApiResourceSitesUser>) => {
-  item = clone(item)
-  if (
-    isApiLdResourceItem(item?.site) &&
-    item.site['@id'] !== props.item?.site?.['@id']
-  ) {
-    item.site = item.site['@id']
+  const submitItem: ApiSubmitResourceSitesUser = {
+    ...clone(item),
+    site: undefined,
+    user: undefined,
   }
-  if (
-    isApiLdResourceItem(item?.user) &&
-    item.user['@id'] !== props.item?.user?.['@id']
-  ) {
-    item.user = item.user['@id']
+  if (isApiLdResourceItem(item?.site)) {
+    submitItem.site = item.site['@id']
   }
-  if (item?.privileges) {
-    item.privileges = Number(item.privileges)
+  if (isApiLdResourceItem(item?.user)) {
+    submitItem.user = item.user['@id']
   }
-  return item
+  if (submitItem?.privileges) {
+    submitItem.privileges = Number(submitItem.privileges)
+  }
+  return submitItem
 }
 useResourceItemNormalizeSubmit(props.mode, props.item, state, normalizePost)
 </script>

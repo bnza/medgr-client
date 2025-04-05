@@ -47,14 +47,14 @@ const updateItems = async () => {
       params.value,
       props.authorizedOnly,
     )
-  } catch (e) {
+  } catch (_e) {
     items.value = []
   } finally {
     loading.value = false
   }
 }
 
-const timerId = ref<NodeJS.Timeout | undefined>(undefined)
+const timerId = ref<NodeJS.Timeout | number | undefined>(undefined)
 const updateItemsDebounced = () => {
   // cancel pending call
   clearTimeout(timerId.value)

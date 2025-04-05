@@ -17,7 +17,11 @@ const { filter: parentFilter } = usePageParentStore()
 <template>
   <v-list v-if="parentFilter">
     <v-container>
-      <search-filters-list-item :filter="parentFilter" is-parent />
+      <search-filters-list-item
+        :filter="parentFilter"
+        is-parent
+        :resource-key
+      />
     </v-container>
   </v-list>
   <v-empty-state

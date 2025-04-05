@@ -2,7 +2,7 @@
 import type {
   ApiAction,
   ApiResourceMicroStratigraphicUnit,
-  ApiResourceSample,
+  ApiSubmitResourceMicroStratigraphicUnit,
   ResourceCollectionParent,
   ResourceConfig,
 } from '~~/types'
@@ -29,13 +29,17 @@ const getRules = readonly.value
   ? (_: string) => undefined
   : useMicroStratigraphicUnitValidation(props.item)
 
-const normalizePost = (item: Partial<ApiResourceSample>) => {
-  item = clone(item)
-  if (isApiResourceItem(item?.stratigraphicUnit)) {
-    item.stratigraphicUnit = item.stratigraphicUnit['@id']
+const normalizePost = (item: Partial<ApiResourceMicroStratigraphicUnit>) => {
+  const newItem: ApiSubmitResourceMicroStratigraphicUnit = {
+    ...clone(item),
+    stratigraphicUnit: '',
+    sample: '',
   }
-  if (isApiResourceItem(item?.sample)) {
-    item.sample = item.sample['@id']
+  if (isApiLdResourceItem(item?.stratigraphicUnit)) {
+    newItem.stratigraphicUnit = item.stratigraphicUnit['@id']
+  }
+  if (isApiLdResourceItem(item?.sample)) {
+    newItem.sample = item.sample['@id']
   }
   const numericFields = [
     'number',
@@ -45,11 +49,11 @@ const normalizePost = (item: Partial<ApiResourceSample>) => {
     'inclusionsOrganicRefuse',
   ]
   numericFields.forEach((prop) => {
-    if (item?.[prop]) {
-      item[prop] = Number(item[prop])
+    if (newItem?.[prop]) {
+      newItem[prop] = Number(newItem[prop])
     }
   })
-  return item
+  return newItem
 }
 useResourceItemNormalizeSubmit(props.mode, props.item, state, normalizePost)
 

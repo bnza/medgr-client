@@ -2,13 +2,14 @@ import { ApiRole, ROLE_COLORS } from '~/utils/consts/auth'
 import type { ApiResourceSite } from '~~/types'
 import type { SessionData } from '#auth'
 
+type ApiResourceSiteItem = Pick<ApiResourceSite, 'id'>
 const _hasSitePrivileges = (
-  site: ApiResourceSite,
+  site: ApiResourceSiteItem,
   sessionData: SessionData | null | undefined,
 ) => (sessionData?.privileges ? site.id in sessionData.privileges : false)
 
 const _getSitePrivilege = (
-  site: ApiResourceSite,
+  site: ApiResourceSiteItem,
   sessionData: SessionData | null | undefined,
 ) =>
   _hasSitePrivileges(site, sessionData)
@@ -38,7 +39,7 @@ export function useAppAuth() {
   }
 
   const hasSitePrivileges = computed(
-    () => (site: ApiResourceSite) =>
+    () => (site: ApiResourceSiteItem) =>
       hasRoleAdmin.value || _hasSitePrivileges(site, data.value),
   )
 

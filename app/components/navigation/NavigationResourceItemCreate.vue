@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import type { ResourceCollectionParent } from '~~/types'
+import type {
+  ApiResourceCollectionParent,
+  ResourceCollectionParent,
+} from '~~/types'
 import usePageResourceCollectionParent from '~/composables/usePageResourceCollectionParent'
 
 withDefaults(
   defineProps<{
     appPath: string
     disabled?: boolean
-    parent?: ResourceCollectionParent
+    parent?: ApiResourceCollectionParent
   }>(),
   {
     disabled: false,

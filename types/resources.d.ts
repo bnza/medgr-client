@@ -25,15 +25,18 @@ export interface ApiResourceSite extends ApiResourceItem {
 }
 export interface ApiResourceStratigraphicUnit extends ApiResourceItem {
   id: number
-  site:
-    | (Pick<ApiResourceSite, 'id' | 'code' | 'name'> & { '@id': string })
-    | string
+  site: Pick<ApiResourceSite, 'id' | 'code' | 'name'> & { '@id': string }
   year: number
   number: number
   code: string
   interpretation?: string
   description?: string
   public?: boolean
+}
+
+export interface ApiSubmitResourceStratigraphicUnit
+  extends Omit<ApiResourceStratigraphicUnit, 'site'> {
+  site: string
 }
 export interface ApiResourceUser extends ApiResourceItem {
   id: string
@@ -43,12 +46,17 @@ export interface ApiResourceUser extends ApiResourceItem {
 }
 
 export interface ApiResourceSitesUser extends ApiResourceItem {
-  site:
-    | (Pick<ApiResourceSite, 'id' | 'code' | 'name'> & { '@id': string })
-    | string
-  user: (Pick<ApiResourceUser, 'id' | 'email'> & { '@id': string }) | string
+  site: Pick<ApiResourceSite, 'id' | 'code' | 'name'> & { '@id': string }
+  user: Pick<ApiResourceUser, 'id' | 'email'> & { '@id': string }
   privileges: number
 }
+
+export interface ApiSubmitResourceSitesUser
+  extends Omit<ApiResourceSitesUser, 'site' | 'user'> {
+  site?: string
+  user?: string
+}
+
 export interface ApiResourceMediaObject extends ApiResourceItem {
   contentUrl: string
   originalFilename: string
@@ -77,7 +85,10 @@ export interface ApiVocabularyItem extends ApiResourceItem {
 }
 
 export interface ApiResourcePottery extends ApiResourceItem {
-  stratigraphicUnit: Pick<ApiResourceStratigraphicUnit, 'id' | 'code' | 'site'>
+  stratigraphicUnit: Pick<
+    ApiResourceStratigraphicUnit,
+    'id' | 'code' | 'site'
+  > & { '@id': string }
   number: number
   code: string
   fragmentsNumber: number
@@ -90,20 +101,36 @@ export interface ApiResourcePottery extends ApiResourceItem {
   chronologyUpper?: number
   public?: boolean
 }
+
+export interface ApiSubmitResourcePottery
+  extends Omit<ApiResourcePottery, 'stratigraphicUnit'> {
+  stratigraphicUnit: string
+}
+
 export interface ApiResourceSample extends ApiResourceItem {
   stratigraphicUnit: Pick<
     ApiResourceStratigraphicUnit,
     'id' | 'code' | 'year' | 'site'
-  >
+  > & { '@id': string }
   number: number
   description?: string
   collector?: string
   takingDate?: string | Date
 }
 
+export interface ApiSubmitResourceSample
+  extends Omit<ApiResourceSite, 'stratigraphicUnit'> {
+  stratigraphicUnit: string
+}
+
 export interface ApiResourceMicroStratigraphicUnit extends ApiResourceItem {
-  sample: Pick<ApiResourceStratigraphicUnit, 'id' | 'number'>
-  stratigraphicUnit: Pick<ApiResourceStratigraphicUnit, 'id' | 'code' | 'site'>
+  sample: Pick<ApiResourceStratigraphicUnit, 'id' | 'number'> & {
+    '@id': string
+  }
+  stratigraphicUnit: Pick<
+    ApiResourceStratigraphicUnit,
+    'id' | 'code' | 'site'
+  > & { '@id': string }
   number?: number
   depositType: string
   keyAttributes?: string
@@ -124,6 +151,15 @@ export interface ApiResourceMicroStratigraphicUnit extends ApiResourceItem {
   organicOrganoMineral: number
   earthwormGranule: number
   interpretation?: string
+}
+
+export interface ApiSubmitResourceMicroStratigraphicUnit
+  extends Omit<
+    ApiResourceMicroStratigraphicUnit,
+    'sample' | 'stratigraphicUnit'
+  > {
+  sample: string
+  stratigraphicUnit: string
 }
 
 export type StratigraphicUnitRelationshipKey =

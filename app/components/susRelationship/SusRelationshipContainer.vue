@@ -24,6 +24,7 @@ const lockedIcon = computed(() =>
 const lockedTooltipText = computed(() =>
   isReadonly.value ? 'Enable editing' : 'Disable editing',
 )
+const toggleReadonly = () => (isReadonly.value = !isReadonly.value)
 </script>
 
 <template>
@@ -39,7 +40,7 @@ const lockedTooltipText = computed(() =>
           variant="text"
           icon
           data-testid="enable-editing-button"
-          @click="isReadonly = !isReadonly"
+          @click="toggleReadonly"
         >
           <v-icon :icon="lockedIcon" color="primary" />
           <v-tooltip activator="parent" location="bottom">
@@ -79,5 +80,3 @@ const lockedTooltipText = computed(() =>
     </v-row>
   </v-container>
 </template>
-
-<style scoped></style>

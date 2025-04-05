@@ -9,7 +9,7 @@ const resourceKey: ApiDataResourceKey = 'sample'
 
 const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
 
-const { hasSitePrivileges, hasRole } = useAppAuth()
+const { hasSitePrivileges } = useAppAuth()
 </script>
 
 <template>

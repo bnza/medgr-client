@@ -1,5 +1,4 @@
 import { process } from 'std-env'
-
 export default defineNuxtConfig({
   app: {
     baseURL: '/app',
@@ -53,7 +52,7 @@ export default defineNuxtConfig({
     disableServerSideAuth: false,
     globalAppMiddleware: true,
     baseURL: process.env.NUXT_PUBLIC_API_BASE_URL
-      ? process.env.NUXT_PUBLIC_API_BASE_URL
+      ? process.env.NUXT_PUBLIC_API_BASE_URL + '/api'
       : 'http://localhost/api',
   },
   compatibilityDate: '2024-04-03',

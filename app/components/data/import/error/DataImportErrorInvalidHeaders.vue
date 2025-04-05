@@ -10,10 +10,21 @@ const props = defineProps<{
   job: JsonLdResourceItem<ApiResourceWorkUnit>
 }>()
 
-const missingHeaders: string[] =
-  'missingHeaders' in (props.error.values || {})
-    ? props.error.values.missingHeaders
-    : []
+type MissingHeadersValues = {
+  missingHeaders: string[]
+}
+const areErrorValuesMissingHeadersArray = (
+  value: unknown,
+): value is MissingHeadersValues =>
+  isLiteralObject(value) &&
+  'missingHeaders' in value &&
+  Array.isArray(value.missingHeaders)
+
+const missingHeaders: string[] = areErrorValuesMissingHeadersArray(
+  props.error.values,
+)
+  ? props.error.values.missingHeaders
+  : []
 </script>
 
 <template>

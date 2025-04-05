@@ -6,6 +6,7 @@ import type {
   JsonLdResourceItem,
 } from '~~/types'
 import type { AsyncDataRequestStatus } from '#app'
+import { getDefaultPaginationOptions } from '~/stores/useApiResourceCollectionsStore'
 
 const props = withDefaults(
   defineProps<{
@@ -26,6 +27,7 @@ const results = ref({
   totalItems: ref(0),
   items: ref([] as JsonLdResourceItem<ApiResourceItem>[]),
   status: ref('pending' as AsyncDataRequestStatus),
+  paginationOptions: ref(getDefaultPaginationOptions()),
 })
 
 fetchCollection().then((_results) => (results.value = _results))

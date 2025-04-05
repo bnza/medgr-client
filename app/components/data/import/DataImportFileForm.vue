@@ -35,7 +35,10 @@ const submit = async () => {
   }
 
   if (state.file instanceof File) {
-    job.value = await importFile(state)
+    job.value = await importFile({
+      file: state.file,
+      description: state.description,
+    })
   }
 }
 </script>

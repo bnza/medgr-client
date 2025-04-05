@@ -54,7 +54,7 @@ const submitCreate = async () => {
     <v-card title="new relationship" data-testid="add-su-relationship-card">
       <v-card-text>
         <v-container>
-          <v-form ref="form" @submit.prevent>
+          <v-form :ref="'form'" @submit.prevent>
             <v-row dense justify="center">
               <v-col
                 justify="center"

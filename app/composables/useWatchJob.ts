@@ -1,5 +1,7 @@
 import type { ApiResourceWorkUnit, JsonLdResourceItem } from '~~/types'
 
+type NullableTimeout = number | NodeJS.Timeout | null
+
 export default function (job: Ref<JsonLdResourceItem<ApiResourceWorkUnit>>) {
   const idleJobRetries = ref(0)
 
@@ -7,7 +9,7 @@ export default function (job: Ref<JsonLdResourceItem<ApiResourceWorkUnit>>) {
 
   const { showError } = useAppSnackbarStore()
 
-  const timeoutId = ref<number | null>(null)
+  const timeoutId = ref<NullableTimeout>(null)
   const watchJob = async () => {
     if (idleJobRetries.value > 9) {
       showError(
@@ -38,7 +40,7 @@ export default function (job: Ref<JsonLdResourceItem<ApiResourceWorkUnit>>) {
   }
 
   const cachedJob = ref<JsonLdResourceItem<ApiResourceWorkUnit> | null>(null)
-  const timeoutIdCached = ref<number | null>(null)
+  const timeoutIdCached = ref<NullableTimeout>(null)
 
   const watchCachedJob = async () => {
     if (timeoutIdCached.value !== null) {

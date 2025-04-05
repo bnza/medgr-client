@@ -1,5 +1,6 @@
 import type { ResourceCollectionCacheKey, Filter } from '~~/types'
 import { API_FILTERS } from '~/utils/consts/filters'
+import { structuredClone } from 'structured-clone-es'
 
 type PaginationOptionsState = {
   itemsPerPage?: number
@@ -14,18 +15,21 @@ const defaultPaginationOptions: PaginationOptionsState = {
   sortBy: [
     {
       key: 'id',
-      order: 'asc', //?
+      order: 'asc',
     },
   ],
   groupBy: [],
 }
+
+export const getDefaultPaginationOptions = () =>
+  structuredClone(defaultPaginationOptions)
 export default function (resourceCacheKey: ResourceCollectionCacheKey) {
   return defineStore(`api-resource-collections:${resourceCacheKey}`, () => {
     /**
      * PaginationOptions
      */
     const paginationOptionsState = ref<PaginationOptionsState>(
-      structuredClone(defaultPaginationOptions),
+      structuredClone(defaultPaginationOptions) as PaginationOptionsState,
     )
 
     const vuetifyPaginationOptionToQsObject = (
@@ -46,7 +50,7 @@ export default function (resourceCacheKey: ResourceCollectionCacheKey) {
       }
     }
 
-    const paginationOptions = computed({
+    const paginationOptions = computed<PaginationOptionsState>({
       get() {
         return paginationOptionsState.value
       },

@@ -2,6 +2,7 @@
 import type { ApiAction, ApiResourceItem, ResourceConfig } from '~~/types'
 import type { VForm } from 'vuetify/components'
 import type ResourceRepository from '~/utils/repository/ResourceRepository'
+import { injectResourceItemSubmit } from '~/composables/useResourceItemSubmit'
 
 const props = defineProps<{
   item: ApiResourceItem
@@ -10,7 +11,7 @@ const props = defineProps<{
   repository: ResourceRepository<ApiResourceItem>
   resourceConfig: ResourceConfig
 }>()
-const { submittingItem, submitStatus } = inject(resourceItemSubmitInjectionKey)
+const { submittingItem, submitStatus } = injectResourceItemSubmit()
 const formRef = useTemplateRef<VForm>('form')
 
 const router = useRouter()
@@ -34,7 +35,11 @@ watch(submittingItem, async (value) => {
           break
         }
         case 'delete':
-          await props.repository.deleteItem(value)
+          if (isApiResourceItem(value)) {
+            await props.repository.deleteItem(value)
+          } else {
+            throw new Error('Missing required parameter id')
+          }
           break
         case 'update':
           await props.repository.patchItem(
