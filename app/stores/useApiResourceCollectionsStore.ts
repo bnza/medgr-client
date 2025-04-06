@@ -1,14 +1,11 @@
-import type { ResourceCollectionCacheKey, Filter } from '~~/types'
+import type {
+  ResourceCollectionCacheKey,
+  Filter,
+  PaginationOptionsState,
+} from '~~/types'
 import { API_FILTERS } from '~/utils/consts/filters'
 import { structuredClone } from 'structured-clone-es'
 
-type PaginationOptionsState = {
-  itemsPerPage?: number
-  page: number
-  search?: string
-  groupBy: Array<string>
-  sortBy?: Array<{ key: string; order: 'asc' | 'desc' }>
-}
 const defaultPaginationOptions: PaginationOptionsState = {
   page: 1,
   itemsPerPage: 10,

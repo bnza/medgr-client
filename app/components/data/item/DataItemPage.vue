@@ -3,6 +3,7 @@ import type {
   ApiAclResource,
   ApiAction,
   ApiDataResourceKey,
+  ApiResourceCollectionParent,
   ApiResourceItem,
 } from '~~/types'
 
@@ -39,7 +40,7 @@ const resourceItemSubmit = useResourceItemSubmit()
 provide(resourceItemSubmitInjectionKey, resourceItemSubmit)
 const { triggerSubmit, submitStatus } = resourceItemSubmit
 
-const { parent } =
+const { parent }: { parent: Ref<ApiResourceCollectionParent | undefined> } =
   props.mode === 'create'
     ? usePageResourceCollectionParent(true)
     : { parent: ref(undefined) }

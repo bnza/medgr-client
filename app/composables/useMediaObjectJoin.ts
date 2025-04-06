@@ -20,14 +20,22 @@ const useMediaObjectJoin = async (
   resourceKey: ApiDataResourceKey,
   parent: ApiResourceCollectionParent,
 ) => {
-  const { paginationOptions, fetchCollection } =
-    useResourceCollection<ApiResourceMediaObjectJoin>(resourceKey, parent)
+  const {
+    paginationOptions,
+    fetchCollection,
+    items,
+    refresh,
+    status: fetchStatus,
+  } = useResourceFetchCollection<ApiResourceMediaObjectJoin>(
+    resourceKey,
+    parent,
+  )
 
   paginationOptions.value = Object.assign({}, paginationOptions.value, {
     itemsPerPage: -1,
   })
 
-  const { items, refresh, status: fetchStatus } = await fetchCollection()
+  await fetchCollection()
 
   const repository = useNuxtApp().$api.getRepository(resourceKey)
   const { showSuccess, showError } = useAppSnackbarStore()
@@ -69,11 +77,10 @@ const useMediaObjectJoin = async (
     }
     try {
       await repository.postItem(formData, 'multipart/form-data')
-      refresh()
       submitStatus.value = 'success'
       showSuccess('Successfully created media')
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (e: unknown) {
+      await refresh()
+    } catch (_e: unknown) {
       submitStatus.value = 'error'
     }
   }

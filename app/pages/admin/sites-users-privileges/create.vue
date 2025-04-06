@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { DataItemPage } from '#components'
 import type { ApiAclResource, ApiResourceSitesUser } from '~~/types'
+import { isResourceCollectionParent } from '~/utils/guards'
 
 definePageMeta({
   middleware: ['sidebase-auth', 'acl'],
@@ -16,6 +17,7 @@ definePageMeta({
   >
     <template #default="{ item, repository, resourceConfig, parent }">
       <lazy-data-item-sites-user-form
+        v-if="isResourceCollectionParent(parent)"
         :mode="'create'"
         :item
         :resource-config

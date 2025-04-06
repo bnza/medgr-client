@@ -24,8 +24,8 @@ const useStratigraphicUnitsRelationship = (
   if (!isApiResourceItem(su)) {
     throw new Error('Unsupported IRI resource. Use plain object instead.')
   }
-  const { fetchCollection } =
-    useResourceCollection<ApiResourceStratigraphicUnitsRelationship>(
+  const { fetchCollection, items, refresh } =
+    useResourceFetchCollection<ApiResourceStratigraphicUnitsRelationship>(
       'stratigraphicUnitsRelationship',
       ['sxSU', su],
     )
@@ -92,6 +92,8 @@ const useStratigraphicUnitsRelationship = (
     fetchCollection,
     isEditable,
     isReadonly,
+    items,
+    refresh,
     submitStatus,
     sxSU,
   }

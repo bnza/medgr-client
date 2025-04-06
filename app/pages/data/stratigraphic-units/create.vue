@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { DataItemPage } from '#components'
 import type { ApiAclResource, ApiResourceStratigraphicUnit } from '~~/types'
+import { isResourceCollectionParent } from '~/utils/guards'
 </script>
 
 <template>
@@ -11,6 +12,7 @@ import type { ApiAclResource, ApiResourceStratigraphicUnit } from '~~/types'
   >
     <template #default="{ item, repository, resourceConfig, parent }">
       <lazy-data-item-stratigraphic-unit-form
+        v-if="isResourceCollectionParent(parent)"
         :mode="'create'"
         :item
         :parent

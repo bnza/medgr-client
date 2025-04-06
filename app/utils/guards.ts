@@ -1,10 +1,15 @@
 import type {
   JsonLdConstraintViolations,
   JsonLdHydraError,
+  JsonLdResourceItem,
 } from '~~/types/jsonld'
 import { ApiRole, type ApiSpecialistRole } from '~/utils/consts/auth'
-import type { ApiResourceKey } from '~~/types/api'
-import { apiResourceKeys } from '~/utils/resources'
+import type {
+  ApiDataResourceKey,
+  ApiResourceKey,
+  ResourceCollectionParent,
+} from '~~/types/api'
+import { apiDataResourceKey, apiResourceKeys } from '~/utils/resources'
 import type { FetchResponse } from 'ofetch'
 import type {
   ApiResourceItem,
@@ -27,7 +32,9 @@ export const isApiResourceItemOrIri = (
 ): value is ApiResourceItem | string =>
   typeof value === 'string' || isApiResourceItem(value)
 
-export const isApiLdResourceItem = (value: unknown): value is ApiResourceItem =>
+export const isApiLdResourceItem = (
+  value: unknown,
+): value is JsonLdResourceItem<ApiResourceItem> =>
   isLiteralObject(value) && '@id' in value
 export const isJsonLdValidationResponseError = (
   value: unknown,
@@ -60,6 +67,19 @@ export const isSpecialistRole = (value: string): value is ApiSpecialistRole =>
 
 export const isApiResourceKey = (value: string): value is ApiResourceKey =>
   (apiResourceKeys as ReadonlyArray<string>).includes(value)
+export const isApiDataResourceKey = (
+  value: string,
+): value is ApiDataResourceKey =>
+  (apiDataResourceKey as ReadonlyArray<string>).includes(value)
+
+export const isResourceCollectionParent = (
+  value: unknown,
+): value is ResourceCollectionParent =>
+  Array.isArray(value) &&
+  'string' === typeof value[0] &&
+  isApiDataResourceKey(value[0]) &&
+  isLiteralObject(value[1]) &&
+  isApiResourceItem(value[1])
 
 export const isFetchResponse = (
   value: unknown,

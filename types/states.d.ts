@@ -6,3 +6,10 @@ export interface AppSnackbarState {
   visible: boolean
   vertical: boolean
 }
+type PaginationOptionsState = {
+  itemsPerPage?: number
+  page: number
+  search?: string
+  groupBy: Array<string>
+  sortBy?: Array<{ key: string; order: 'asc' | 'desc' }>
+}

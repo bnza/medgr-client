@@ -14,9 +14,10 @@ provide(
   stratigraphicUnitsRelationship,
 )
 
-const { fetchCollection, isReadonly } = stratigraphicUnitsRelationship
+const { fetchCollection, items, refresh, isReadonly } =
+  stratigraphicUnitsRelationship
 
-const { items, refresh } = await fetchCollection()
+await fetchCollection()
 
 const lockedIcon = computed(() =>
   isReadonly.value ? 'fas fa-lock' : 'fas fa-lock-open',

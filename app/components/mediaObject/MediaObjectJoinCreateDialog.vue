@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import useMediaObjectJoinValidation from '~/composables/validation/useMediaObjectJoinValidation'
 import { VForm } from 'vuetify/components'
-import type { OptionalProp } from '~~/types'
+import type { ApiResourceItem, OptionalProp } from '~~/types'
 
 type MediaObjectState = {
   item: string
@@ -17,7 +17,7 @@ const isMediaObjectState = (
 
 const props = withDefaults(
   defineProps<{
-    parentIri: string
+    parent: ApiResourceItem
     mimeTypes?: Array<string>
   }>(),
   {
@@ -34,9 +34,16 @@ const props = withDefaults(
   },
 )
 
+const parentIri = computed<string>(() => {
+  if (isApiLdResourceItem(props.parent)) {
+    return props.parent['@id']
+  }
+  return ''
+})
+
 const accept = computed(() => props.mimeTypes.join(','))
 const state: PartialMediaObjectState = reactive({
-  item: props.parentIri,
+  item: parentIri.value,
   file: undefined,
   description: undefined,
 })
@@ -75,7 +82,17 @@ watch(model, (flag) => {
   <v-dialog v-model="model" max-width="600px" persistent>
     <v-card data-testid="create-media-object-card">
       <v-card-text class="text-center">
-        <v-container v-if="submitStatus === 'pending'" style="height: 300px">
+        <v-container v-if="!parentIri" style="height: 300px">
+          <v-alert
+            icon="fas fa-exclamation-mark"
+            title="Invalid value"
+            text="Expecting Json Ld Item. Missing '@id' property"
+          />
+        </v-container>
+        <v-container
+          v-else-if="submitStatus === 'pending'"
+          style="height: 300px"
+        >
           <v-row align-content="center" class="fill-height" justify="center">
             <v-col class="text-subtitle-1 text-center" cols="12">
               Request in progress

@@ -3,10 +3,7 @@ import type {
   ApiResourceCollectionParent,
   ApiResourceItem,
   ApiDataResourceKey,
-  JsonLdResourceItem,
 } from '~~/types'
-import type { AsyncDataRequestStatus } from '#app'
-import { getDefaultPaginationOptions } from '~/stores/useApiResourceCollectionsStore'
 
 const props = withDefaults(
   defineProps<{
@@ -20,17 +17,17 @@ const props = withDefaults(
   },
 )
 
-const { headers, fetchCollection, resourceConfig } =
-  useResourceCollection<ApiResourceItem>(props.resourceKey, props.parent)
+const {
+  headers,
+  fetchCollection,
+  resourceConfig,
+  totalItems,
+  items,
+  status,
+  paginationOptions,
+} = useResourceFetchCollection<ApiResourceItem>(props.resourceKey, props.parent)
 
-const results = ref({
-  totalItems: ref(0),
-  items: ref([] as JsonLdResourceItem<ApiResourceItem>[]),
-  status: ref('pending' as AsyncDataRequestStatus),
-  paginationOptions: ref(getDefaultPaginationOptions()),
-})
-
-fetchCollection().then((_results) => (results.value = _results))
+await fetchCollection()
 const height = computed(() =>
   props.parent ? 'calc(100vh - 370px)' : 'calc(100vh - 220px)',
 )
@@ -38,19 +35,19 @@ const height = computed(() =>
 
 <template>
   <v-data-table-server
-    :loading="results.status === 'pending'"
+    :loading="status === 'pending'"
     fixed-header
     fixed-footer
     :height
     :headers
-    :items="results.items"
-    :items-length="results.totalItems"
-    :items-per-page="results.paginationOptions?.itemsPerPage"
+    :items
+    :items-length="totalItems"
+    :items-per-page="paginationOptions?.itemsPerPage"
     :items-per-page-options="[10, 25, 50, 100]"
-    :page="results.paginationOptions?.page || 1"
-    :sort-by="results.paginationOptions?.sortBy"
+    :page="paginationOptions?.page || 1"
+    :sort-by="paginationOptions?.sortBy"
     :multi-sort
-    @update:options="results.paginationOptions = $event"
+    @update:options="paginationOptions = $event"
   >
     <!-- https://mokkapps.de/vue-tips/expose-slots-from-a-child-component-->
     <template v-for="(_, name) in $slots" #[name]="slotProps">

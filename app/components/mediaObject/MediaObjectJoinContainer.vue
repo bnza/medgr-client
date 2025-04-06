@@ -20,7 +20,6 @@ const config = useRuntimeConfig()
 const apiBaseUrl = config.public.apiBaseUrl
 
 const isCreateDialogOpen = ref(false)
-const parentIri = computed(() => props.parent[1]['@id'])
 
 const isCarouselOpen = ref(false)
 const carouselModel = ref(0)
@@ -40,7 +39,10 @@ const openCarousel = (index: number) => {
   />
   <v-container v-else data-testid="media-object-join-container">
     <media-object-join-delete-dialog />
-    <media-object-join-create-dialog v-model="isCreateDialogOpen" :parent-iri />
+    <media-object-join-create-dialog
+      v-model="isCreateDialogOpen"
+      :parent="parent[1]"
+    />
     <v-row dense justify="end" style="min-height: 48px">
       <v-col class="text-right">
         <v-btn

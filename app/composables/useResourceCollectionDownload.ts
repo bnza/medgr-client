@@ -14,9 +14,11 @@ export const downloadCsv = (resourceName: string, data: string) => {
 export default function (
   resourceCollectionCacheKey: ResourceCollectionCacheKey,
 ) {
-  const { label, filteredItemsCount, exportCollection } = useResourceCollection(
-    resourceCollectionCacheKey,
-  )
+  const {
+    label,
+    totalItems: filteredItemsCount,
+    exportCollection,
+  } = useResourceFetchCollection(resourceCollectionCacheKey)
   const status = ref<AsyncDataRequestStatus>('idle')
   const { showSuccess } = useAppSnackbarStore()
 

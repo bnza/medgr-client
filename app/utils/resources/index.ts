@@ -37,6 +37,10 @@ export const resources = Object.freeze(
   Object.assign({}, data, vocabularies, { workUnit }),
 )
 
+export const apiDataResourceKey = [
+  ...Object.keys(data),
+] as const as ApiDataResourceKey[]
+
 export const apiResourceKeys = [
   ...Object.keys(resources),
 ] as const as ApiResourceKey[]
