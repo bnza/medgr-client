@@ -57,7 +57,9 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2024-04-03',
   css: ['~/assets/styles/index.css'],
-  devtools: { enabled: true },
+  devtools: {
+    enabled: process.env.NODE_ENV === 'development',
+  },
   future: {
     compatibilityVersion: 4,
   },
