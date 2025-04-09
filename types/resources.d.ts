@@ -46,8 +46,8 @@ export interface ApiResourceUser extends ApiResourceItem {
 }
 
 export interface ApiResourceSitesUser extends ApiResourceItem {
-  site: Pick<ApiResourceSite, 'id' | 'code' | 'name'> & { '@id': string }
-  user: Pick<ApiResourceUser, 'id' | 'email'> & { '@id': string }
+  site: Pick<ApiResourceSite, 'id' | 'code' | 'name'>
+  user: Pick<ApiResourceUser, 'id' | 'email'>
   privileges: number
 }
 

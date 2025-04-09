@@ -1,4 +1,8 @@
-import type { ApiResourceItem, JsonLdResourceDocument } from '~~/types'
+import type {
+  ApiResourceItem,
+  JsonLdResourceDocument,
+  JsonLdResourceItem,
+} from '~~/types'
 import type { $Fetch } from 'nitropack'
 import AbstractRepository from '~/utils/repository/AbstractRepository'
 
@@ -18,7 +22,9 @@ class ResourceBaseRepository<
 
   fetchItem(id: string | number) {
     const url = this.getItemUrl(id)
-    return this.$fetch<JsonLdResourceDocument<ResourceType>>(url, {
+    return this.$fetch<
+      JsonLdResourceDocument<JsonLdResourceItem<ResourceType>>
+    >(url, {
       method: 'GET',
     })
   }

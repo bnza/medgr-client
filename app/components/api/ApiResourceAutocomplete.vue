@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import type { ApiResourceCollectionParent } from '~~/types'
+import type {
+  ApiResourceCollectionParent,
+  ApiResourceItem,
+  JsonLdResourceItem,
+} from '~~/types'
 
 const props = withDefaults(
   defineProps<{
@@ -19,7 +23,7 @@ const props = withDefaults(
   },
 )
 
-const items = ref([])
+const items = ref<JsonLdResourceItem<ApiResourceItem>[]>([])
 const search = ref('')
 const orderBy = computed(() =>
   'string' === typeof props.orderBy
@@ -42,7 +46,7 @@ const loading = ref(false)
 const updateItems = async () => {
   loading.value = true
   try {
-    items.value = await autocomplete.search(
+    items.value = await autocomplete.search<ApiResourceItem>(
       props.path,
       params.value,
       props.authorizedOnly,

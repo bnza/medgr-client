@@ -51,8 +51,37 @@ interface JsonLdApiDocumentation extends JsonLdDocument, JsonLdContext {
 
 export type JsonLdResourceDocument<T extends ApiResourceItem> = JsonLdDocument &
   T
-export type JsonLdResourceItem<T extends ApiResourceItem> = JsonLdItem & T
 
+export type JsonLdResourceItem<T> = JsonLdItem & {
+  [K in keyof T]: K extends 'id'
+    ? T[K] // ← Leave 'id' as-is (string | number)
+    : T[K] extends ApiResourceItem
+      ? JsonLdResourceItem<T[K]>
+      : T[K] extends (infer U)[]
+        ? U extends ApiResourceItem
+          ? JsonLdResourceItem<U>[]
+          : T[K]
+        : T[K]
+}
+type EmptyJsonLdResourceItem<RT extends ApiResourceItem> = {
+  '@id'?: string
+  '@type'?: string
+  '@context'?: string
+} & {
+  [K in keyof RT]?: RT[K] extends ApiResourceItem
+    ? EmptyJsonLdResourceItem<RT[K]>
+    : RT[K] extends (infer U)[]
+      ? U extends ApiResourceItem
+        ? EmptyJsonLdResourceItem<U>[]
+        : RT[K]
+      : RT[K]
+} & {
+  _acl?: {
+    canRead?: boolean
+    canUpdate?: boolean
+    canDelete?: boolean
+  }
+}
 export type JsonLdResourceCollection<T extends ApiResourceItem> =
   JsonLdDocument & {
     totalItems: number
