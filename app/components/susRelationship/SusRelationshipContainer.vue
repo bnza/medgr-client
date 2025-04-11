@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import type { ApiAclResource, ApiResourceStratigraphicUnit } from '~~/types'
+import type {
+  ApiAclResource,
+  ApiResourceStratigraphicUnit,
+  ResourceConfig,
+} from '~~/types'
 
 const props = defineProps<{
   sxSu: ApiAclResource & ApiResourceStratigraphicUnit
@@ -26,6 +30,9 @@ const lockedTooltipText = computed(() =>
   isReadonly.value ? 'Enable editing' : 'Disable editing',
 )
 const toggleReadonly = () => (isReadonly.value = !isReadonly.value)
+
+const suResourceConfig: ResourceConfig =
+  useApiResourceConfig('stratigraphicUnit')
 </script>
 
 <template>
@@ -52,31 +59,59 @@ const toggleReadonly = () => (isReadonly.value = !isReadonly.value)
     </v-row>
     <v-row>
       <v-col>
-        <sus-relationship-card relationship-key="c" :items />
+        <sus-relationship-card
+          relationship-key="c"
+          :items
+          :resource-config="suResourceConfig"
+        />
       </v-col>
       <v-col>
-        <sus-relationship-card relationship-key="C" :items />
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col>
-        <sus-relationship-card relationship-key="x" :items />
-      </v-col>
-      <v-col>
-        <sus-relationship-card relationship-key="X" :items />
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col>
-        <sus-relationship-card relationship-key="f" :items />
-      </v-col>
-      <v-col>
-        <sus-relationship-card relationship-key="F" :items />
+        <sus-relationship-card
+          relationship-key="C"
+          :items
+          :resource-config="suResourceConfig"
+        />
       </v-col>
     </v-row>
     <v-row>
       <v-col>
-        <sus-relationship-card relationship-key="e" :items />
+        <sus-relationship-card
+          relationship-key="x"
+          :items
+          :resource-config="suResourceConfig"
+        />
+      </v-col>
+      <v-col>
+        <sus-relationship-card
+          relationship-key="X"
+          :items
+          :resource-config="suResourceConfig"
+        />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <sus-relationship-card
+          relationship-key="f"
+          :items
+          :resource-config="suResourceConfig"
+        />
+      </v-col>
+      <v-col>
+        <sus-relationship-card
+          relationship-key="F"
+          :items
+          :resource-config="suResourceConfig"
+        />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <sus-relationship-card
+          relationship-key="e"
+          :items
+          :resource-config="suResourceConfig"
+        />
       </v-col>
     </v-row>
   </v-container>

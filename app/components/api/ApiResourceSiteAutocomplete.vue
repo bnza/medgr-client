@@ -24,5 +24,8 @@ import type { ApiResourceSite } from '~~/types/index.js'
         >
       </v-list-item>
     </template>
+    <template v-if="'readonly' in $attrs" #append-inner="{ selectedItem }">
+      <lazy-data-item-info-box-site v-if="selectedItem" :id="selectedItem.id" />
+    </template>
   </api-resource-autocomplete>
 </template>

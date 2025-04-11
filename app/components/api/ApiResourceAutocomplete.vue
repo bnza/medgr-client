@@ -98,7 +98,13 @@ watch(() => props.watch, updateItems)
   >
     <!-- https://mokkapps.de/vue-tips/expose-slots-from-a-child-component-->
     <template v-for="(_, name) in $slots" #[name]="slotProps">
-      <slot :name="name" v-bind="slotProps || {}" />
+      <slot
+        :name="name"
+        v-bind="{
+          ...slotProps,
+          selectedItem: $attrs.modelValue,
+        }"
+      />
     </template>
   </v-autocomplete>
 </template>

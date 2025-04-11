@@ -15,5 +15,11 @@
         >
       </v-list-item>
     </template>
+    <template v-if="'readonly' in $attrs" #append-inner="{ selectedItem }">
+      <lazy-data-item-info-box-stratigraphic-unit
+        v-if="selectedItem"
+        :id="selectedItem.id"
+      />
+    </template>
   </api-resource-autocomplete>
 </template>

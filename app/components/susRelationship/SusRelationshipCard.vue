@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type {
   ApiResourceStratigraphicUnitsRelationship,
+  ResourceConfig,
   StratigraphicUnitRelationshipKey,
 } from '~~/types'
 
@@ -9,6 +10,7 @@ import { stratigraphicUnitRelationshipMap } from '~/utils/resources/vocabularies
 
 const props = defineProps<{
   relationshipKey: StratigraphicUnitRelationshipKey
+  resourceConfig: ResourceConfig
   items?: Array<ApiResourceStratigraphicUnitsRelationship>
 }>()
 
@@ -60,6 +62,7 @@ const relationships = computed(() =>
           v-for="item in relationships"
           :key="item.id"
           :item
+          :resource-config
         />
       </v-chip-group>
     </v-card-text>

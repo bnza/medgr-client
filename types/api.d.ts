@@ -42,11 +42,13 @@ export type ResourceConfig = Readonly<{
   labels: [string, string]
   protectedFields: Array<string>
   defaultHeaders: ReadonlyHeaders
+  getResourceIri: (id: ApiId) => string
+  getAppPath: (id: ApiId) => string
 }>
 
 export type StaticResourceConfig = Optional<
   Omit<ResourceConfig, 'apiPath' | 'name'>,
-  'protectedFields'
+  'protectedFields' | 'getResourceIri' | 'getAppPath'
 >
 
 export type VocabularyStaticResourceConfig = Optional<

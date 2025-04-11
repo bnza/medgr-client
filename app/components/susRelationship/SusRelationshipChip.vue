@@ -1,22 +1,39 @@
 <script setup lang="ts">
-import type { ApiResourceStratigraphicUnitsRelationship } from '~~/types'
+import type {
+  ApiResourceStratigraphicUnitsRelationship,
+  ResourceConfig,
+} from '~~/types'
 import { injectStratigraphicUnitsRelationship } from '~/composables/useStratigraphicUnitsRelationship'
 
-defineProps<{ item: ApiResourceStratigraphicUnitsRelationship }>()
+defineProps<{
+  item: ApiResourceStratigraphicUnitsRelationship
+  resourceConfig: ResourceConfig
+}>()
 const { isEditable, deletingRelation } = injectStratigraphicUnitsRelationship()
 </script>
 
 <template>
-  <v-chip class="text-white" data-testid="su-relationship-chip">
-    {{ item.dxSU.code.replace(/^\w+\./, '') }}
-    <template #close>
-      <v-icon
-        v-if="isEditable"
-        data-testid="delete-relationship-button"
-        icon="far fa-circle-xmark"
-        size="x-small"
-        @click.stop="deletingRelation = item"
-      />
+  <lazy-data-item-info-box-stratigraphic-unit
+    :id="item.dxSU.id"
+    :resource-config
+  >
+    <template #activator="{ props }">
+      <v-chip
+        v-bind="props"
+        class="text-white"
+        data-testid="su-relationship-chip"
+      >
+        {{ item.dxSU.code.replace(/^\w+\./, '') }}
+        <template #close>
+          <v-icon
+            v-if="isEditable"
+            data-testid="delete-relationship-button"
+            icon="far fa-circle-xmark"
+            size="x-small"
+            @click.stop="deletingRelation = item"
+          />
+        </template>
+      </v-chip>
     </template>
-  </v-chip>
+  </lazy-data-item-info-box-stratigraphic-unit>
 </template>

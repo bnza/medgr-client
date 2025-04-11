@@ -33,6 +33,9 @@ function useApiResourceConfig(key?: ApiResourceKey) {
             labels: [key, key],
             protectedFields: [],
             defaultHeaders: [] as ReadonlyHeaders,
+            getResourceIri: getResourceIri(key),
+            getAppPath: (id: ApiId) =>
+              resources[key]?.appPath ? `${resources[key].appPath}/${id}` : '',
           },
           resources[key],
         ),
