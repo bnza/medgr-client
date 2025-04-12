@@ -61,26 +61,41 @@ const fetchData = async (isOpen: boolean) => {
               v-bind="mergeProps(menu, tooltip)"
               icon="fas fa-circle-info"
               size="xsmall"
+              data-testid="data-info-box-activator"
             />
           </slot>
         </template>
         <span>show info</span>
       </v-tooltip>
     </template>
-    <v-card prepend-icon="fas fa-circle-info" min-width="500">
-      <template #title>{{ getResourceConfig().labels[0] }}</template>
+    <v-card
+      prepend-icon="fas fa-circle-info"
+      min-width="500"
+      data-testid="info-box-card"
+    >
+      <template #title
+        ><span data-testid="info-box-card-title">{{
+          getResourceConfig().labels[0]
+        }}</span></template
+      >
       <template #text>
-        <slot v-if="item" v-bind="{ item }" />
+        <v-sheet v-if="item" data-testid="info-box-card-text">
+          <slot v-bind="{ item }" />
+        </v-sheet>
         <v-container
           v-else
           class="d-flex flex-column justify-center align-center"
           style="height: 100%"
         >
-          <loading-component v-if="status === 'pending'" />
+          <loading-component
+            v-if="status === 'pending'"
+            data-testid="info-box-card-pending"
+          />
           <v-alert
             v-else-if="status === 'error'"
             icon="fas fa-circle-exclamation"
             text="Data fetch failed"
+            data-testid="info-box-card-error"
           />
         </v-container>
       </template>
@@ -88,6 +103,7 @@ const fetchData = async (isOpen: boolean) => {
         <v-spacer />
         <navigation-resource-item-read
           :id
+          :disabled="status !== 'success'"
           :app-path="getResourceConfig().appPath"
         />
       </template>

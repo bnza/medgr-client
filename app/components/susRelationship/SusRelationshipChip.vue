@@ -13,10 +13,7 @@ const { isEditable, deletingRelation } = injectStratigraphicUnitsRelationship()
 </script>
 
 <template>
-  <lazy-data-item-info-box-stratigraphic-unit
-    :id="item.dxSU.id"
-    :resource-config
-  >
+  <lazy-data-item-info-box-stratigraphic-unit :id="item.dxSU.id">
     <template #activator="{ props }">
       <v-chip
         v-bind="props"

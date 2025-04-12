@@ -20,6 +20,7 @@ defineProps<{
       <v-container>
         <data-item-info-box-row label="site" :text="item.site.name" />
         <data-item-info-box-row label="year" :text="String(item.year)" />
+        <data-item-info-box-row label="number" :text="String(item.number)" />
         <data-item-info-box-row
           label="description"
           :text="item.description ?? ''"

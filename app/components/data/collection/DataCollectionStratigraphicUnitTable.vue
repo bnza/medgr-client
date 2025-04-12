@@ -16,6 +16,13 @@ const resourceKey: ApiDataResourceKey = 'stratigraphicUnit'
     <template #[`item.code`]="{ item }">
       <p class="text-secondary">{{ item.code }}</p>
     </template>
+    <template #[`item.site.code`]="{ item }">
+      <lazy-data-item-info-box-site :id="item.site.id">
+        <template #activator="{ props }">
+          <lazy-data-item-info-box-chip v-bind="props" :item="item.site" />
+        </template>
+      </lazy-data-item-info-box-site>
+    </template>
     <template #[`item.public`]="{ item }">
       <v-checkbox-btn
         density="compact"
