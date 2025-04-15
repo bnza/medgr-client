@@ -9,6 +9,7 @@ import microStratigraphicUnit from '~/utils/resources/data/microStratigraphicUni
 import pottery from '~/utils/resources/data/pottery'
 import potteriesMediaObject from '~/utils/resources/data/potteriesMediaObject'
 import sample from './data/sample'
+import samplesMediaObject from '~/utils/resources/data/samplesMediaObject'
 import site from './data/site'
 import sitesUser from './data/sitesUser'
 import stratigraphicUnit from './data/stratigraphicUnit'
@@ -25,6 +26,7 @@ export const data: Record<ApiDataResourceKey, StaticResourceConfig> = {
   pottery,
   potteriesMediaObject,
   sample,
+  samplesMediaObject,
   site,
   sitesUser,
   stratigraphicUnit,

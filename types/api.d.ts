@@ -12,6 +12,7 @@ export type ApiDataResourceKey =
   | 'pottery'
   | 'potteriesMediaObject'
   | 'sample'
+  | 'samplesMediaObject'
   | 'site'
   | 'sitesUser'
   | 'stratigraphicUnit'
