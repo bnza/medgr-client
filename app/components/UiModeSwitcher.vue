@@ -1,12 +1,17 @@
 <script setup lang="ts">
-const { state, icon, toggle } = useAppUiModeStore()
-const text = computed(() => (state === 'map' ? 'Map mode' : 'Data mode'))
+const appUiModeStore = useAppUiModeStore()
+
+const { state, icon } = storeToRefs(appUiModeStore)
+
+const { toggle } = appUiModeStore
+
+const text = computed(() => (state.value === 'map' ? 'Map mode' : 'Data mode'))
 </script>
 
 <template>
-  <v-tooltip :text="text">
+  <v-tooltip :text>
     <template #activator="{ props }">
-      <v-btn class="mr-6" :icon="icon" v-bind="props" @click="toggle" />
+      <v-btn class="mr-6" :icon v-bind="props" @click="toggle" />
     </template>
   </v-tooltip>
 </template>

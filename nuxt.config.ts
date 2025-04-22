@@ -11,6 +11,9 @@ export default defineNuxtConfig({
       ],
     },
   },
+  build: {
+    transpile: ['vue3-openlayers'],
+  },
   auth: {
     provider: {
       type: 'local',
@@ -85,6 +88,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBaseUrl: 'http://localhost',
+    },
+  },
+  vite: {
+    optimizeDeps: {
+      include: ['ol > geotiff'],
     },
   },
   ssr: false,

@@ -6,6 +6,7 @@
         text="Selected item will be delete. Are you sure you want to proceed? This action cannot be undone."
         title="Delete item?"
         type="error"
+        variant="tonal"
       />
     </v-col>
   </v-row>

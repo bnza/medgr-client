@@ -1,16 +1,18 @@
 <script setup lang="ts">
-const store = useUiAppNavigationDrawerStore()
+const uiAppNavigationDrawerStore = useUiAppNavigationDrawerStore()
+
+const { defaultOpened, visible } = storeToRefs(uiAppNavigationDrawerStore)
+
 const { hasRoleAdmin, hasRole } = useAppAuth()
-const open = ref([])
 </script>
 
 <template>
   <v-navigation-drawer
-    :model-value="store.visible"
+    :model-value="visible"
     :permanent="true"
     data-testid="app-navigation-drawer"
   >
-    <v-list v-model:opened="open">
+    <v-list v-model:opened="defaultOpened">
       <v-list-item
         nuxt
         to="/"
@@ -111,5 +113,3 @@ const open = ref([])
     </v-list>
   </v-navigation-drawer>
 </template>
-
-<style scoped></style>
