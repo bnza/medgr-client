@@ -1,5 +1,5 @@
 import { diff } from 'deep-object-diff'
-import type { ApiAction, ApiResourceItem, Writeable } from '~~/types'
+import type { ApiAction, ApiResourceItem } from '~~/types'
 
 type NormalizePatch = typeof _normalizePatch
 const _normalizePost = <RT extends ApiResourceItem>(item: Partial<RT>) =>

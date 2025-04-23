@@ -6,6 +6,7 @@ import type {
 import { ApiRole, type ApiSpecialistRole } from '~/utils/consts/auth'
 import type {
   ApiDataResourceKey,
+  ApiGeometryDataResourceKey,
   ApiResourceKey,
   ResourceCollectionParent,
 } from '~~/types/api'
@@ -65,13 +66,17 @@ export const isJsonLdResourceMediaObjectJoinItem = (
 export const isSpecialistRole = (value: string): value is ApiSpecialistRole =>
   !isAppRole(value)
 
-export const isApiResourceKey = (value: string): value is ApiResourceKey =>
+export const isApiResourceKey = (value: any): value is ApiResourceKey =>
+  typeof value === 'string' &&
   (apiResourceKeys as ReadonlyArray<string>).includes(value)
-export const isApiDataResourceKey = (
-  value: string,
-): value is ApiDataResourceKey =>
+export const isApiDataResourceKey = (value: any): value is ApiDataResourceKey =>
+  typeof value === 'string' &&
   (apiDataResourceKey as ReadonlyArray<string>).includes(value)
 
+export const isApiGeometryDataResourceKey = (
+  value: any,
+): value is ApiGeometryDataResourceKey =>
+  isApiDataResourceKey(value) && value.endsWith('Geometry')
 export const isResourceCollectionParent = (
   value: unknown,
 ): value is ResourceCollectionParent =>

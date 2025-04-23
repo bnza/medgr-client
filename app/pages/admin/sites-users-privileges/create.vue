@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { DataItemPage } from '#components'
-import type { ApiAclResource, ApiResourceSitesUser } from '~~/types'
 import { isResourceCollectionParent } from '~/utils/guards'
 
 definePageMeta({
@@ -10,11 +8,7 @@ definePageMeta({
 </script>
 
 <template>
-  <component
-    :is="DataItemPage<ApiResourceSitesUser & ApiAclResource>"
-    resource-key="sitesUser"
-    mode="create"
-  >
+  <lazy-data-item-page resource-key="sitesUser" mode="create">
     <template #default="{ item, repository, resourceConfig, parent }">
       <lazy-data-item-sites-user-form
         v-if="isResourceCollectionParent(parent)"
@@ -25,5 +19,5 @@ definePageMeta({
         :parent
       />
     </template>
-  </component>
+  </lazy-data-item-page>
 </template>

@@ -1,14 +1,5 @@
-<script setup lang="ts">
-import { DataItemPage } from '#components'
-import type {
-  ApiAclResource,
-  ApiResourceMicroStratigraphicUnit,
-} from '~~/types'
-</script>
-
 <template>
-  <component
-    :is="DataItemPage<ApiResourceMicroStratigraphicUnit & ApiAclResource>"
+  <lazy-data-item-page
     mode="update"
     resource-key="microStratigraphicUnit"
     code-key="code"
@@ -21,5 +12,5 @@ import type {
         :resource-config
       />
     </template>
-  </component>
+  </lazy-data-item-page>
 </template>

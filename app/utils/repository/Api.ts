@@ -5,31 +5,38 @@ import type {
   ApiDataResourceKey,
   ApiResourceKey,
   ImportableDataResourceKey,
+  ApiGeometryDataResourceKey,
+  ApiDataResource,
 } from '~~/types'
+import type { ApiGeoJsonDataFeature } from '~~/types/geoJson'
 import ResourceRepository from './ResourceRepository'
 import ValidatorRepository from './ValidatorRepository'
 import AutocompleteRepository from './AutocompleteRepository'
 import UserRepository from './UserRepository'
 import ImportCsvFileRepository from './ImportCsvFileRepository'
 import WorkUnitRepository from './WorkUnitRepository'
+import GeometricResourceRepository from '~/utils/GeometricResourceRepository'
 
+type ExtractGeometricKey<K> = K extends `${infer T}Geometry` ? T : never
 export default class Api {
   readonly #fetcher: $Fetch
-  readonly paths: Readonly<Record<ApiResourceKey, string>>
   #autocomplete: AutocompleteRepository | undefined
-  #resources: Map<ApiDataResourceKey, ResourceRepository<ApiResourceItem>>
+  #resourceRepos: Map<ApiDataResourceKey, ResourceRepository<ApiResourceItem>>
+  #geoRepos = new Map<
+    ApiGeometryDataResourceKey,
+    GeometricResourceRepository<ApiGeoJsonDataFeature>
+  >()
   #imports: Map<ImportableDataResourceKey, ImportCsvFileRepository>
   #validator: ValidatorRepository | undefined
   #userRepository: UserRepository | undefined
   #workUnitRepository: WorkUnitRepository | undefined
 
   constructor(
-    index: Record<ApiResourceKey, string>,
+    readonly paths: Record<ApiResourceKey, string>,
     private readonly fetchOptions: FetchOptions,
   ) {
-    this.paths = Object.freeze(index)
     this.#fetcher = $fetch.create(fetchOptions)
-    this.#resources = new Map<
+    this.#resourceRepos = new Map<
       ApiDataResourceKey,
       ResourceRepository<ApiResourceItem>
     >()
@@ -67,17 +74,46 @@ export default class Api {
     return this.#userRepository
   }
 
-  getRepository<RT extends ApiResourceItem>(
-    resourceKey: ApiDataResourceKey,
-  ): ResourceRepository<RT> {
-    if (!this.#resources.has(resourceKey)) {
-      this.#resources.set(
-        resourceKey,
-        new ResourceRepository<RT>(this.paths[resourceKey], this.#fetcher),
+  getRepository<K extends ApiDataResourceKey>(
+    resourceKey: K,
+  ): ResourceRepository<ApiDataResource<K>>
+
+  getRepository<K extends ApiGeometryDataResourceKey>(
+    resourceKey: K,
+  ): GeometricResourceRepository<ApiGeoJsonDataFeature<ExtractGeometricKey<K>>>
+
+  getRepository(resourceKey: ApiDataResourceKey | ApiGeometryDataResourceKey) {
+    if (isApiGeometryDataResourceKey(resourceKey)) {
+      return this.getGeoRepository(resourceKey)
+    }
+    return this.getStandardRepository(resourceKey)
+  }
+
+  private getStandardRepository<K extends ApiDataResourceKey>(
+    key: ApiDataResourceKey,
+  ) {
+    if (!this.#resourceRepos.has(key)) {
+      this.#resourceRepos.set(
+        key,
+        new ResourceRepository<ApiDataResource<K>>(
+          this.paths[key],
+          this.#fetcher,
+        ),
       )
     }
-    // @ts-expect-error: map value has been set above!
-    return this.#resources.get(resourceKey)
+    return this.#resourceRepos.get(key)
+  }
+
+  private getGeoRepository<RT extends ApiGeoJsonDataFeature>(
+    key: ApiGeometryDataResourceKey,
+  ): GeometricResourceRepository<RT> {
+    if (!this.#geoRepos.has(key)) {
+      this.#geoRepos.set(
+        key,
+        new GeometricResourceRepository<RT>(this.paths[key], this.#fetcher),
+      )
+    }
+    return this.#geoRepos.get(key) as GeometricResourceRepository<RT>
   }
 
   getWorkUnitRepository(): WorkUnitRepository {

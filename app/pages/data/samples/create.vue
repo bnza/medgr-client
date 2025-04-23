@@ -1,14 +1,5 @@
-<script setup lang="ts">
-import { DataItemPage } from '#components'
-import type { ApiAclResource, ApiResourceSample } from '~~/types'
-</script>
-
 <template>
-  <component
-    :is="DataItemPage<ApiResourceSample & ApiAclResource>"
-    resource-key="sample"
-    mode="create"
-  >
+  <lazy-data-item-page resource-key="sample" mode="create">
     <template #default="{ item, repository, resourceConfig, parent }">
       <lazy-data-item-sample-form
         :mode="'create'"
@@ -18,5 +9,5 @@ import type { ApiAclResource, ApiResourceSample } from '~~/types'
         :resource-config
       />
     </template>
-  </component>
+  </lazy-data-item-page>
 </template>

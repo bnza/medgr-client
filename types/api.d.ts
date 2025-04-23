@@ -26,15 +26,21 @@ export type ApiVocabularyResourceKey =
   | 'vocabularyPotteryTypology'
   | 'vocabularySuRelationship'
 
-export type ApiResourceKey =
-  | ApiDataResourceKey
-  | ApiVocabularyResourceKey
-  | 'workUnit'
-
 export type ImportableDataResourceKey = Extract<
   ApiDataResourceKey,
   'stratigraphicUnit'
 >
+
+export type ApiGeometricDataResourceKey = Extract<ApiDataResourceKey, 'site'>
+
+export type ApiGeometryDataResourceKey =
+  `${ApiGeometricDataResourceKey}Geometry`
+
+export type ApiResourceKey =
+  | ApiGeometryDataResourceKey
+  | ApiDataResourceKey
+  | ApiVocabularyResourceKey
+  | 'workUnit'
 
 export type ResourceConfig = Readonly<{
   apiPath: string

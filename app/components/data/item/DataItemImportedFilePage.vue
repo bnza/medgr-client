@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import type {
-  ApiAclResource,
-  ApiDataResourceKey,
-  ApiResourceImportedFile,
-} from '~~/types'
-import { DataItemPage } from '#components'
+import type { ApiDataResourceKey } from '~~/types'
 
 const resourceKey: ApiDataResourceKey = 'importedFile'
 </script>
 
 <template>
-  <component
-    :is="DataItemPage<ApiResourceImportedFile & ApiAclResource>"
+  <lazy-data-item-page
     :resource-key
     mode="read"
     code-key="id"
@@ -31,5 +25,5 @@ const resourceKey: ApiDataResourceKey = 'importedFile'
         :resource-config
       />
     </template>
-  </component>
+  </lazy-data-item-page>
 </template>

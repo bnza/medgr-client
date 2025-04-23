@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type {
-  ApiResourceImportFile,
   ApiResourceWorkUnit,
   ApiResourceWorkUnitError,
   JsonLdResourceItem,
@@ -11,8 +10,7 @@ const props = defineProps<{
   job: JsonLdResourceItem<ApiResourceWorkUnit>
 }>()
 
-const repository =
-  useNuxtApp().$api.getRepository<ApiResourceImportFile>('importFile')
+const repository = useNuxtApp().$api.getRepository('importFile')
 
 const errorFile = await repository.fetchItem(props.job.id)
 const apiBaseUrl = useRuntimeConfig().public.apiBaseUrl

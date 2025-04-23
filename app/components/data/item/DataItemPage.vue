@@ -1,20 +1,35 @@
-<script setup lang="ts" generic="RT extends ApiResourceItem & ApiAclResource">
+<script setup lang="ts" generic="K extends ApiDataResourceKey">
 import type {
-  ApiAclResource,
   ApiAction,
+  ApiDataResource,
   ApiDataResourceKey,
   ApiResourceCollectionParent,
-  ApiResourceItem,
+  ResourceConfig,
 } from '~~/types'
 
 import useResourceItemSubmit from '~/composables/useResourceItemSubmit'
 import useResourceItemPage from '~/composables/useResourceItemPage'
 import usePageResourceCollectionParent from '~/composables/usePageResourceCollectionParent'
+import type ResourceRepository from '~/utils/repository/ResourceRepository'
+
+interface SlotProps<K extends ApiDataResourceKey> {
+  resourceConfig: ResourceConfig
+  item: Ref<ApiDataResource<K>>
+  repository: ResourceRepository<ApiDataResource<K>>
+  parent?: ApiResourceCollectionParent
+}
+
+// 2. Define slots with the typed props
+defineSlots<{
+  default: (props: SlotProps<K>) => any
+  'toolbar-append': (props: { item: Ref<ApiDataResource<K>> }) => any
+}>()
+
 const props = withDefaults(
   defineProps<{
-    codeKey?: keyof RT
+    codeKey?: string
     mode: ApiAction
-    resourceKey: ApiDataResourceKey
+    resourceKey: K
     appendIcons?: boolean
   }>(),
   {
@@ -23,18 +38,20 @@ const props = withDefaults(
   },
 )
 
-const { getAsyncData, label, resourceConfig, repository } =
-  useResourceItemPage<RT>(props.resourceKey, props.mode)
+const { getAsyncData, label, resourceConfig, repository } = useResourceItemPage(
+  props.resourceKey,
+  props.mode,
+)
 
 const { item, status, error } = await getAsyncData()
 
-const code = computed(() =>
-  props.mode === 'create' || !item.value
-    ? ''
-    : props.codeKey in item.value
-      ? item.value[props.codeKey]
-      : '?',
-)
+const code = computed(() => {
+  if (!props.codeKey || !item.value) return '?'
+  if (props.codeKey in item.value && Boolean(item.value[props.codeKey])) {
+    return String(item.value[props.codeKey])
+  }
+  return '?'
+})
 
 const resourceItemSubmit = useResourceItemSubmit()
 provide(resourceItemSubmitInjectionKey, resourceItemSubmit)
@@ -104,5 +121,3 @@ const { collection, back } = useAppNavigation(props.mode === 'delete')
     <slot :resource-config :item :repository :parent />
   </data-card>
 </template>
-
-<style scoped></style>

@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import { DataItemPage } from '#components'
-import type {
-  ApiAclResource,
-  ApiDataResourceKey,
-  ApiResourceSample,
-} from '~~/types'
+import type { ApiDataResourceKey } from '~~/types'
 const resourceKey: ApiDataResourceKey = 'sample'
 
 const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
@@ -13,12 +8,7 @@ const { hasSitePrivileges } = useAppAuth()
 </script>
 
 <template>
-  <component
-    :is="DataItemPage<ApiResourceSample & ApiAclResource>"
-    :resource-key
-    mode="read"
-    code-key="code"
-  >
+  <lazy-data-item-page :resource-key mode="read" code-key="code">
     <template #default="{ item, repository, resourceConfig }">
       <v-tabs v-model="tab" color="anchor">
         <v-tab value="data">data</v-tab>
@@ -50,5 +40,5 @@ const { hasSitePrivileges } = useAppAuth()
         </v-tabs-window-item>
       </v-tabs-window>
     </template>
-  </component>
+  </lazy-data-item-page>
 </template>

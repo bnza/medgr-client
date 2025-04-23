@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import type {
-  ApiAclResource,
-  ApiDataResourceKey,
-  ApiResourceUser,
-} from '~~/types'
-import { DataItemPage } from '#components'
+import type { ApiDataResourceKey } from '~~/types'
 
 const { isCurrentUser } = useAppAuth()
 const resourceKey: ApiDataResourceKey = 'user'
@@ -12,12 +7,7 @@ const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
 </script>
 
 <template>
-  <component
-    :is="DataItemPage<ApiResourceUser & ApiAclResource>"
-    :resource-key
-    mode="read"
-    code-key="email"
-  >
+  <lazy-data-item-page :resource-key mode="read" code-key="email">
     <template #toolbar-append="{ item }">
       <user-password-dialog-open-button
         size="small"
@@ -53,5 +43,5 @@ const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
         </v-tabs-window-item>
       </v-tabs-window>
     </template>
-  </component>
+  </lazy-data-item-page>
 </template>

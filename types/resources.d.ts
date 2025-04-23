@@ -1,4 +1,6 @@
 import type { JsonLdItem } from '~~/types/jsonld'
+import type { ApiDataResourceKey } from '~~/types/api'
+import type { ApiGeoJsonDataFeature } from '~~/types/geoJson'
 
 export type ApiId = string | number
 
@@ -25,7 +27,7 @@ export interface ApiResourceSite extends ApiResourceItem {
 }
 export interface ApiResourceStratigraphicUnit extends ApiResourceItem {
   id: number
-  site: Pick<ApiResourceSite, 'id' | 'code' | 'name'> & { '@id': string }
+  site: Pick<ApiResourceSite, 'id' | 'code' | 'name'>
   year: number
   number: number
   code: string
@@ -74,9 +76,9 @@ export interface ApiResourceMediaObjectJoin extends ApiResourceItem {
 }
 export interface ApiResourceStratigraphicUnitsRelationship
   extends ApiResourceItem {
-  sxSU: Pick<ApiResourceStratigraphicUnit, 'id' | 'code'> & { '@id': string }
+  sxSU: Pick<ApiResourceStratigraphicUnit, 'id' | 'code'>
   relationship: string
-  dxSU: Pick<ApiResourceStratigraphicUnit, 'id' | 'code'> & { '@id': string }
+  dxSU: Pick<ApiResourceStratigraphicUnit, 'id' | 'code'>
 }
 
 export interface ApiVocabularyItem extends ApiResourceItem {
@@ -85,10 +87,7 @@ export interface ApiVocabularyItem extends ApiResourceItem {
 }
 
 export interface ApiResourcePottery extends ApiResourceItem {
-  stratigraphicUnit: Pick<
-    ApiResourceStratigraphicUnit,
-    'id' | 'code' | 'site'
-  > & { '@id': string }
+  stratigraphicUnit: Pick<ApiResourceStratigraphicUnit, 'id' | 'code' | 'site'>
   number: number
   code: string
   fragmentsNumber: number
@@ -124,13 +123,8 @@ export interface ApiSubmitResourceSample
 }
 
 export interface ApiResourceMicroStratigraphicUnit extends ApiResourceItem {
-  sample: Pick<ApiResourceStratigraphicUnit, 'id' | 'number'> & {
-    '@id': string
-  }
-  stratigraphicUnit: Pick<
-    ApiResourceStratigraphicUnit,
-    'id' | 'code' | 'site'
-  > & { '@id': string }
+  sample: Pick<ApiResourceStratigraphicUnit, 'id' | 'number'>
+  stratigraphicUnit: Pick<ApiResourceStratigraphicUnit, 'id' | 'code' | 'site'>
   number?: number
   depositType: string
   keyAttributes?: string
@@ -204,4 +198,27 @@ export interface ApiResourceImportedFile extends ApiResourceItem {
   userId: string
   uploadDate: string
   mediaObject: ApiResourceMediaObject
+}
+
+export type ApiDataResourceMap = {
+  importFile: ApiResourceImportFile
+  importedFile: ApiResourceImportedFile
+  microStratigraphicUnit: ApiResourceMicroStratigraphicUnit
+  pottery: ApiResourcePottery
+  potteriesMediaObject: ApiResourceMediaObjectJoin
+  sample: ApiResourceSample
+  samplesMediaObject: ApiResourceMediaObjectJoin
+  site: ApiResourceSite
+  sitesUser: ApiResourceSitesUser
+  stratigraphicUnit: ApiResourceStratigraphicUnit
+  stratigraphicUnitsMediaObject: ApiResourceMediaObjectJoin
+  stratigraphicUnitsRelationship: ApiResourceStratigraphicUnitsRelationship
+  user: ApiResourceUser
+}
+
+export type ApiDataResource<K extends ApiDataResourceKey> =
+  ApiDataResourceMap[K]
+
+export type ApiGeoJsonDataResourceMap = {
+  siteGeometry: ApiGeoJsonDataFeature<'site'>
 }

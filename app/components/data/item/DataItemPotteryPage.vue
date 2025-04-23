@@ -1,22 +1,12 @@
 <script setup lang="ts">
-import { DataItemPage } from '#components'
-import type {
-  ApiAclResource,
-  ApiDataResourceKey,
-  ApiResourcePottery,
-} from '~~/types'
+import type { ApiDataResourceKey } from '~~/types'
 const resourceKey: ApiDataResourceKey = 'pottery'
 
 const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
 </script>
 
 <template>
-  <component
-    :is="DataItemPage<ApiResourcePottery & ApiAclResource>"
-    :resource-key
-    mode="read"
-    code-key="code"
-  >
+  <lazy-data-item-page :resource-key mode="read" code-key="code">
     <template #default="{ item, repository, resourceConfig }">
       <v-tabs v-model="tab" color="anchor">
         <v-tab value="data">data</v-tab>
@@ -40,5 +30,5 @@ const { tab } = storeToRefs(useUiResourcePageTabStore(resourceKey))
         </v-tabs-window-item>
       </v-tabs-window>
     </template>
-  </component>
+  </lazy-data-item-page>
 </template>

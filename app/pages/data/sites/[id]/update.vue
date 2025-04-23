@@ -1,15 +1,5 @@
-<script setup lang="ts">
-import { DataItemPage } from '#components'
-import type { ApiAclResource, ApiResourceSite } from '~~/types'
-</script>
-
 <template>
-  <component
-    :is="DataItemPage<ApiResourceSite & ApiAclResource>"
-    mode="update"
-    resource-key="site"
-    code-key="code"
-  >
+  <lazy-data-item-page mode="update" resource-key="site" code-key="code">
     <template #default="{ item, repository, resourceConfig }">
       <lazy-data-item-site-form
         mode="update"
@@ -18,5 +8,5 @@ import type { ApiAclResource, ApiResourceSite } from '~~/types'
         :resource-config
       />
     </template>
-  </component>
+  </lazy-data-item-page>
 </template>

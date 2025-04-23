@@ -1,20 +1,10 @@
 <script setup lang="ts">
-import { DataItemPage } from '#components'
-import type {
-  ApiAclResource,
-  ApiDataResourceKey,
-  ApiResourceSitesUser,
-} from '~~/types'
+import type { ApiDataResourceKey } from '~~/types'
 const resourceKey: ApiDataResourceKey = 'sitesUser'
 </script>
 
 <template>
-  <component
-    :is="DataItemPage<ApiResourceSitesUser & ApiAclResource>"
-    :resource-key
-    mode="read"
-    code-key="id"
-  >
+  <lazy-data-item-page :resource-key mode="read" code-key="id">
     <template #default="{ item, repository, resourceConfig }">
       <lazy-data-item-sites-user-form
         v-if="item"
@@ -24,5 +14,5 @@ const resourceKey: ApiDataResourceKey = 'sitesUser'
         mode="read"
       />
     </template>
-  </component>
+  </lazy-data-item-page>
 </template>

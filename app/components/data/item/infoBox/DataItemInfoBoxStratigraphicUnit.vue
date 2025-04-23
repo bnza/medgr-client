@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { ApiId, ApiResourceStratigraphicUnit } from '~~/types'
-import { DataItemInfoBox } from '#components'
+import type { ApiId } from '~~/types'
 
 defineProps<{
   id: ApiId
@@ -8,11 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <component
-    :is="DataItemInfoBox<ApiResourceStratigraphicUnit>"
-    :id
-    resource-key="stratigraphicUnit"
-  >
+  <lazy-data-item-info-box :id resource-key="stratigraphicUnit">
     <template #activator="{ props }">
       <slot name="activator" v-bind="{ props }" />
     </template>
@@ -31,5 +26,5 @@ defineProps<{
         />
       </v-container>
     </template>
-  </component>
+  </lazy-data-item-info-box>
 </template>

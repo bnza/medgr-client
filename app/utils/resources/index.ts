@@ -18,6 +18,7 @@ import stratigraphicUnitsRelationship from './data/stratigraphicUnitsRelationshi
 import user from './data/user'
 import workUnit from './workUnit'
 import vocabularies from './vocabularies'
+import geoJson from './geoJson'
 
 export const data: Record<ApiDataResourceKey, StaticResourceConfig> = {
   importFile,
@@ -36,7 +37,7 @@ export const data: Record<ApiDataResourceKey, StaticResourceConfig> = {
 } as const
 
 export const resources = Object.freeze(
-  Object.assign({}, data, vocabularies, { workUnit }),
+  Object.assign({}, data, vocabularies, geoJson, { workUnit }),
 )
 
 export const apiDataResourceKey = [

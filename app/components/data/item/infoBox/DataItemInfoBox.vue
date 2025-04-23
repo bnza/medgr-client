@@ -1,8 +1,8 @@
-<script setup lang="ts" generic="RT extends ApiResourceItem">
+<script setup lang="ts" generic="K extends ApiDataResourceKey">
 import type {
+  ApiDataResource,
   ApiDataResourceKey,
   ApiId,
-  ApiResourceItem,
   JsonLdResourceDocument,
   JsonLdResourceItem,
   ResourceConfig,
@@ -12,12 +12,12 @@ import type ResourceRepository from '~/utils/repository/ResourceRepository'
 import type { AsyncDataRequestStatus } from '#app'
 
 const props = defineProps<{
-  resourceKey: ApiDataResourceKey
+  resourceKey: K
   id: ApiId
 }>()
 
 const resourceConfig = ref<ResourceConfig | null>(null)
-const repository = ref<ResourceRepository<RT> | null>(null)
+const repository = ref<ResourceRepository<ApiDataResource<K>> | null>(null)
 
 const getResourceConfig = () => {
   if (!resourceConfig.value) {
@@ -33,7 +33,9 @@ const getRepository = () => {
   return repository.value
 }
 
-const item = ref<JsonLdResourceDocument<JsonLdResourceItem<RT>> | null>(null)
+const item = ref<JsonLdResourceDocument<
+  JsonLdResourceItem<ApiDataResource<K>>
+> | null>(null)
 const status = ref<AsyncDataRequestStatus>('idle')
 
 const fetchData = async (isOpen: boolean) => {

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { ApiId, ApiResourceSite } from '~~/types'
-import { DataItemInfoBox } from '#components'
+import type { ApiId } from '~~/types'
 
 defineProps<{
   id: ApiId
@@ -8,8 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <component
-    :is="DataItemInfoBox<ApiResourceSite>"
+  <lazy-data-item-info-box
     :id
     resource-key="site"
     data-testid="data-item-info-box-site"
@@ -23,5 +21,5 @@ defineProps<{
         <data-item-info-box-row label="description" :text="item.description" />
       </v-container>
     </template>
-  </component>
+  </lazy-data-item-info-box>
 </template>

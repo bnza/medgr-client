@@ -37,7 +37,7 @@ function _useResource<RT extends ApiResourceItem>(
 ) {
   // const parent = ref(_parent)
   const resourceKey: ApiDataResourceKey = key.replace(/\/.+/, '')
-  const repository = useNuxtApp().$api.getRepository<RT>(resourceKey)
+  const repository = useNuxtApp().$api.getRepository(resourceKey)
   const resourceConfig = useApiResourceConfig(resourceKey)
   const label = resourceConfig.labels[1]
 

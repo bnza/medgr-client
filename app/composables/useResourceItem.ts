@@ -1,9 +1,9 @@
-import type { ApiDataResourceKey, ApiResourceItem } from '~~/types'
+import type { ApiDataResourceKey } from '~~/types'
 
-function useResourceItem<RT extends ApiResourceItem>(
-  resourceKey: ApiDataResourceKey,
-) {
-  const repository = useNuxtApp().$api.getRepository<RT>(resourceKey)
+function useResourceItem<K extends ApiDataResourceKey>(resourceKey: K) {
+  const api = useNuxtApp().$api
+
+  const repository = api.getRepository(resourceKey)
   const resourceConfig = useApiResourceConfig(resourceKey)
 
   const label = resourceConfig.labels[0]

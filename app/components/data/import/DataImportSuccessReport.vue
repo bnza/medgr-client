@@ -9,8 +9,7 @@ const props = defineProps<{
   job: JsonLdResourceItem<ApiResourceWorkUnit>
 }>()
 
-const repository =
-  useNuxtApp().$api.getRepository<ApiResourceImportedFile>('importedFile')
+const repository = useNuxtApp().$api.getRepository('importedFile')
 const resourceConfig = useApiResourceConfig('importedFile')
 const item = ref<JsonLdResourceItem<ApiResourceImportedFile> | null>(null)
 
