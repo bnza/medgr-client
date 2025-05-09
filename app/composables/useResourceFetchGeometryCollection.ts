@@ -14,8 +14,9 @@ export default function useResourceFetchGeometryCollection(
     useApiResourceCollectionsStore(key),
   )
 
+  const { bboxString: bbox } = storeToRefs(useMapStore())
   const fetchCollectionParams = computed(() =>
-    Object.assign({}, resourceFilterParams.value),
+    Object.assign({}, resourceFilterParams.value, { bbox: bbox.value }),
   )
 
   const fetchWithCurrentParams = () =>
