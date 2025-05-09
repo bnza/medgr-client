@@ -8,23 +8,25 @@ import type {
   ApiGeometryDataResourceKey,
   ApiDataResource,
 } from '~~/types'
-import type { ApiGeoJsonDataFeature } from '~~/types/geoJson'
+import type {
+  ApiGeoJsonDataFeature,
+  ExtractGeometricKey,
+} from '~~/types/geoJson'
 import ResourceRepository from './ResourceRepository'
 import ValidatorRepository from './ValidatorRepository'
 import AutocompleteRepository from './AutocompleteRepository'
 import UserRepository from './UserRepository'
 import ImportCsvFileRepository from './ImportCsvFileRepository'
 import WorkUnitRepository from './WorkUnitRepository'
-import GeometricResourceRepository from '~/utils/GeometricResourceRepository'
+import GeometryResourceRepository from './GeometryResourceRepository'
 
-type ExtractGeometricKey<K> = K extends `${infer T}Geometry` ? T : never
 export default class Api {
   readonly #fetcher: $Fetch
   #autocomplete: AutocompleteRepository | undefined
   #resourceRepos: Map<ApiDataResourceKey, ResourceRepository<ApiResourceItem>>
   #geoRepos = new Map<
     ApiGeometryDataResourceKey,
-    GeometricResourceRepository<ApiGeoJsonDataFeature>
+    GeometryResourceRepository<ApiGeoJsonDataFeature>
   >()
   #imports: Map<ImportableDataResourceKey, ImportCsvFileRepository>
   #validator: ValidatorRepository | undefined
@@ -80,7 +82,7 @@ export default class Api {
 
   getRepository<K extends ApiGeometryDataResourceKey>(
     resourceKey: K,
-  ): GeometricResourceRepository<ApiGeoJsonDataFeature<ExtractGeometricKey<K>>>
+  ): GeometryResourceRepository<ApiGeoJsonDataFeature<ExtractGeometricKey<K>>>
 
   getRepository(resourceKey: ApiDataResourceKey | ApiGeometryDataResourceKey) {
     if (isApiGeometryDataResourceKey(resourceKey)) {
@@ -106,14 +108,14 @@ export default class Api {
 
   private getGeoRepository<RT extends ApiGeoJsonDataFeature>(
     key: ApiGeometryDataResourceKey,
-  ): GeometricResourceRepository<RT> {
+  ): GeometryResourceRepository<RT> {
     if (!this.#geoRepos.has(key)) {
       this.#geoRepos.set(
         key,
-        new GeometricResourceRepository<RT>(this.paths[key], this.#fetcher),
+        new GeometryResourceRepository<RT>(this.paths[key], this.#fetcher),
       )
     }
-    return this.#geoRepos.get(key) as GeometricResourceRepository<RT>
+    return this.#geoRepos.get(key) as GeometryResourceRepository<RT>
   }
 
   getWorkUnitRepository(): WorkUnitRepository {

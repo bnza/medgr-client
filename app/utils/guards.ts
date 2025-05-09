@@ -17,6 +17,7 @@ import type {
   ApiResourceMediaObject,
   ApiResourceMediaObjectJoin,
 } from '~~/types'
+
 export const isDefined = <T>(value: T | undefined | null): value is T =>
   value !== undefined && value !== null
 
@@ -76,7 +77,9 @@ export const isApiDataResourceKey = (value: any): value is ApiDataResourceKey =>
 export const isApiGeometryDataResourceKey = (
   value: any,
 ): value is ApiGeometryDataResourceKey =>
-  isApiDataResourceKey(value) && value.endsWith('Geometry')
+  typeof value === 'string' &&
+  value.endsWith('Geometry') &&
+  isApiDataResourceKey(value.slice(0, -8))
 export const isResourceCollectionParent = (
   value: unknown,
 ): value is ResourceCollectionParent =>

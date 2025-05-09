@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Map, Layers, Sources } from 'vue3-openlayers'
+
 const center = ref([-28000, 4660000])
 const projection = ref('EPSG:3857')
 const zoom = ref(6)
@@ -16,6 +17,6 @@ const rotation = ref(0)
     <Layers.OlTileLayer>
       <Sources.OlSourceOsm />
     </Layers.OlTileLayer>
-    <map-layer-site />
+    <map-layer-vector-api-site />
   </Map.OlMap>
 </template>

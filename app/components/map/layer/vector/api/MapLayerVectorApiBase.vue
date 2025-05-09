@@ -24,5 +24,3 @@ const geoJsonFormat = new GeoJSON({
     </Styles.OlStyle>
   </Layers.OlVectorLayer>
 </template>
-
-<style scoped></style>

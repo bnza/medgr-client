@@ -6,6 +6,7 @@ import type {
 } from '~~/types'
 
 export type UseResourceCollection = ReturnType<typeof _useResource>
+
 function useResourceCollection<RT extends ApiResourceItem>(
   key: ApiDataResourceKey,
   parent?: ApiResourceCollectionParent,
@@ -18,7 +19,7 @@ function useResourceCollection<RT extends ApiResourceItem>(
   if (!cache.has(resourceCollectionCacheKey)) {
     cache.set(
       resourceCollectionCacheKey,
-      _useResource<RT>(resourceCollectionCacheKey, parent),
+      _useResource<RT>(resourceCollectionCacheKey),
     )
   }
 
@@ -33,9 +34,7 @@ function useResourceCollection<RT extends ApiResourceItem>(
 
 function _useResource<RT extends ApiResourceItem>(
   key: ResourceCollectionCacheKey,
-  _parent?: ApiResourceCollectionParent,
 ) {
-  // const parent = ref(_parent)
   const resourceKey: ApiDataResourceKey = key.replace(/\/.+/, '')
   const repository = useNuxtApp().$api.getRepository(resourceKey)
   const resourceConfig = useApiResourceConfig(resourceKey)
