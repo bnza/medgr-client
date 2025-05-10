@@ -6,7 +6,9 @@ export const useMapStore = defineStore('map', () => {
 
   const extentArray = ref<number[] | null>(null)
   const bboxString = computed<string | null>(() =>
-    extentArray.value ? extentArray.value.join(',') : null,
+    extentArray.value
+      ? extentArray.value.join(',') + ',' + projection.value.match(/\d+/)?.[0]
+      : null,
   )
 
   function updateBbox(extent: number[]) {
